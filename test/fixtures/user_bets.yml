@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user: 
+  bet: 
+  user_bet: MyString
+  date: 2012-06-06
+  result: false
+  user_ack: MyString
+
+two:
+  user: 
+  bet: 
+  user_bet: MyString
+  date: 2012-06-06
+  result: false
+  user_ack: MyString

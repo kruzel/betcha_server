@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Owner</b>
+  <%= @bet.user.name %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @bet.subject %>
+</p>
+
+<p>
+  <b>Reward:</b>
+  <%= @bet.reward %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @bet.date %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%= @bet.due_date %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @bet.state %>
+</p>
+
+<%= link_to 'Edit', edit_bet_path(@bet) %> |
+<%= link_to 'Back', bets_path %>
+
+<%= render :template  => 'user_bets/index'  %>
