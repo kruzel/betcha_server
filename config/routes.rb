@@ -14,6 +14,8 @@ BetchaServer::Application.routes.draw do
     resources :bets
   end
 
+  match "bets/show_for_user_id/:id" => "bets#show_for_user_id"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
