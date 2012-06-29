@@ -22,6 +22,7 @@ class BetsController < ApplicationController
   # GET /bets/1.json
   def show
     @bet = Bet.find(params[:id])
+    @user_bets = UserBet.find_all_by_bet_id(@bet.id)
 
     respond_to do |format|
       format.html # show.html.erb
