@@ -2,6 +2,7 @@ BetchaServer::Application.routes.draw do
   resources :bets do
     collection do
       get :show_uuid
+      get :show_for_user_id
     end
   end
   resources :user_bets do
