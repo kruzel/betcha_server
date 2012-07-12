@@ -1,12 +1,6 @@
-#=begin apidoc
-#name:: /bets
-#json:: <%Bets.find(:first).to_json %>
-#
-#This resource can be used to show edit and list bets. A bet
-#has multiple users_bets. 
-#=end
-
 class BetsController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /bets
   # GET /bets.json
   def index
@@ -62,6 +56,7 @@ class BetsController < ApplicationController
   # GET /bets/new.json
   def new
     @bet = Bet.new
+    @bet.user = current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -78,6 +73,7 @@ class BetsController < ApplicationController
   # POST /bets.json
   def create
     @bet = Bet.new(params[:bet])
+    @bet.user = current_user
     
     if @bet.due_date.nil?
         @bet.due_date = Time.new

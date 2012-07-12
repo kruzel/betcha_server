@@ -1,4 +1,6 @@
 class UserBetsController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /user_bets
   # GET /user_bets.json
   def index
@@ -36,6 +38,8 @@ class UserBetsController < ApplicationController
   # GET /user_bets/new.json
   def new
     @user_bet = UserBet.new
+    @user_bet.user = current_user
+    @user_bet.bet_id = params[:bet_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -53,10 +57,13 @@ class UserBetsController < ApplicationController
   def create
     @user_bet = UserBet.new(params[:user_bet])   
     @user_bet.date = Time.new
+    @user_bet.user = current_user
+    @user_bet.bet_id = params[:bet_id]
+    @bet = @user_bet.bet
 
     respond_to do |format|
       if @user_bet.save
-        format.html { redirect_to @user_bet, notice: 'User bet was successfully created.' }
+        format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
         format.json { render json: @user_bet, status: :created, location: @user_bet }
       else
         format.html { render action: "new" }

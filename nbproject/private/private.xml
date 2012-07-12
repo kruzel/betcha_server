@@ -1,17 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/config/routes.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/models/user.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/controllers/users_controller.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/models/bet.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/db/migrate/20120604194002_create_users.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/db/migrate/20120605185237_create_bets.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/controllers/bets_controller.rb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/views/users/_form.html.erb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/views/bets/_form.html.erb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/views/bets/new.html.erb</file>
-        <file>file:/C:/Users/ofer/Development/Betcha/Server/BetchaServer/app/views/bets/show.html.erb</file>
-    </open-files>
 </project-private>

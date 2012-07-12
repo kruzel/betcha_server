@@ -30,4 +30,8 @@
 
 <br />
 
-<%= link_to 'New User bet', new_user_bet_path %>
+<% if @bet.nil? %>
+<%= link_to('New User bet' , new_user_bet_path) %>
+<% else %>
+<%= link_to('New User bet' , new_user_bet_path(:bet_id => @bet.id)) %>
+<% end %>

@@ -1,4 +1,6 @@
 BetchaServer::Application.routes.draw do
+  devise_for :users
+
   resources :bets do
     collection do
       get :show_uuid
@@ -11,9 +13,8 @@ BetchaServer::Application.routes.draw do
       put :update_list
     end
   end
-  resources :users do 
-    resources :bets
-  end
+  
+  resources :tokens,:only => [:create, :destroy]
 
   match "bets/show_for_user_id/:id" => "bets#show_for_user_id"
   
@@ -66,7 +67,7 @@ BetchaServer::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'bets#index'
 
   # See how all your routes lay out with "rake routes"
 

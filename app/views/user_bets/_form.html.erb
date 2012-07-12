@@ -13,15 +13,15 @@
 
   <div class="field">
     <%= f.label :user %><br />
-    <%= f.text_field :user_id %>
+    <%= f.label @user_bet.user.name %>
   </div>
   <div class="field">
-    <%= f.label :bet %><br />
-    <%= f.text_field :bet_id %>
+    <%= f.label :bet_subject %><br />
+    <%= f.label @user_bet.bet.subject %>
   </div>
   <div class="field">
-    <%= f.label :user_bet %><br />
-    <%= f.text_field :user_bet %>
+    <%= f.label :user_result_bet %><br />
+    <%= f.text_field :user_result_bet %>
   </div>
   <div class="field">
     <%= f.label :date %><br />
@@ -35,6 +35,7 @@
     <%= f.label :user_ack %><br />
     <%= f.text_field :user_ack %>
   </div>
+  <%= hidden_field_tag :bet_id, @user_bet.bet.id %>
   <div class="actions">
     <%= f.submit %>
   </div>

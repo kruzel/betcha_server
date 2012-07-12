@@ -30,6 +30,6 @@
   <%= @user_bet.user_ack %>
 </p>
 
-
+<%@bet = @user_bet.bet%>
 <%= link_to 'Edit', edit_user_bet_path(@user_bet) %> |
-<%= link_to 'Back', user_bets_path %>
+<%= link_to 'Back', @bet %>
