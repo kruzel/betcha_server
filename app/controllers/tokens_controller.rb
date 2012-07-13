@@ -24,21 +24,27 @@ class TokensController < ApplicationController
 #      render :status=>401, :json=>{:message=>"Invalid email or passoword."}
 #      return
       @user = User.new()
-      if @user.name.nil?
+      @user.name = name
+      @user.email = email
+      @user.password = password
+      @user.ensure_authentication_token
+      @user.save!
+    else
+      logger.info("User #{email} signin, user found. updating and creating token")
+      if(!name.nil?)
         @user.name = name
-        @user.email = email
-        @user.password = password
       end
+      @user.email = email
+      @user.password = password
+      @user.ensure_authentication_token
+      @user.save
     end
-    
-    @user.ensure_authentication_token
-    @user.save!
     
     if not @user.valid_password?(password)
       logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
       render :status=>401, :json=>{:message=>"Invalid email or passoword."}
     else
-      render :status=>200, :json=>{:token=>@user.authentication_token}
+      render :status=>200, :json=>{:token=>@user.authentication_token, :id=>@user.id}
     end
   end
   
