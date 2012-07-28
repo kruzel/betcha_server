@@ -43,14 +43,14 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    if @user.name.nil?
-      @user.name = params[:name]
+    if @user.full_name.nil?
+      @user.name = params[:full_name]
       @user.email = params[:email]
     end
     
     respond_to do |format|
       if @user.save
-        if @user.name.nil?
+        if @user.full_name.nil?
           @user.name = @user.id
         end
         format.html { redirect_to @user, notice: 'User was successfully created.' }

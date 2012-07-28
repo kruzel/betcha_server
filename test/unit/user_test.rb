@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: users
+# Table full_name: users
 #
 #  id         :integer(4)      not null, primary key
-#  name       :string(255)
+#  full_name       :string(255)
 #  email      :string(255)
 #  created_at :datetime
 #  updated_at :datetime

@@ -171,7 +171,7 @@ Devise.setup do |config|
   # config.encryptor = :sha512
 
   # ==> Configuration for :token_authenticatable
-  # Defines name of the authentication token params key
+  # Defines full_name of the authentication token params key
   config.token_authentication_key = :auth_token
 
   # ==> Scopes configuration
@@ -206,7 +206,12 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-
+  require "omniauth-facebook"
+  config.omniauth :facebook, "299434100154215", "2f65288b03d6fc6138d472c65e8e28ed",
+      #:client_options => {:ssl => {:ca_path => '#{Rails.root}\config\cert\cacert.pem'}} 
+      :scope => 'email, read_friendlists, friends_about_me' , 
+      :display => 'popup'
+  
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
@@ -224,7 +229,7 @@ Devise.setup do |config|
   #     mount MyEngine, at: "/my_engine"
   #
   # The router that invoked `devise_for`, in the example above, would be:
-  # config.router_name = :my_engine
+  # config.router_full_name = :my_engine
   #
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:

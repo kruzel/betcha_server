@@ -2,6 +2,9 @@ require 'test_helper'
 
 class BetsControllerTest < ActionController::TestCase
   setup do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    sign_in @user
     @bet = bets(:one)
   end
 

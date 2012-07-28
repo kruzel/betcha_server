@@ -16,31 +16,32 @@ class BetsController < ApplicationController
   # GET /bets/1.json
   def show
     @bet = Bet.find(params[:id])
-    @user_bets = UserBet.find_all_by_bet_id(@bet.id)
-
+    @predictions = Prediction.find_all_by_bet_id(@bet.id)
+    @chat_messages = ChatMessage.find_all_by_bet_id(@bet.id)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bet }
     end
   end
   
-  # GET /bets/show_uuid
-  # GET /bets/show_uuid.json
-  def show_uuid
-    @bets = Bet.where("uuid = ?",params[:uuid])
-    @bet = @bets[0]
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @bet }
-    end
-  end
+#  # GET /bets/show_uuid
+#  # GET /bets/show_uuid.json
+#  def show_uuid
+#    @bets = Bet.where("uuid = ?",params[:uuid])
+#    @bet = @bets[0]
+#
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.json { render json: @bet }
+#    end
+#  end
   
   # GET /bets/show_for_user_id/1
   # GET /bets/show_for_user_id/1.json
   def show_for_user_id
     @bets = Array.new
-    @userBets = UserBet.find_all_by_user_id (params[:id])
+    @userBets = Prediction.find_all_by_user_id (params[:id])
     @userBets.each do |userbet|
         @bet = Bet.find(userbet.bet.id)
         @bets << @bet unless (@bet.nil?)

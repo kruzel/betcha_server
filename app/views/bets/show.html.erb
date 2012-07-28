@@ -2,7 +2,7 @@
 
 <p>
   <b>Owner</b>
-  <%= @bet.user.name %>
+  <%= @bet.user.full_name %>
 </p>
 
 <p>
@@ -26,11 +26,6 @@
 </p>
 
 <p>
-  <b>uuid:</b>
-  <%= @bet.uuid %>
-</p>
-
-<p>
   <b>State:</b>
   <%= @bet.state %>
 </p>
@@ -38,4 +33,5 @@
 <%= link_to 'Edit', edit_bet_path(@bet) %> |
 <%= link_to 'Back', bets_path %>
 
-<%= render :template  => 'user_bets/index'  %>
+<%= render :template  => 'predictions/index'  %>
+<%= render :template  => 'chat_messages/index'  %>

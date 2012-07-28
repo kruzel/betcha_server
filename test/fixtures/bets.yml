@@ -16,17 +16,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
 one:
-  user: 
-  subject: MyString
-  reward: MyString
+  id: 1
+  user_id: 1
+  subject: a
+  reward: a
   date: 2012-06-05
   due_date: 2012-06-05
-  state: MyString
 
 two:
-  user: 
-  subject: MyString
-  reward: MyString
+  id: 2
+  user_id: 1
+  subject: b
+  reward: b
   date: 2012-06-05
   due_date: 2012-06-05
-  state: MyString

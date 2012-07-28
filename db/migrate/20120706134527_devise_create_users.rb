@@ -33,7 +33,18 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Token authenticatable
       t.string :authentication_token
 
-      t.string :name
+      t.string :first_name
+      t.string :family_name
+      t.string :full_name
+      t.boolean :is_app_installed
+      t.integer :gender #usage: http://www.kensodev.com/tag/rails/
+      t.string :locale
+      t.string :profile_pic_url     
+      t.string :provider
+      t.string :uid
+      t.string :access_token
+      t.datetime :expires_at
+      t.boolean :expires 
       
       t.timestamps
     end

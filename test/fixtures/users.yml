@@ -12,9 +12,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  email: MyString
+  id: 1
+  email: a@a.com
+  encrypted_password: $2a$10$pfU8EWTk7.SluZT1B8sBUeg59dxGCvFrwfmEWAuc3QC7P9qFXuHNe
+  first_name: a
+  family_name: a
+  full_name: a a
+  is_app_installed: false
+  gender: 1
+  locale: en
+  
 
 two:
-  name: MyString
-  email: MyString
+  id: 2
+  email: b@b.com
+  encrypted_password: $2a$10$pfU8EWTk7.SluZT1B8sBUeg59dxGCvFrwfmEWAuc3QC7P9qFXuHNe
+  first_name: b
+  family_name: b
+  full_name: b b
+  is_app_installed: false
+  gender: 1
+  locale: en
+  

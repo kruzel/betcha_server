@@ -1,7 +1,7 @@
 class CreateBets < ActiveRecord::Migration
   def change
     create_table :bets do |t|
-      t.string :uuid
+#      t.string :uuid
       t.references :user
       t.string :subject
       t.string :reward
@@ -13,6 +13,6 @@ class CreateBets < ActiveRecord::Migration
     end
     
     add_index :bets, :user_id
-    add_index :bets, :uuid
+#    add_index :bets, :uuid
   end
 end

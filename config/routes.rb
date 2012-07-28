@@ -1,5 +1,7 @@
 BetchaServer::Application.routes.draw do
-  devise_for :users
+  resources :chat_messages
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   resources :bets do
     collection do
@@ -7,14 +9,21 @@ BetchaServer::Application.routes.draw do
       get :show_for_user_id
     end
   end
-  resources :user_bets do
+  resources :predictions do
     collection do
       get :show_bet_id
       put :update_list
+      post :create_batch
     end
   end
   
-  resources :tokens,:only => [:create, :destroy]
+  #,:only => [:create, :destroy,:create_oauth]
+  
+  resources :tokens do
+    collection do 
+      post :create_oauth
+    end
+  end
 
   match "bets/show_for_user_id/:id" => "bets#show_for_user_id"
   

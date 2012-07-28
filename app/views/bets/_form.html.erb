@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :user %><br />
-    <%= f.label @bet.user.name %>
+    <%= f.label @bet.user.full_name %>
   </div>
     <div class="field">
     <%= f.label :subject %><br />
@@ -34,10 +34,6 @@
   <div class="field">
     <%= f.label :state %><br />
     <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :uuid %><br />
-    <%= f.text_field :uuid %>
   </div>
   <div class="actions">
     <%= f.submit %>
