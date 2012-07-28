@@ -1,0 +1,37 @@
+<h1>Listing predictions</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Bet</th>
+    <th>User bet</th>
+    <th>Date</th>
+    <th>Result</th>
+    <th>User ack</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @predictions.each do |prediction| %>
+  <tr>
+    <td><%= prediction.user.full_name %></td>
+    <td><%= prediction.bet.subject %></td>
+    <td><%= prediction.prediction %></td>
+    <td><%= prediction.date %></td>
+    <td><%= prediction.result %></td>
+    <td><%= prediction.user_ack %></td>
+    <td><%= link_to 'Show', prediction %></td>
+    <td><%= link_to 'Edit', edit_prediction_path(prediction) %></td>
+    <td><%= link_to 'Destroy', p, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if @bet.nil? %>
+<%= link_to('New Prediction' , new_prediction_path) %>
+<% else %>
+<%= link_to('New Prediction' , new_prediction_path(:bet_id => @bet.id)) %>
+<% end %>

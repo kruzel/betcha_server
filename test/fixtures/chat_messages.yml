@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  bet: 
+  user: 
+  type: 1
+  message: MyString
+  creation_time: 2012-07-24
+  notification_sent: false
+
+two:
+  bet: 
+  user: 
+  type: 1
+  message: MyString
+  creation_time: 2012-07-24
+  notification_sent: false

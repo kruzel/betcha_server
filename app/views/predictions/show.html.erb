@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @prediction.user.full_name %>
+</p>
+
+<p>
+  <b>Bet:</b>
+  <%= @prediction.bet.subject %>
+</p>
+
+<p>
+  <b>User bet:</b>
+  <%= @prediction.prediction %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @prediction.date %>
+</p>
+
+<p>
+  <b>Result:</b>
+  <%= @prediction.result %>
+</p>
+
+<p>
+  <b>User ack:</b>
+  <%= @prediction.user_ack %>
+</p>
+
+<%@bet = @prediction.bet%>
+<%= link_to 'Edit', edit_prediction_path(@prediction) %> |
+<%= link_to 'Back', @bet %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Bet:</b>
+  <%= @chat_message.bet.subject %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @chat_message.user.full_name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @chat_message.type %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%= @chat_message.message %>
+</p>
+
+<p>
+  <b>Creation time:</b>
+  <%= @chat_message.creation_time %>
+</p>
+
+<%@bet = @chat_message.bet%>
+<%= link_to 'Edit', edit_chat_message_path(@chat_message) %> |
+<%= link_to 'Back', @bet %>
