@@ -9,8 +9,12 @@ class FriendsController < ApplicationController
     @friends = Array.new
     friends_ids.each do |friend|
         user = User.find(friend.friend_id)
-        #@friend_list << user unless (user.nil?)
-        @friends << user
+        tmp_friend = User.new()
+        tmp_friend.id = user.id
+        tmp_friend.email = user.email
+        tmp_friend.full_name = user.full_name
+        tmp_friend.profile_pic_url = user.profile_pic_url
+        @friends << tmp_friend 
     end unless (friends_ids.nil?)
       
     respond_to do |format|
