@@ -3,7 +3,7 @@ class PredictionsController < ApplicationController
   
   # GET /predictions
   # GET /predictions.json
-  def index
+  def index #TODO allow only to admin
     @predictions = Prediction.all
 
     respond_to do |format|
@@ -77,7 +77,6 @@ class PredictionsController < ApplicationController
     success = true
     
     params[:predictions].each do |entry|
-          #TODO existing user handling 
           # check if existing user
           # if found associate to prediction
           # otherwise create a new user
@@ -93,7 +92,6 @@ class PredictionsController < ApplicationController
             end
           end
 
-          #TODO friend handling
           # check if current_user and prediction user are friends
           # if not create friend record
           unless @user == current_user
@@ -108,7 +106,6 @@ class PredictionsController < ApplicationController
             end
           end
       
-          #TODO create  new prediction
           @prediction = Prediction.new() #should include user ids for existing users, email or FB ID or both
           @prediction.date = Time.new
           @prediction.bet_id = entry[:bet_id]
@@ -155,7 +152,7 @@ class PredictionsController < ApplicationController
    
     success = true
     
-    params[:_json].each do |entry|
+    params[:predictions].each do |entry|
         unless Prediction.update(entry[:id], :prediction => entry[:prediction])
           success = false
           break

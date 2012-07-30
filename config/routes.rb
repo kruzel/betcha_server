@@ -1,14 +1,25 @@
 BetchaServer::Application.routes.draw do
-  resources :chat_messages
-
+  
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  resources :bets do
-    collection do
-      get :show_uuid
-      get :show_for_user_id
+  resources :tokens do
+    collection do 
+      post :create_oauth
     end
   end
+  
+  resources :friends do
+    collection do
+      get :show_for_user
+    end
+  end
+  
+  resources :bets do
+    collection do
+      get :show_for_user
+    end
+  end
+  
   resources :predictions do
     collection do
       get :show_bet_id
@@ -16,16 +27,12 @@ BetchaServer::Application.routes.draw do
       post :create_batch
     end
   end
-  
-  #,:only => [:create, :destroy,:create_oauth]
-  
-  resources :tokens do
-    collection do 
-      post :create_oauth
+      
+  resources :chat_messages do
+    collection do
+      get :chat_messages_for_bet
     end
   end
-
-  match "bets/show_for_user_id/:id" => "bets#show_for_user_id"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -76,7 +83,7 @@ BetchaServer::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'bets#index'
+  root :to => 'bets#show_for_user'
 
   # See how all your routes lay out with "rake routes"
 

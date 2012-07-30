@@ -11,10 +11,6 @@ class TokensController < ApplicationController
     expires_at = params[:expires_at]
     expires = params[:expires]
     
-#    fbUser = FbGraph::User.me(token)
-#    fbUser = fbUser.fetch
-#    user = User.find_by_uid(fbUser.identifier)
-
     user = User.find_by_uid(uid)
     
     success = true
@@ -46,6 +42,12 @@ class TokensController < ApplicationController
       end
     end
     
+    #TODO add FB friends to friends table
+    #
+    #    fbUser = FbGraph::User.me(token)
+    #    fbUser = fbUser.fetch
+    #    user = User.find_by_uid(fbUser.identifier)
+
     if not success
       logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
       render :status=>401, :json=>{:message=>"sign in failed."}
@@ -58,7 +60,7 @@ class TokensController < ApplicationController
   def create
     email = params[:email]
     password = params[:password]
-    name = params[:full_name]
+    full_name = params[:full_name]
     
     
     if request.format != :json
@@ -76,20 +78,18 @@ class TokensController < ApplicationController
     success = true
     if user.nil?
       logger.info("User #{email} signin, user cannot be found. creating new")
-#      render :status=>401, :json=>{:message=>"Invalid email or passoword."}
-#      return
-      user = User.new()
-      user.name = name
-      user.email = email
-      user.password = password
-      user.ensure_authentication_token
-      unless user.save
+      User.create(full_name: full_name,
+                          email: email,
+                          password: password
+                          )
+     
+      unless user
         success = false
       end
     else
       logger.info("User #{email} signin, user found. updating and creating token")
-      if not name.nil?
-        user.name = name
+      if not full_name.nil?
+        user.full_name = full_name
       end
       user.email = email
       if not user.valid_password?(password)

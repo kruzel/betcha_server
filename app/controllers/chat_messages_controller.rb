@@ -3,8 +3,19 @@ class ChatMessagesController < ApplicationController
 
   # GET /chat_messages
   # GET /chat_messages.json
-  def index
+  def index #TODO allow only to admin
     @chat_messages = ChatMessage.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @chat_messages }
+    end
+  end
+  
+  # GET /chat_messages_for_bet
+  # GET /chat_messages_for_bet.json
+  def chat_messages_for_bet 
+    @chat_messages = ChatMessage.where("bet_id = ? AND created_at > ?",params[:bet_id], params[:newer_than])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,37 @@
+<h1>Listing chat_messages</h1>
+
+<table>
+  <tr>
+    <th>Bet</th>
+    <th>User</th>
+    <th>Type</th>
+    <th>Message</th>
+    <th>Creation time</th>
+    <th>Notification sent</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @chat_messages.each do |chat_message| %>
+  <tr>
+    <td><%= chat_message.bet.subject %></td>
+    <td><%= chat_message.user.full_name %></td>
+    <td><%= chat_message.type %></td>
+    <td><%= chat_message.message %></td>
+    <td><%= chat_message.creation_time %></td>
+    <td><%= chat_message.notification_sent %></td>
+    <td><%= link_to 'Show', chat_message %></td>
+    <td><%= link_to 'Edit', edit_chat_message_path(chat_message) %></td>
+    <td><%= link_to 'Destroy', chat_message, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if @bet.nil? %>
+<%= link_to 'New Chat message', new_chat_message_path %>
+<% else %>
+<%= link_to('New Chat message' , new_chat_message_path(:bet_id => @bet.id)) %>
+<% end %>

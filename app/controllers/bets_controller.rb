@@ -3,7 +3,7 @@ class BetsController < ApplicationController
   
   # GET /bets
   # GET /bets.json
-  def index
+  def index #TODO allow only to admin
     @bets = Bet.all
 
     respond_to do |format|
@@ -25,30 +25,19 @@ class BetsController < ApplicationController
     end
   end
   
-#  # GET /bets/show_uuid
-#  # GET /bets/show_uuid.json
-#  def show_uuid
-#    @bets = Bet.where("uuid = ?",params[:uuid])
-#    @bet = @bets[0]
-#
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.json { render json: @bet }
-#    end
-#  end
-  
-  # GET /bets/show_for_user_id/1
-  # GET /bets/show_for_user_id/1.json
-  def show_for_user_id
+  # GET /bets/show_for_user
+  # GET /bets/show_for_user.json
+  def show_for_user
     @bets = Array.new
-    @userBets = Prediction.find_all_by_user_id (params[:id])
-    @userBets.each do |userbet|
-        @bet = Bet.find(userbet.bet.id)
+    
+    @predictions = Prediction.find_all_by_user_id (current_user.id)
+    @predictions.each do |prediction|
+        @bet = Bet.find(prediction.bet.id)
         @bets << @bet unless (@bet.nil?)
-      end unless (@userBets.nil?)
+      end unless (@predictions.nil?)
           
     respond_to do |format|
-      format.html # show_for_user_id.html.erb
+      format.html # show_for_user.html.erb
       format.json { render json: @bets }
     end
   end
