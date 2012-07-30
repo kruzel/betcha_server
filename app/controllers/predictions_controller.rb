@@ -107,15 +107,22 @@ class PredictionsController < ApplicationController
             end
           end
       
-          @prediction = Prediction.new() #should include user ids for existing users, email or FB ID or both
+          @predictions = Prediction.find_all_by_user_id_and_bet_id entry[:user_id], entry[:bet_id]
+          if @predictions.nil? || @predictions.size == 0 
+            @prediction = Prediction.new() #should include user ids for existing users, email or FB ID or both
+          else
+            @prediction = @predictions.first
+          end
+          
           @prediction.date = Time.new
           @prediction.bet_id = entry[:bet_id]
           @prediction.user = @user
 
-        unless @prediction.save
-          success = false
-          break
-        end
+          unless @prediction.save
+            success = false
+            break
+          end
+        
     end
     
     
@@ -123,7 +130,7 @@ class PredictionsController < ApplicationController
       if success
         format.json { head :ok , status: :created, location: @prediction }
       else
-        format.json { render json: @predictions.errors, status: :unprocessable_entity }
+        format.json { render json: @prediction.errors, status: :unprocessable_entity }
       end
     end
   end
