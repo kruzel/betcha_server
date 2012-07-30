@@ -55,10 +55,11 @@ class PredictionsController < ApplicationController
   # POST /predictions
   # POST /predictions.json
   def create
-    @prediction = Prediction.new(params[:prediction])   
+    @prediction = Prediction.new()   
     @prediction.date = Time.new
     @prediction.user = current_user
     @prediction.bet_id = params[:bet_id]
+    @prediction.prediction = params[:prediction]
     @bet = @prediction.bet
 
     respond_to do |format|

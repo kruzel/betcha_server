@@ -78,12 +78,12 @@ class TokensController < ApplicationController
     success = true
     if user.nil?
       logger.info("User #{email} signin, user cannot be found. creating new")
-      User.create(full_name: full_name,
-                          email: email,
-                          password: password
-                          )
-     
-      unless user
+      user = User.new()
+      user.full_name = full_name
+      user.email = email
+      user.password = password
+      user.ensure_authentication_token
+      unless user.save
         success = false
       end
     else
