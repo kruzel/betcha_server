@@ -1,4 +1,4 @@
-<%= form_for(@prediction) do |f| %>
+<%= form_for([@bet, @prediction]) do |f| %>
   <% if @prediction.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@prediction.errors.count, "error") %> prohibited this prediction from being saved:</h2>

@@ -5,6 +5,7 @@ class PredictionsController < ApplicationController
   # GET /predictions.json
   def index #TODO allow only to admin
     @predictions = Prediction.all
+    @bet = @predictions.first.bet
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +17,8 @@ class PredictionsController < ApplicationController
   # GET /predictions/1.json
   def show
     @prediction = Prediction.find(params[:id])
-
+    @bet = @prediction.bet
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @prediction }
@@ -27,7 +29,8 @@ class PredictionsController < ApplicationController
   # GET /predictions/show_bet_id.json
   def show_bet_id
     @predictions = Prediction.where("bet_id = ?",params[:bet_id])
-
+    @bet = @predictions.first.bet
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @predictions }
@@ -40,7 +43,8 @@ class PredictionsController < ApplicationController
     @prediction = Prediction.new
     @prediction.user = current_user
     @prediction.bet_id = params[:bet_id]
-
+    @bet = @prediction.bet
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @prediction }
@@ -50,16 +54,17 @@ class PredictionsController < ApplicationController
   # GET /predictions/1/edit
   def edit
     @prediction = Prediction.find(params[:id])
+    @bet = @prediction.bet
   end
 
   # POST /predictions
   # POST /predictions.json
   def create
-    @prediction = Prediction.new()   
+    @prediction = Prediction.new(params[:prediction])   
     @prediction.date = Time.new
     @prediction.user = current_user
     @prediction.bet_id = params[:bet_id]
-    @prediction.prediction = params[:prediction]
+    @prediction.prediction = params[:prediction] unless request.format=="html"
     @bet = @prediction.bet
 
     respond_to do |format|
@@ -140,12 +145,13 @@ class PredictionsController < ApplicationController
   def update
     @prediction = Prediction.find(params[:id])
     if(!params[:prediction].nil?)
-      @prediction.user_result_bet = params[:prediction]
+      @prediction.prediction = params[:prediction]
     end
+    @bet = @prediction.bet
 
     respond_to do |format|
       if @prediction.update_attributes(params[:prediction])
-        format.html { redirect_to @prediction, notice: 'User bet was successfully updated.' }
+        format.html { redirect_to [@bet,@prediction] , notice: 'User bet was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -182,10 +188,11 @@ class PredictionsController < ApplicationController
   # DELETE /predictions/1.json
   def destroy
     @prediction = Prediction.find(params[:id])
+    @bet = @prediction.bet
     @prediction.destroy
 
     respond_to do |format|
-      format.html { redirect_to predictions_url }
+      format.html { redirect_to @bet }
       format.json { head :ok }
     end
   end

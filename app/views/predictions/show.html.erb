@@ -30,6 +30,5 @@
   <%= @prediction.user_ack %>
 </p>
 
-<%@bet = @prediction.bet%>
-<%= link_to 'Edit', edit_prediction_path(@prediction) %> |
+<%= link_to 'Edit', edit_bet_prediction_path(@bet,@prediction) %> |
 <%= link_to 'Back', @bet %>

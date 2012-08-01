@@ -25,6 +25,5 @@
   <%= @chat_message.creation_time %>
 </p>
 
-<%@bet = @chat_message.bet%>
-<%= link_to 'Edit', edit_chat_message_path(@chat_message) %> |
+<%= link_to 'Edit', edit_bet_chat_message_path(@bet,@chat_message) %> |
 <%= link_to 'Back', @bet %>

@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @prediction %> |
-<%= link_to 'Back', predictions_path %>
+<%= link_to 'Show', [@bet,@prediction] %> |
+<%= link_to 'Back', bet_predictions_path(@bet) %>

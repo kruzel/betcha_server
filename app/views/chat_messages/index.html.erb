@@ -21,17 +21,13 @@
     <td><%= chat_message.message %></td>
     <td><%= chat_message.creation_time %></td>
     <td><%= chat_message.notification_sent %></td>
-    <td><%= link_to 'Show', chat_message %></td>
-    <td><%= link_to 'Edit', edit_chat_message_path(chat_message) %></td>
-    <td><%= link_to 'Destroy', chat_message, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', bet_chat_message_path(@bet) %></td>
+    <td><%= link_to 'Edit', edit_bet_chat_message_path(@bet,chat_message) %></td>
+    <td><%= link_to 'Destroy', bet_chat_message_path(@bet,chat_message), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<% if @bet.nil? %>
-<%= link_to 'New Chat message', new_chat_message_path %>
-<% else %>
-<%= link_to('New Chat message' , new_chat_message_path(:bet_id => @bet.id)) %>
-<% end %>
+<%= link_to('New Chat message' , new_bet_chat_message_path(@bet)) %>

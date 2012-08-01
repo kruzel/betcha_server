@@ -18,20 +18,21 @@ BetchaServer::Application.routes.draw do
     collection do
       get :show_for_user
     end
-  end
-  
-  resources :predictions do
-    collection do
-      get :show_bet_id
-      put :update_list
-      post :create_batch
+
+    resources :predictions do
+      collection do
+        get :show_bet_id
+        put :update_list
+        post :create_batch
+      end
     end
-  end
-      
-  resources :chat_messages do
-    collection do
-      get :chat_messages_for_bet
+
+    resources :chat_messages do
+      collection do
+        get :chat_messages_for_bet
+      end
     end
+
   end
   
   # The priority is based upon order of creation:

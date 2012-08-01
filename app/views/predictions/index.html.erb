@@ -21,17 +21,13 @@
     <td><%= prediction.date %></td>
     <td><%= prediction.result %></td>
     <td><%= prediction.user_ack %></td>
-    <td><%= link_to 'Show', prediction %></td>
-    <td><%= link_to 'Edit', edit_prediction_path(prediction) %></td>
-    <td><%= link_to 'Destroy', p, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', bet_prediction_path(@bet,prediction) %></td>
+    <td><%= link_to 'Edit', edit_bet_prediction_path(@bet,prediction) %></td>
+    <td><%= link_to 'Destroy', bet_prediction_path(@bet,prediction), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<% if @bet.nil? %>
-<%= link_to('New Prediction' , new_prediction_path) %>
-<% else %>
-<%= link_to('New Prediction' , new_prediction_path(:bet_id => @bet.id)) %>
-<% end %>
+<%= link_to('New Prediction' , new_bet_prediction_path(@bet)) %>

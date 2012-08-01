@@ -17,6 +17,11 @@ class FriendsController < ApplicationController
         @friends << tmp_friend 
     end unless (friends_ids.nil?)
       
+    if request.env['ACCEPT'] = 'application/json'
+      render json: @friends
+      return
+    end
+
     respond_to do |format|
       format.html # show_for_user.html.erb
       format.json { render json: @friends }
