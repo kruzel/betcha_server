@@ -82,15 +82,23 @@ class PredictionsController < ApplicationController
   def create_batch
     success = true
     
-    params[:predictions].each do |entry|
+    params[:users].each do |entry|
           # check if existing user
           # if found associate to prediction
           # otherwise create a new user
-          @user = User.find(entry[:user_id])
+          unless entry[:user_id].nil?
+            @user = User.find(entry[:user_id])
           if @user.nil?
             @user = User.new()
-            @user.email = entry[:email]
-            @user.faceboo_id = entry[:faceboook_id]
+            @user.email = entry[:email] unless entry[:email].nil?
+            @user.full_name = entry[:full_name] unless entry[:full_name].nil?
+            @user.provider = entry[:provider] unless entry[:provider].nil?
+            @user.uid = entry[:uid] unless entry[:uid].nil?
+            @user.access_token = entry[:access_token] unless entry[:access_token].nil?
+            @user.gender = entry[:gender] unless entry[:gender].nil?
+            @user.locale = entry[:locale] unless entry[:locale].nil?
+            @user.profile_pic_url = entry[:profile_pic_url] unless entry[:profile_pic_url].nil?
+          
             @user.ensure_authentication_token
             unless @user.save
               logger.error("User #{@user.email} user acount creation failed")
