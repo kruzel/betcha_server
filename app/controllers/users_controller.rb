@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:create]
   
   # GET /users
   # GET /users.json
@@ -43,10 +43,18 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    if @user.full_name.nil?
-      @user.name = params[:full_name]
-      @user.email = params[:email]
+    @user.email = params[:email] unless params[:email].nil?
+    if params[:password].nil?
+      @user.password =  Devise.friendly_token[0,20]
+    else
+      @user.password = params[:password] 
     end
+    @user.full_name = params[:full_name] unless params[:full_name].nil?
+    @user.provider = params[:provider] unless params[:provider].nil?
+    @user.uid = params[:uid] unless params[:uid].nil?
+    @user.access_token = params[:access_token] unless params[:access_token].nil?
+    @user.expires_at = params[:expires_at] unless params[:expires_at].nil?
+    @user.expires = params[:expires] unless params[:expires].nil?
     
     respond_to do |format|
       if @user.save

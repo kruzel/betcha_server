@@ -2,40 +2,40 @@ class TokensController < ApplicationController
   skip_before_filter :verify_authenticity_token
   respond_to :json
   
-  def create_oauth
-    full_name = params[:full_name]
-    email = params[:email]
-    provider = params[:provider]
-    uid = params[:uid]
-    token = params[:token]
-    expires_at = params[:expires_at]
-    expires = params[:expires]
-    
-    user = User.find_by_uid(uid)
-    
+  def create
     success = true
+    provider = params[:provider]
     
-    unless user
-      user = User.create(full_name: full_name,
-                          provider: provider,
-                          uid: uid,
-                          email: email,
-                          access_token: token ,
-                          expires_at: Time.at(expires_at).to_datetime, 
-                          expires: expires,
-                          password: Devise.friendly_token[0,20]
-                          )
+    if provider == "email"
+      email = params[:email]
+      password = param[:password]
+      user = User.find_by_email(email)
       unless user
+        logger.info("User #{email} not found")
         success = false
+      else
+        unless user.valid_password?(password)
+          logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
+          success = false
+        end
       end
-    else 
-      user.full_name = full_name unless full_name.nil?
-      user.email = email unless email.nil?
-      user.provider = provider unless provider.nil?
-      user.uid = uid unless uid.nil?
-      user.access_token = token unless token.nil?
-      user.expires_at = expires_at unless expires_at.nil?
-      user.expires = expires unless expires.nil?
+    else
+      #facebook
+      uid = params[:uid]
+      access_token = params[:access_token]
+      user = User.find_by_uid(uid)
+      unless user
+        logger.info("User #{uid} not found")
+        success = false
+      else
+        unless access_token = user.access_token
+          logger.info("User #{uid} failed signin, access_token \"#{access_token}\" is invalid")
+          success = false
+        end
+      end
+    end
+    
+    if success
       user.ensure_authentication_token
       unless user.save
         success = false
@@ -49,69 +49,10 @@ class TokensController < ApplicationController
     #    user = User.find_by_uid(fbUser.identifier)
 
     if not success
-      logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
       render :status=>401, :json=>{:message=>"sign in failed."}
     else
-      render :status=>200, :json=>{:token=>user.authentication_token, :id=>user.id}
+      render :status=>200, :json=>{:token=>user.authentication_token}
     end
-  end
-
-  
-  def create
-    email = params[:email]
-    password = params[:password]
-    full_name = params[:full_name]
-    
-    
-    if request.format != :json
-        render :status=>406, :json=>{:message=>"The request must be json"}
-        return
-    end
-    
-    if email.nil? or password.nil?
-      render :status=>400, :json=>{:message=>"The request must contain the user email and password."}
-      return
-    end
-        
-    user=User.find_by_email(email.downcase)
-    
-    success = true
-    if user.nil?
-      logger.info("User #{email} signin, user cannot be found. creating new")
-      user = User.new()
-      user.full_name = full_name
-      user.email = email
-      user.password = password
-      user.ensure_authentication_token
-      unless user.save
-        success = false
-      end
-    else
-      logger.info("User #{email} signin, user found. updating and creating token")
-      if not full_name.nil?
-        user.full_name = full_name
-      end
-      user.email = email
-      if not user.valid_password?(password)
-        logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
-        render :status=>401, :json=>{:message=>"Invalid email or passoword."}
-        return
-      end
-
-      user.password = password
-      user.ensure_authentication_token
-      unless user.save
-        success = false
-      end
-    end
-        
-    if not success
-      logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
-      render :status=>401, :json=>{:message=>"sign in failed."}
-    else
-      render :status=>200, :json=>{:token=>user.authentication_token, :id=>user.id}
-    end
-    
   end
   
   def destroy
