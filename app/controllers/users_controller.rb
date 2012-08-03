@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         if @user.full_name.nil?
-          @user.name = @user.id
+          @user.full_name = @user.full_name
         end
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }

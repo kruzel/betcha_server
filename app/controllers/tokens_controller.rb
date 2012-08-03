@@ -8,7 +8,7 @@ class TokensController < ApplicationController
     
     if provider == "email"
       email = params[:email]
-      password = param[:password]
+      password = params[:password]
       user = User.find_by_email(email)
       unless user
         logger.info("User #{email} not found")
