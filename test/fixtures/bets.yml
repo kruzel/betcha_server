@@ -6,7 +6,6 @@
 #  user_id    :integer(4)
 #  subject    :string(255)
 #  reward     :string(255)
-#  date       :datetime
 #  due_date   :datetime
 #  state      :string(255)
 #  created_at :datetime
@@ -20,7 +19,6 @@ one:
   user_id: 1
   subject: a
   reward: a
-  date: 2012-06-05
   due_date: 2012-06-05
 
 two:
@@ -28,5 +26,4 @@ two:
   user_id: 1
   subject: b
   reward: b
-  date: 2012-06-05
   due_date: 2012-06-05

@@ -5,7 +5,6 @@ class CreateChatMessages < ActiveRecord::Migration
       t.references :user
       t.integer :type
       t.string :message
-      t.date :creation_time
       t.boolean :notification_sent
 
       t.timestamps

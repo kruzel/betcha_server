@@ -11,7 +11,6 @@ end
 #  user_id    :integer(4)
 #  subject    :string(255)
 #  reward     :string(255)
-#  date       :datetime
 #  due_date   :datetime
 #  state      :string(255)
 #  created_at :datetime

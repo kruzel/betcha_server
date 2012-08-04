@@ -61,7 +61,6 @@ class ChatMessagesController < ApplicationController
   # POST /chat_messages.json
   def create
     @chat_message = ChatMessage.new(params[:chat_message])
-    @chat_message.creation_time = Time.new
     @chat_message.user = current_user
     @chat_message.bet_id = params[:bet_id]
     @bet = @chat_message.bet

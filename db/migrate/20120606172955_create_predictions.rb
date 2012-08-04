@@ -4,7 +4,6 @@ class CreatePredictions < ActiveRecord::Migration
       t.references :user
       t.references :bet
       t.string :prediction
-      t.datetime :date
       t.boolean :result
       t.string :user_ack
 

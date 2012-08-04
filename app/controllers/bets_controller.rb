@@ -68,7 +68,6 @@ class BetsController < ApplicationController
     if @bet.due_date.nil?
         @bet.due_date = Time.new
     end
-    @bet.date = Time.new
     
     respond_to do |format|
       if @bet.save

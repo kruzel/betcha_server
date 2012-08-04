@@ -19,7 +19,7 @@
     <td><%= chat_message.user.full_name %></td>
     <td><%= chat_message.type %></td>
     <td><%= chat_message.message %></td>
-    <td><%= chat_message.creation_time %></td>
+    <td><%= chat_message.created_at %></td>
     <td><%= chat_message.notification_sent %></td>
     <td><%= link_to 'Show', bet_chat_message_path(@bet) %></td>
     <td><%= link_to 'Edit', edit_bet_chat_message_path(@bet,chat_message) %></td>

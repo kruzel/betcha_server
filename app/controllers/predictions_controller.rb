@@ -61,7 +61,6 @@ class PredictionsController < ApplicationController
   # POST /predictions.json
   def create
     @prediction = Prediction.new(params[:prediction])   
-    @prediction.date = Time.new
     @prediction.user = current_user
     @prediction.bet_id = params[:bet_id]
     @prediction.prediction = params[:prediction] unless request.format=="html"
@@ -88,6 +87,7 @@ class PredictionsController < ApplicationController
           # otherwise create a new user
           unless entry[:user_id].nil?
             @user = User.find(entry[:user_id])
+          end
           if @user.nil?
             @user = User.new()
             @user.email = entry[:email] unless entry[:email].nil?
@@ -127,7 +127,6 @@ class PredictionsController < ApplicationController
             @prediction = @predictions.first
           end
           
-          @prediction.date = Time.new
           @prediction.bet_id = entry[:bet_id]
           @prediction.user = @user
 

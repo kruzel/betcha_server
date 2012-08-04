@@ -5,7 +5,6 @@ class CreateBets < ActiveRecord::Migration
       t.references :user
       t.string :subject
       t.string :reward
-      t.datetime :date
       t.datetime :due_date
       t.string :state
 
