@@ -41,12 +41,6 @@ class TokensController < ApplicationController
         success = false
       end
     end
-    
-    #TODO add FB friends to friends table
-    #
-    #    fbUser = FbGraph::User.me(token)
-    #    fbUser = fbUser.fetch
-    #    user = User.find_by_uid(fbUser.identifier)
 
     if not success
       render :status=>401, :json=>{:message=>"sign in failed."}

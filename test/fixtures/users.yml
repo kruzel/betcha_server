@@ -40,7 +40,7 @@ one:
   family_name: a
   full_name: a a
   is_app_installed: false
-  gender: 1
+  gender: mail
   locale: en
   
 
@@ -52,6 +52,6 @@ two:
   family_name: b
   full_name: b b
   is_app_installed: false
-  gender: 1
+  gender: mail
   locale: en
   

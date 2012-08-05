@@ -43,18 +43,30 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    @user.email = params[:email] unless params[:email].nil?
-    if params[:password].nil?
-      @user.password =  Devise.friendly_token[0,20]
-    else
-      @user.password = params[:password] 
-    end
-    @user.full_name = params[:full_name] unless params[:full_name].nil?
     @user.provider = params[:provider] unless params[:provider].nil?
-    @user.uid = params[:uid] unless params[:uid].nil?
-    @user.access_token = params[:access_token] unless params[:access_token].nil?
-    @user.expires_at = params[:expires_at] unless params[:expires_at].nil?
-    @user.expires = params[:expires] unless params[:expires].nil?
+    
+    if @user.provider == "facebook"
+      unless params[:access_token].nil?
+        @user.access_token = params[:access_token] 
+        fb_client = FBGraph::Client.new(:client_id => config.app_id,:secret_id =>config.app_secret ,:token => @user.access_token)
+        user_info = fb_client.selection.me.info!
+
+        @user.email = user_info.email
+        @user.full_name = user_info.name
+        @user.provider = "facebook"
+        @user.uid = user_info.id
+#        @user.expires_at = user_info.credentials.expires_at
+#        @user.expires = 
+        @user.gender = user_info.gender
+        @user.locale = user_info.locale
+        @user.profile_pic_url = fb_client.selection.me.picture
+        @user.password =  Devise.friendly_token[0,20]
+      end
+    else #email provider
+      @user.email = params[:email] unless params[:email].nil?
+      @user.password = params[:password] 
+      @user.full_name = params[:full_name] unless params[:full_name].nil?
+    end    
     
     respond_to do |format|
       if @user.save

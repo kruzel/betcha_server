@@ -46,5 +46,9 @@ module BetchaServer
     config.assets.version = '1.0'
     
     #config.force_ssl = true
+    
+    #facebook 'APP_ID', 'APP_SECRET'
+    config.app_id = "299434100154215"
+    config.app_secret = "2f65288b03d6fc6138d472c65e8e28ed"
   end
 end

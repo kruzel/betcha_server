@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(:version => 20120724192844) do
     t.string   "family_name"
     t.string   "full_name"
     t.boolean  "is_app_installed"
-    t.integer  "gender"
+    t.string   "gender"
     t.string   "locale"
     t.string   "profile_pic_url"
     t.string   "provider"

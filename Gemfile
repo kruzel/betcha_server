@@ -16,6 +16,8 @@ gem 'annotate', '~> 2.4.1.beta'
 gem "thin", "1.3.1"
 gem "eventmachine", "1.0.0.beta.4.1"
 
+gem "fbgraph"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

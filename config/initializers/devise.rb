@@ -207,7 +207,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   require "omniauth-facebook"
-  config.omniauth :facebook, "299434100154215", "2f65288b03d6fc6138d472c65e8e28ed",
+  config.omniauth :facebook, BetchaServer::Application::config.app_id, BetchaServer::Application::config.app_secret,
       #:client_options => {:ssl => {:ca_path => '#{Rails.root}\config\cert\cacert.pem'}} 
       :scope => 'email, read_friendlists, friends_about_me' , 
       :display => 'popup'

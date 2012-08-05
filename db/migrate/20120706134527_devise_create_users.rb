@@ -37,7 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :family_name
       t.string :full_name
       t.boolean :is_app_installed
-      t.integer :gender #usage: http://www.kensodev.com/tag/rails/
+      t.string :gender
       t.string :locale
       t.string :profile_pic_url     
       t.string :provider
