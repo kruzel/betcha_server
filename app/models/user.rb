@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable,
-  # :lockable, :timeoutable and 
+  # :lockable, :timeoutable , :validatable 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable, :omniauthable
+         :recoverable, :rememberable, :trackable, :token_authenticatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
@@ -13,6 +13,12 @@ class User < ActiveRecord::Base
   has_many :bets , :dependent => :destroy
   has_many :predictions , :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy
+  
+  validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :if => :email_changed?
+  validates_format_of :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_presence_of   :password, :on=>:create
+  validates_confirmation_of   :password, :on=>:create
+  validates_length_of :password, :within => Devise.password_length, :allow_blank => true
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first

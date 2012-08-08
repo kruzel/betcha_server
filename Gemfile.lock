@@ -25,6 +25,9 @@ GEM
       activesupport (= 3.1.0)
       arel (~> 2.2.1)
       tzinfo (~> 0.3.29)
+    activerecord-import (0.2.10)
+      activerecord (~> 3.0)
+      activerecord (~> 3.0)
     activeresource (3.1.0)
       activemodel (= 3.1.0)
       activesupport (= 3.1.0)
@@ -178,6 +181,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-import
   annotate (~> 2.4.1.beta)
   coffee-rails (~> 3.1.0)
   devise
