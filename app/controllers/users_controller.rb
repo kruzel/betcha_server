@@ -1,4 +1,4 @@
-require 'facebook_utils'
+#require 'facebook_utils'
 
 class UsersController < ApplicationController
   
@@ -47,14 +47,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.provider = params[:provider] unless params[:provider].nil?
+    @access_token = params[:access_token]
     
     success = false
     
     if @user.provider == "facebook"
       unless params[:access_token].nil?
-        success = FacebookUtils::get_facebook_info @user, params[:access_token]
+        fb_utils = FacebookUtils.new(@user,@access_token)
+        success = fb_utils.get_facebook_info
         if success
-          FacebookUtils::add_facebook_friends @user, params[:access_token]
+          fb_utils.add_facebook_friends
         end
       end
     else #email provider
@@ -102,5 +104,6 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :ok }
     end
-  end
+  end 
+
 end
