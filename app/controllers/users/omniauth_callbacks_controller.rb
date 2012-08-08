@@ -6,7 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user.full_name = request.env["omniauth.auth"]["info"]["name"]
     @user.provider = "facebook"
     @user.uid = request.env["omniauth.auth"]["uid"]
-    @user.expires_at = request.env["omniauth.auth"]["credentials"]["expires_at"]
+    @user.expires_at = Time.at(request.env["omniauth.auth"]["credentials"]["expires_at"]).to_datetime
     @user.expires = request.env["omniauth.auth"]["credentials"]["expires"]
     @user.gender = request.env["omniauth.auth"]["extra"]["gender"]
     @user.locale = request.env["omniauth.auth"]["extra"]["locale"]

@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
                           expires: auth.credentials.expires,
                           password:Devise.friendly_token[0,20]
                           )
+                          
+        fb_utils = FacebookUtils.new(user,auth.credentials.token)
+        success = fb_utils.get_facebook_info
+        if success
+          fb_utils.add_facebook_friends
+        end
     end
     user
   end
