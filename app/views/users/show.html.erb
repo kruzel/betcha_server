@@ -12,4 +12,9 @@
 
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%#= link_to 'Back', users_path %>
+
+<%= render :template  => 'badges/show_for_user' %>
+<%= render :template  => 'user_stats/show_for_user'  %>
+<%= render :template  => 'bets/show_for_user'  %>
+<%= render :template  => 'friends/show_for_user'  %>

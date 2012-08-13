@@ -1,0 +1,33 @@
+<h1>Listing user_stats</h1>
+
+<table>
+  <tr>
+    <th>Wins</th>
+    <th>Consecuitive wins</th>
+    <th>Same reward wins</th>
+    <th>Invites</th>
+    <th>Bet creations</th>
+    <th>Participations</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_stats.each do |user_stat| %>
+  <tr>
+    <td><%= user_stat.wins %></td>
+    <td><%= user_stat.consecuitive_wins %></td>
+    <td><%= user_stat.same_reward_wins %></td>
+    <td><%= user_stat.invites %></td>
+    <td><%= user_stat.bet_creations %></td>
+    <td><%= user_stat.participations %></td>
+    <td><%= link_to 'Show', user_stat %></td>
+    <td><%= link_to 'Edit', edit_user_stat_path(user_stat) %></td>
+    <td><%= link_to 'Destroy', user_stat, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User stat', new_user_stat_path %>

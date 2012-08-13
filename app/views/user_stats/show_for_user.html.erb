@@ -1,0 +1,29 @@
+<h1>Listing user_stats</h1>
+
+<table>
+  <tr>
+    <th>Wins</th>
+    <th>Consecuitive wins</th>
+    <th>Same reward wins</th>
+    <th>Invites</th>
+    <th>Bet creations</th>
+    <th>Participations</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_stats.each do |user_stat| %>
+  <tr>
+    <td><%= user_stat.wins %></td>
+    <td><%= user_stat.consecuitive_wins %></td>
+    <td><%= user_stat.same_reward_wins %></td>
+    <td><%= user_stat.invites %></td>
+    <td><%= user_stat.bet_creations %></td>
+    <td><%= user_stat.participations %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

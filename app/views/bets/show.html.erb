@@ -31,7 +31,7 @@
 </p>
 
 <%= link_to 'Edit', edit_bet_path(@bet) %> |
-<%= link_to 'Back', bets_path %>
+<%= link_to 'Back', user_path(current_user) %>
 
 <%= render :template  => 'predictions/index'  %>
 <%= render :template  => 'chat_messages/index'  %>

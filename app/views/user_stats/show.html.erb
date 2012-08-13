@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Wins:</b>
+  <%= @user_stat.wins %>
+</p>
+
+<p>
+  <b>Consecuitive wins:</b>
+  <%= @user_stat.consecuitive_wins %>
+</p>
+
+<p>
+  <b>Same reward wins:</b>
+  <%= @user_stat.same_reward_wins %>
+</p>
+
+<p>
+  <b>Invites:</b>
+  <%= @user_stat.invites %>
+</p>
+
+<p>
+  <b>Bet creations:</b>
+  <%= @user_stat.bet_creations %>
+</p>
+
+<p>
+  <b>Participations:</b>
+  <%= @user_stat.participations %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_stat_path(@user_stat) %> |
+<%= link_to 'Back', user_stats_path %>

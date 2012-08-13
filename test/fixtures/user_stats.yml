@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  wins: 1
+  consecuitive_wins: 1
+  same_reward_wins: 1
+  invites: 1
+  bet_creations: 1
+  participations: 1
+
+two:
+  wins: 1
+  consecuitive_wins: 1
+  same_reward_wins: 1
+  invites: 1
+  bet_creations: 1
+  participations: 1

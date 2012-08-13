@@ -19,7 +19,11 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-
+    @badges = Badge.find_all_by_user_id(@user.id)
+    @user_stats = UserStat.find_all_by_user_id (@user.id)
+    @friends = Friend.get_user_friends(@user.id)
+    @bets = Bet.find_all_by_user_id(@user.id)
+     
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -66,6 +70,8 @@ class UsersController < ApplicationController
       @user.full_name = @user.email if @user.full_name.nil?
       success = @user.save
     end    
+    
+    user_stat = UserStat.create!(user_id:@user.id )
     
     respond_to do |format|
       if success

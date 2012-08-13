@@ -3,7 +3,7 @@ class BetsController < ApplicationController
   
   # GET /bets
   # GET /bets.json
-  def index #TODO allow only to admin
+  def index
     @bets = Bet.all
 
     respond_to do |format|

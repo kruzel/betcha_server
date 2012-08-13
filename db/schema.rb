@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808044959) do
+ActiveRecord::Schema.define(:version => 20120812193046) do
+
+  create_table "badges", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "badges", ["user_id"], :name => "index_badges_on_user_id"
 
   create_table "bets", :force => true do |t|
     t.integer  "user_id"
@@ -77,8 +86,22 @@ ActiveRecord::Schema.define(:version => 20120808044959) do
   add_index "predictions", ["bet_id"], :name => "index_predictions_on_bet_id"
   add_index "predictions", ["user_id"], :name => "index_predictions_on_user_id"
 
+  create_table "user_stats", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "wins",              :default => 0
+    t.integer  "consecuitive_wins", :default => 0
+    t.integer  "same_reward_wins",  :default => 0
+    t.integer  "invites",           :default => 0
+    t.integer  "bet_creations",     :default => 0
+    t.integer  "participations",    :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_stats", ["user_id"], :name => "index_user_stats_on_user_id"
+
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => ""
+    t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -101,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20120808044959) do
     t.string   "access_token"
     t.datetime "expires_at"
     t.boolean  "expires"
+    t.integer  "coins"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

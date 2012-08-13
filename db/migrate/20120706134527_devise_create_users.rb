@@ -46,6 +46,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime :expires_at
       t.boolean :expires 
       
+      t.integer :coins
+      
       t.timestamps
     end
 

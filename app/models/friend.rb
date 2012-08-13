@@ -1,6 +1,17 @@
 class Friend < ActiveRecord::Base
   belongs_to :user
   belongs_to :friend, :class_name => "User"
+  
+  def self.get_user_friends(user_id)
+    friends_ids = Friend.find_all_by_user_id (user_id)
+    @friends = Array.new
+    friends_ids.each do |friend|
+        friend_user = User.find(friend.friend_id)
+        @friends << friend_user 
+    end unless (friends_ids.nil?)
+    return @friends
+  end
+  
 end
 # == Schema Information
 #

@@ -8,11 +8,13 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
           :first_name, :family_name , :full_name, :is_app_installed, :gender, :locale, 
-          :profile_pic_url, :provider, :uid, :access_token, :expires_at, :expires
+          :profile_pic_url, :provider, :uid, :access_token, :expires_at, :expires , :coins
   
   has_many :bets , :dependent => :destroy
   has_many :predictions , :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy
+  has_many :badges, :dependent => :destroy
+  has_one :user_stats, :dependent => :destroy
   
   validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :if => :email_changed?
   validates_format_of :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
@@ -33,11 +35,12 @@ class User < ActiveRecord::Base
                           password:Devise.friendly_token[0,20]
                           )
                           
-        fb_utils = FacebookUtils.new(user,auth.credentials.token)
-        success = fb_utils.get_facebook_info
-        if success
-          fb_utils.add_facebook_friends
-        end
+      user_stat = UserStat.create!(user_id:user.id )
+      fb_utils = FacebookUtils.new(user,auth.credentials.token)
+      success = fb_utils.get_facebook_info
+      if success
+        fb_utils.add_facebook_friends
+      end
     end
     user
   end

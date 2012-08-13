@@ -1,11 +1,25 @@
 BetchaServer::Application.routes.draw do
   
-  devise_for :users, :path => 'accounts', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :path => 'users', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } #, :path => 'accounts'
 
   resources :tokens
   
   resources :users do
-    resources :friends
+    resources :friends do
+      collection do
+        get :show_for_user
+      end
+    end
+    resources :user_stats do
+      collection do
+        get :show_for_user
+      end
+    end
+    resources :badges do
+      collection do
+        get :show_for_user
+      end
+    end
   end
   
   resources :bets do
@@ -78,7 +92,7 @@ BetchaServer::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'bets#show_for_user'
+  root :to => 'bets#index'
 
   # See how all your routes lay out with "rake routes"
 
