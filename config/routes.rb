@@ -1,6 +1,6 @@
 BetchaServer::Application.routes.draw do
   
-  devise_for :users, :path => 'users', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } #, :path => 'accounts'
+  devise_for :users, :path => 'accounts', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } #, :path => 'accounts'
 
   resources :tokens
   
