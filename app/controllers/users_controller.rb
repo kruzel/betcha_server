@@ -50,9 +50,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    @user.provider = params[:provider] unless params[:provider].nil?
-    @access_token = params[:access_token]
-    
+        
     success = false
     
     if @user.provider == "facebook"
@@ -64,14 +62,13 @@ class UsersController < ApplicationController
         end
       end
     else #email provider
-      @user.email = params[:email] unless params[:email].nil?
-      @user.password = params[:password] 
-      @user.full_name = params[:full_name] unless params[:full_name].nil?
       @user.full_name = @user.email if @user.full_name.nil?
-      success = @user.save
     end    
     
-    user_stat = UserStat.create!(user_id:@user.id )
+    success = @user.save!
+    if(success)
+      user_stat = UserStat.create!(user_id:@user.id )
+    end
     
     respond_to do |format|
       if success

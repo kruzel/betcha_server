@@ -62,14 +62,14 @@ class PredictionsController < ApplicationController
   def create
     @prediction = Prediction.new(params[:prediction])   
     @prediction.user = current_user
-    @prediction.bet_id = params[:bet_id]
-    @prediction.prediction = params[:prediction] unless request.format=="html"
+#    @prediction.bet_id = params[:bet_id]
+#    @prediction.prediction = params[:prediction] unless request.format=="html"
     @bet = @prediction.bet
 
     respond_to do |format|
       if @prediction.save
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: @prediction, status: :created, location: @prediction }
+        format.json { render json: @prediction, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
