@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
           :first_name, :family_name , :full_name, :is_app_installed, :gender, :locale, 
-          :profile_pic_url, :provider, :uid, :access_token, :expires_at, :expires , :coins
+          :profile_pic_url, :provider, :uid, :access_token, :expires_at, :expires , :coins, :id
   
   has_many :bets , :dependent => :destroy
   has_many :predictions , :dependent => :destroy

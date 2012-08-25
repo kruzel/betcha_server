@@ -68,7 +68,7 @@ class ChatMessagesController < ApplicationController
     respond_to do |format|
       if @chat_message.save
         format.html { redirect_to @bet, notice: 'Chat message was successfully created.' }
-        format.json { render json: @chat_message, status: :created, location: @chat_message }
+        format.json { render json: @chat_message, status: :created, location: [@bet,@chat_message] }
       else
         format.html { render action: "new" }
         format.json { render json: @chat_message.errors, status: :unprocessable_entity }
