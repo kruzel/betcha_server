@@ -31,7 +31,7 @@ BetchaServer::Application.routes.draw do
       collection do
         get :show_bet_id
         put :update_list
-        post :create_batch
+        post :send_invites
       end
     end
 

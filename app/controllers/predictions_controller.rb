@@ -77,36 +77,42 @@ class PredictionsController < ApplicationController
     end
   end
 
-  # POST /create_batch.json
-  def create_batch
+  # POST /send_invites.json
+  def send_invites
     success = true
     
-    params[:users].each do |entry|
-          # check if existing user
+    @bet = Bet.find(params[:bet_id])
+    participants = Array.new()
+    
+    params[:users].each do |tmpUser|
+          # check if existing tmpUser
           # if found associate to prediction
-          # otherwise create a new user
-          unless entry[:user_id].nil?
-            @user = User.find(entry[:user_id])
-          end
+          # otherwise create a new tmpUser
+          @user = User.find(tmpUser[:id]) unless tmpUser[:id].nil?
           if @user.nil?
-            @user = User.new()
-            @user.email = entry[:email] unless entry[:email].nil?
-            @user.full_name = entry[:full_name] unless entry[:full_name].nil?
-            @user.provider = entry[:provider] unless entry[:provider].nil?
-            @user.uid = entry[:uid] unless entry[:uid].nil?
-            @user.access_token = entry[:access_token] unless entry[:access_token].nil?
-            @user.gender = entry[:gender] unless entry[:gender].nil?
-            @user.locale = entry[:locale] unless entry[:locale].nil?
-            @user.profile_pic_url = entry[:profile_pic_url] unless entry[:profile_pic_url].nil?
-          
-            @user.ensure_authentication_token
-            unless @user.save
+            @user.provider = tmpUser[:provider] unless tmpUser[:provider].nil?
+            if @user.provider=="email" && !tmpUser[:email].nil?
+              @user =  User.find_by_email(@user.email)
+            end
+            #if its a facebook user, it should already exist
+          end
+            
+          if @user.nil?
+            @user = User.new(tmpUser)
+#            @user.full_name = tmpUser[:full_name] unless tmpUser[:full_name].nil?
+#            @user.uid = tmpUser[:uid] unless tmpUser[:uid].nil?
+#            @user.access_token = tmpUser[:access_token] unless tmpUser[:access_token].nil?
+#            @user.gender = tmpUser[:gender] unless tmpUser[:gender].nil?
+#            @user.locale = tmpUser[:locale] unless tmpUser[:locale].nil?
+#            @user.profile_pic_url = tmpUser[:profile_pic_url] unless tmpUser[:profile_pic_url].nil?
+#            @user.ensure_authentication_token
+            unless @user.save!
               logger.error("User #{@user.email} user acount creation failed")
               next
             end
           end
 
-          # check if current_user and prediction user are friends
+          # check if current_tmpUser and prediction user are friends
           # if not create friend record
           unless @user == current_user
             @friend = Friend.where("user_id = ? AND friend_id = ?", current_user.id, @user.id).first
@@ -120,27 +126,31 @@ class PredictionsController < ApplicationController
             end
           end
       
-          @predictions = Prediction.find_all_by_user_id_and_bet_id entry[:user_id], entry[:bet_id]
+          @predictions = Prediction.find_all_by_user_id_and_bet_id tmpUser[:user_id], params[:bet_id]
           if @predictions.nil? || @predictions.size == 0 
-            @prediction = Prediction.new() #should include user ids for existing users, email or FB ID or both
+            @prediction = Prediction.new() #should include tmpUser ids for existing users, email or FB ID or both
           else
             @prediction = @predictions.first
           end
           
-          @prediction.bet_id = entry[:bet_id]
+          @prediction.bet_id = params[:bet_id]
           @prediction.user = @user
 
-          unless @prediction.save
+          unless @prediction.save!
             success = false
             break
           end
+          
+        BetMailer.initialize(@user, @bet)
+        BetMailer.delay.send_invite.deliver
         
     end
     
+    #send FB invite or email to all participants
     
     respond_to do |format|
       if success
-        format.json { head :ok , status: :created, location: @prediction }
+        format.json { head :ok , status: :created, location: [@bet,@prediction] }
       else
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
       end
