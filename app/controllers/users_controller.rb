@@ -49,27 +49,36 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
-        
     success = false
     
+    @user = User.new(params[:user])
+   
     if @user.provider == "facebook"
-      unless params[:access_token].nil?
-        fb_utils = FacebookUtils.new(@user,@access_token)
-        success = fb_utils.get_facebook_info
-        if success
-          fb_utils.add_facebook_friends
+      found_user = User.find_by_uid(@user.uid)
+      if found_user.nil?
+        unless params[:access_token].nil?
+          fb_utils = FacebookUtils.new(@user,@access_token)
+          success = fb_utils.get_facebook_info
+          if success
+            fb_utils.add_facebook_friends
+          end
         end
       end
     else #email provider
-      @user.full_name = @user.email if @user.full_name.nil?
+      found_user = User.find_by_email(@user.email)
     end    
-    
-    @user.password =  Devise.friendly_token[0,20] if @user.password.nil?
-    
-    success = @user.save!
-    if(success)
-      user_stat = UserStat.create!(user_id:@user.id )
+       
+    if found_user.nil?
+      if @user.password.nil?
+        @user.password =  Devise.friendly_token[0,20]
+      end
+      success = @user.save!
+      if(success)
+        user_stat = UserStat.create!(user_id:@user.id )
+      end
+    else
+      @user = found_user
+      success = true
     end
     
     respond_to do |format|

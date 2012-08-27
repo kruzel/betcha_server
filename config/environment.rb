@@ -36,7 +36,7 @@ module ActiveSupport
 #  :port                 => 587,
 #  :domain               => 'www.dropabet.com',
 #  :user_name            => 'marketing',
-#  :password             => 'kruz6142',
+#  :password             => 'dropabet',
 #  :authentication       => 'plain',
 #  :enable_starttls_auto => true  }
 end
