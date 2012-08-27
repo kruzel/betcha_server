@@ -80,15 +80,15 @@ class PredictionsController < ApplicationController
   # POST /send_invites.json
   def send_invites
     success = true
-    new_users = Array.new
-    
+   
     @bet = Bet.find(params[:bet_id])
        
     params[:users].each do |tmpUser|
       # check if existing tmpUser
       # if found associate to prediction
       # otherwise create a new tmpUser
-      @user = User.find(tmpUser[:id]) unless tmpUser[:id].nil?
+      id = tmpUser[:user][:id]
+      @user = User.find(id) unless id.nil?
 
       unless @user.nil?
         # check if current_tmpUser and prediction user are friends
@@ -120,8 +120,8 @@ class PredictionsController < ApplicationController
           break
         end
 
-        @mailerJob = BetMailerJob.new(@user, @bet)
-        @mailerJob.delay.send_invite
+        @mailerJob = BetMailerJob.new(@bet,@user)
+        @mailerJob.delay.send_invites
       end
     end
     

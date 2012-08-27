@@ -2,14 +2,12 @@
 # and open the template in the editor.
 
 class BetMailerJob
-  def initialize(user, bet)
-    @user = user
+  def initialize(bet,user)
     @bet = bet
+    @user = user
   end
   
-  def send_invite
+  def send_invites
     BetMailer.send_invite(@user,@bet).deliver
   end
-  handle_asynchronously :send_invite
-  
 end
