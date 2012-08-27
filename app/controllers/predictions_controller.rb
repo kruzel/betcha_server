@@ -80,25 +80,18 @@ class PredictionsController < ApplicationController
   # POST /send_invites.json
   def send_invites
     success = true
+    new_users = Array.new
     
     @bet = Bet.find(params[:bet_id])
-    participants = Array.new()
-    
+       
     params[:users].each do |tmpUser|
           # check if existing tmpUser
           # if found associate to prediction
           # otherwise create a new tmpUser
           @user = User.find(tmpUser[:id]) unless tmpUser[:id].nil?
+                      
           if @user.nil?
-            @user.provider = tmpUser[:provider] unless tmpUser[:provider].nil?
-            if @user.provider=="email" && !tmpUser[:email].nil?
-              @user =  User.find_by_email(@user.email)
-            end
-            #if its a facebook user, it should already exist
-          end
-            
-          if @user.nil?
-            @user = User.new(tmpUser)
+            @user = User.new(tmpUser[:user])
 #            @user.full_name = tmpUser[:full_name] unless tmpUser[:full_name].nil?
 #            @user.uid = tmpUser[:uid] unless tmpUser[:uid].nil?
 #            @user.access_token = tmpUser[:access_token] unless tmpUser[:access_token].nil?
@@ -106,6 +99,7 @@ class PredictionsController < ApplicationController
 #            @user.locale = tmpUser[:locale] unless tmpUser[:locale].nil?
 #            @user.profile_pic_url = tmpUser[:profile_pic_url] unless tmpUser[:profile_pic_url].nil?
 #            @user.ensure_authentication_token
+            @user.password =  Devise.friendly_token[0,20]
             unless @user.save!
               logger.error("User #{@user.email} user acount creation failed")
               next
@@ -126,7 +120,7 @@ class PredictionsController < ApplicationController
             end
           end
       
-          @predictions = Prediction.find_all_by_user_id_and_bet_id tmpUser[:user_id], params[:bet_id]
+          @predictions = Prediction.find_all_by_user_id_and_bet_id(@user.id, params[:bet_id])
           if @predictions.nil? || @predictions.size == 0 
             @prediction = Prediction.new() #should include tmpUser ids for existing users, email or FB ID or both
           else
@@ -140,9 +134,9 @@ class PredictionsController < ApplicationController
             success = false
             break
           end
-          
-        BetMailer.initialize(@user, @bet)
-        BetMailer.delay.send_invite.deliver
+      
+        @mailerJob = BetMailerJob.new(@user, @bet)
+        @mailerJob.delay.send_invite
         
     end
     
