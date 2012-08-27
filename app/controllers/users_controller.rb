@@ -65,6 +65,8 @@ class UsersController < ApplicationController
       @user.full_name = @user.email if @user.full_name.nil?
     end    
     
+    @user.password =  Devise.friendly_token[0,20] if @user.password.nil?
+    
     success = @user.save!
     if(success)
       user_stat = UserStat.create!(user_id:@user.id )
@@ -108,5 +110,7 @@ class UsersController < ApplicationController
       format.json { head :ok }
     end
   end 
+  
+  # TODO add User::createBatch(<List> users) + rest api
 
 end

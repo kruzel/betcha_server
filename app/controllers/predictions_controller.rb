@@ -85,59 +85,44 @@ class PredictionsController < ApplicationController
     @bet = Bet.find(params[:bet_id])
        
     params[:users].each do |tmpUser|
-          # check if existing tmpUser
-          # if found associate to prediction
-          # otherwise create a new tmpUser
-          @user = User.find(tmpUser[:id]) unless tmpUser[:id].nil?
-                      
-          if @user.nil?
-            @user = User.new(tmpUser[:user])
-#            @user.full_name = tmpUser[:full_name] unless tmpUser[:full_name].nil?
-#            @user.uid = tmpUser[:uid] unless tmpUser[:uid].nil?
-#            @user.access_token = tmpUser[:access_token] unless tmpUser[:access_token].nil?
-#            @user.gender = tmpUser[:gender] unless tmpUser[:gender].nil?
-#            @user.locale = tmpUser[:locale] unless tmpUser[:locale].nil?
-#            @user.profile_pic_url = tmpUser[:profile_pic_url] unless tmpUser[:profile_pic_url].nil?
-#            @user.ensure_authentication_token
-            @user.password =  Devise.friendly_token[0,20]
-            unless @user.save!
-              logger.error("User #{@user.email} user acount creation failed")
-              next
+      # check if existing tmpUser
+      # if found associate to prediction
+      # otherwise create a new tmpUser
+      @user = User.find(tmpUser[:id]) unless tmpUser[:id].nil?
+
+      unless @user.nil?
+        # check if current_tmpUser and prediction user are friends
+        # if not create friend record
+        unless @user == current_user
+          @friend = Friend.where("user_id = ? AND friend_id = ?", current_user.id, @user.id).first
+          if @friend.nil?
+            @friend = Friend.new()
+            @friend.user = current_user
+            @friend.friend_id = @user.id
+            unless @friend.save
+              logger.error("User #{@user.email} friendship creation failed")
             end
           end
+        end
 
-          # check if current_tmpUser and prediction user are friends
-          # if not create friend record
-          unless @user == current_user
-            @friend = Friend.where("user_id = ? AND friend_id = ?", current_user.id, @user.id).first
-            if @friend.nil?
-              @friend = Friend.new()
-              @friend.user = current_user
-              @friend.friend_id = @user.id
-              unless @friend.save
-                logger.error("User #{@user.email} friendship creation failed")
-              end
-            end
-          end
-      
-          @predictions = Prediction.find_all_by_user_id_and_bet_id(@user.id, params[:bet_id])
-          if @predictions.nil? || @predictions.size == 0 
-            @prediction = Prediction.new() #should include tmpUser ids for existing users, email or FB ID or both
-          else
-            @prediction = @predictions.first
-          end
-          
-          @prediction.bet_id = params[:bet_id]
-          @prediction.user = @user
+        @predictions = Prediction.find_all_by_user_id_and_bet_id(@user.id, params[:bet_id])
+        if @predictions.nil? || @predictions.size == 0 
+          @prediction = Prediction.new() #should include tmpUser ids for existing users, email or FB ID or both
+        else
+          @prediction = @predictions.first
+        end
 
-          unless @prediction.save!
-            success = false
-            break
-          end
-      
+        @prediction.bet_id = params[:bet_id]
+        @prediction.user = @user
+
+        unless @prediction.save!
+          success = false
+          break
+        end
+
         @mailerJob = BetMailerJob.new(@user, @bet)
         @mailerJob.delay.send_invite
-        
+      end
     end
     
     #send FB invite or email to all participants
