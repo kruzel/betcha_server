@@ -6,13 +6,19 @@ class BetMailer < ActionMailer::Base
   #
   #   en.bet_mailer.send_invite.subject
   #
-  def send_invite(user,bet)
+  def send_invite(user,bet,prediction)
     logger.info("Bet #{bet.id} User #{user.email} mail invite")
     
-    subject = user.full_name << " invites you to DropaBet"
-    @url  = "http://www.dropabet.com:3000"
     @user = user 
     @bet = bet
+    
+    subject = user.full_name
+    subject << " invites you to DropaBet"
+    @url = "http://www.dropabet.com:3000/bets/"
+    @url << bet.id.to_s
+    @url << "/predictions/"
+    @url << prediction.id.to_s
+    @url << "/edit"
 
     mail(:to => user.email, :subject => subject)
     

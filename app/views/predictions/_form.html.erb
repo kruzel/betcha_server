@@ -12,10 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user %><br />
-    <%= f.label @prediction.user.full_name %>
-  </div>
-  <div class="field">
     <%= f.label :bet_subject %><br />
     <%= f.label @prediction.bet.subject %>
   </div>
@@ -23,14 +19,7 @@
     <%= f.label :prediction %><br />
     <%= f.text_field :prediction %>
   </div>
-  <div class="field">
-    <%= f.label :result %><br />
-    <%= f.check_box :result %>
-  </div>
-  <div class="field">
-    <%= f.label :user_ack %><br />
-    <%= f.text_field :user_ack %>
-  </div>
+
   <%= hidden_field_tag :bet_id, @prediction.bet.id %>
   <div class="actions">
     <%= f.submit %>

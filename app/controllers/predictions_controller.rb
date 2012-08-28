@@ -1,5 +1,5 @@
 class PredictionsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user! , :except => [:edit,:update]
   
   # GET /predictions
   # GET /predictions.json
@@ -120,7 +120,7 @@ class PredictionsController < ApplicationController
           break
         end
 
-        @mailerJob = BetMailerJob.new(@bet,@user)
+        @mailerJob = BetMailerJob.new(@bet,@user,@prediction)
         @mailerJob.delay.send_invites
       end
     end
