@@ -12,7 +12,7 @@ class BetMailer < ActionMailer::Base
     @user = user 
     @bet = bet
     
-    subject = user.full_name
+    subject = user.full_name.clone
     subject << " invites you to DropaBet"
     @url = "http://www.dropabet.com:3000/bets/"
     @url << bet.id.to_s
