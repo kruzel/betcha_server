@@ -18,7 +18,7 @@ class BetMailer < ActionMailer::Base
     @url << bet.id.to_s
     @url << "/predictions/"
     @url << prediction.id.to_s
-    @url << "/edit"
+    @url << "/submit"
 
     mail(:to => user.email, :subject => subject)
     

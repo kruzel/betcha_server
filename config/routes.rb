@@ -28,6 +28,9 @@ BetchaServer::Application.routes.draw do
     end
 
     resources :predictions do
+      member do
+        get :submit
+      end
       collection do
         get :show_bet_id
         put :update_list

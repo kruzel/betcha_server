@@ -1,5 +1,5 @@
 class PredictionsController < ApplicationController
-  before_filter :authenticate_user! , :except => [:edit,:update]
+  before_filter :authenticate_user! , :except => [:submit,:update]
   
   # GET /predictions
   # GET /predictions.json
@@ -53,6 +53,12 @@ class PredictionsController < ApplicationController
 
   # GET /predictions/1/edit
   def edit
+    @prediction = Prediction.find(params[:id])
+    @bet = @prediction.bet
+  end
+  
+  # GET /predictions/1/submit
+  def submit
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet
   end
