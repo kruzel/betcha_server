@@ -6,9 +6,9 @@ class BetMailer < ActionMailer::Base
   #
   #   en.bet_mailer.send_invite.subject
   #
-  def send_invite(user,bet,prediction)
+  def send_invite(owner,user,bet,prediction)
     logger.info("Bet #{bet.id} User #{user.email} mail invite")
-    
+    @owner = owner
     @user = user 
     @bet = bet
     

@@ -62,12 +62,52 @@ class PredictionsController < ApplicationController
   def create
     @prediction = Prediction.new(params[:prediction])   
     @prediction.user = current_user
-#    @prediction.bet_id = params[:bet_id]
-#    @prediction.prediction = params[:prediction] unless request.format=="html"
-    @bet = @prediction.bet
+    @bet = Bet.find(params[:bet_id])
 
     respond_to do |format|
       if @prediction.save
+        format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
+        format.json { render json: @prediction, status: :created, location: [@bet,@prediction] }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @prediction.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /create_and_invite.json
+  def create_and_invite
+    success = true
+    
+    @prediction = Prediction.new(params[:prediction])   
+    @bet = Bet.find(@prediction.bet_id)
+    @user = User.find(@prediction.user_id)
+
+    # check if @user and prediction user are friends
+    # if not create friend record
+    unless @user == current_user
+      @friend = Friend.where("user_id = ? AND friend_id = ?", current_user.id, @user.id).first
+      if @friend.nil?
+        @friend = Friend.new()
+        @friend.user = current_user
+        @friend.friend_id = @user.id
+        unless @friend.save
+          logger.error("User #{@user.email} friendship creation failed")
+        end
+      end
+    end
+
+    unless @prediction.save!
+      success = false
+    else
+      @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction)
+      @mailerJob.delay.send_invites
+    end
+    
+    #send FB invite or email to all participants
+    
+    respond_to do |format|
+      if success
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
         format.json { render json: @prediction, status: :created, location: [@bet,@prediction] }
       else
