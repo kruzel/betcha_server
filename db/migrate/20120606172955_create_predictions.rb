@@ -3,7 +3,7 @@ class CreatePredictions < ActiveRecord::Migration
     create_table :predictions do |t|
       t.references :user
       t.references :bet
-      t.string :prediction
+      t.string :prediction, :default => ""
       t.boolean :result
       t.string :user_ack
 
