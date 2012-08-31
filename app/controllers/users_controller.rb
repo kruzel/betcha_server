@@ -77,8 +77,13 @@ class UsersController < ApplicationController
         user_stat = UserStat.create!(user_id:@user.id )
       end
     else
-      @user = found_user
-      success = true
+      if found_user.valid_password?(@user.password)
+        @user = found_user
+        success = true
+      else
+        success = false
+      end
+      
     end
     
     respond_to do |format|
