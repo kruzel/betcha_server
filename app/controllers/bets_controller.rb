@@ -103,7 +103,7 @@ class BetsController < ApplicationController
     @bet.destroy
 
     respond_to do |format|
-      format.html { redirect_to bets_url }
+      format.html { redirect_to show_user_path }
       format.json { head :ok }
     end
   end

@@ -3,16 +3,14 @@
 
 class FacebookUtils
     
-    def initialize(user, access_token)
+    def initialize(user)
       @user = user
-      @access_token = access_token
     end
     
     def get_facebook_info
-      fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @access_token)
+      fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
       user_info = fb_client.selection.me.info!
 
-      @user.access_token = @access_token
       @user.email = user_info.email
       @user.full_name = user_info.name
       @user.provider = "facebook"

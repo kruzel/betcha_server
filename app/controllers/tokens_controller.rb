@@ -23,7 +23,12 @@ class TokensController < ApplicationController
       #facebook
       uid = params[:uid]
       access_token = params[:access_token]
-      user = User.find_by_uid(uid)
+      if !uid.nil?
+        user = User.find_by_uid(uid)
+      end
+      if user.nil?
+        user = User.find_by_access_token(access_token)
+      end
       unless user
         logger.info("User #{uid} not found")
         success = false
