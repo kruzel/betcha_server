@@ -25,7 +25,8 @@ class FacebookUtils
     end
   
     def add_facebook_friends
-      fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @access_token)
+      fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
+      
       fb_friends = fb_client.selection.me.friends.info!
 
       fb_friends_ids = Array.new

@@ -55,36 +55,38 @@ class UsersController < ApplicationController
    
     if @user.provider == "facebook"
       if !@user.access_token.nil?
-        found_user = User.find_by_uid(@user.access_token)
+        found_user = User.find_by_access_token(@user.access_token)
       end
-      unless found_user.nil?
+      if found_user.nil?
           fb_utils = FacebookUtils.new(@user)
           success = fb_utils.get_facebook_info
           if success
             fb_utils.add_facebook_friends
           end
+      else
+        success = true
       end
     else #email provider
       found_user = User.find_by_email(@user.email)
-    end    
-       
-    if found_user.nil?
-      if @user.password.nil?
-        @user.password =  Devise.friendly_token[0,20]
-      end
-      success = @user.save!
-      if(success)
-        user_stat = UserStat.create!(user_id:@user.id )
-      end
-    else
-      if found_user.valid_password?(@user.password)
-        @user = found_user
-        success = true
-      else
-        success = false
-      end
       
-    end
+      if found_user.nil?
+        if @user.password.nil?
+          @user.password =  Devise.friendly_token[0,20]
+        end
+        success = @user.save!
+        if(success)
+          user_stat = UserStat.create!(user_id:@user.id )
+        end
+      else
+        if found_user.valid_password?(@user.password)
+          @user = found_user
+          success = true
+        else
+          success = false
+        end
+
+      end
+    end    
     
     respond_to do |format|
       if success
