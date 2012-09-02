@@ -64,6 +64,7 @@ class UsersController < ApplicationController
             fb_utils.add_facebook_friends
           end
       else
+        @user = found_user
         success = true
       end
     else #email provider
