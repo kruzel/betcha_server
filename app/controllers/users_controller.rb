@@ -19,6 +19,17 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+      
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @user }
+    end
+  end
+  
+  # GET /users/1/show_details
+  # GET /users/1/show_details.json
+  def show_details
+    @user = User.find(params[:id])
     @badges = Badge.find_all_by_user_id(@user.id)
     @user_stats = UserStat.find_all_by_user_id (@user.id)
     @friends = Friend.get_user_friends(@user.id)
@@ -63,14 +74,12 @@ class UsersController < ApplicationController
           if success
             fb_utils.add_facebook_friends
           end
-      else
-        @user = found_user
-        success = true
       end
     else #email provider
       found_user = User.find_by_email(@user.email)
-      
-      if found_user.nil?
+    end    
+    
+    if found_user.nil?
         if @user.password.nil?
           @user.password =  Devise.friendly_token[0,20]
         end
@@ -79,15 +88,9 @@ class UsersController < ApplicationController
           user_stat = UserStat.create!(user_id:@user.id )
         end
       else
-        if found_user.valid_password?(@user.password)
-          @user = found_user
-          success = true
-        else
-          success = false
-        end
-
+        @user = found_user
+        success = true
       end
-    end    
     
     respond_to do |format|
       if success

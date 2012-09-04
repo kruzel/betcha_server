@@ -5,6 +5,9 @@ BetchaServer::Application.routes.draw do
   resources :tokens
   
   resources :users do
+    member do
+      get :show_details
+    end
     resources :friends do
       collection do
         get :show_for_user
