@@ -209,7 +209,7 @@ Devise.setup do |config|
   require "omniauth-facebook"
   config.omniauth :facebook, BetchaServer::Application::config.app_id, BetchaServer::Application::config.app_secret,
       #:client_options => {:ssl => {:ca_path => '#{Rails.root}\config\cert\cacert.pem'}} 
-      :scope => 'email, read_friendlists, friends_about_me' , 
+      :scope => 'email, read_friendlists, friends_about_me, xmpp_login' , 
       :display => 'popup'
   
   # ==> Warden configuration
