@@ -107,7 +107,8 @@ class PredictionsController < ApplicationController
       success = false
     else
       @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction)
-      @mailerJob.delay.send_invites
+      #@mailerJob.delay.send_invites
+      @mailerJob.send_invites
     end
     
     #send FB invite or email to all participants
