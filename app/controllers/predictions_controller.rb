@@ -118,7 +118,7 @@ class PredictionsController < ApplicationController
       end
       
       if(@user.provider=="facebook")
-        Jabber.debug=true
+        #Jabber.debug=true
         
         sender_chat_id = "-#{current_user.uid}@chat.facebook.com"
         receiver_chat_id = "-#{@user.uid}@chat.facebook.com"
