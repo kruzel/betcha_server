@@ -30,4 +30,8 @@ module ActiveSupport
     end
   end
   
+  #this is require otherwise delayed jobs fails with NoMethodError due to yaml parser
+  require 'yaml'
+  YAML::ENGINE.yamler = 'psych'
+  
 end

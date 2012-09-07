@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(:version => 20120812193046) do
   create_table "predictions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "bet_id"
-    t.string   "prediction"
+    t.string   "prediction", :default => ""
     t.boolean  "result"
     t.string   "user_ack"
     t.datetime "created_at"
