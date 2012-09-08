@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812193046) do
+ActiveRecord::Schema.define(:version => 20120907195918) do
 
   create_table "badges", :force => true do |t|
     t.integer  "user_id"
@@ -73,6 +73,28 @@ ActiveRecord::Schema.define(:version => 20120812193046) do
   add_index "friends", ["friend_id"], :name => "index_friends_on_friend_id"
   add_index "friends", ["user_id"], :name => "index_friends_on_user_id"
 
+  create_table "gcm_devices", :force => true do |t|
+    t.string   "registration_id",    :null => false
+    t.datetime "last_registered_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gcm_devices", ["registration_id"], :name => "index_gcm_devices_on_registration_id", :unique => true
+
+  create_table "gcm_notifications", :force => true do |t|
+    t.integer  "device_id",        :null => false
+    t.string   "collapse_key"
+    t.text     "data"
+    t.boolean  "delay_while_idle"
+    t.datetime "sent_at"
+    t.integer  "time_to_live"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gcm_notifications", ["device_id"], :name => "index_gcm_notifications_on_device_id"
+
   create_table "predictions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "bet_id"
@@ -101,12 +123,12 @@ ActiveRecord::Schema.define(:version => 20120812193046) do
   add_index "user_stats", ["user_id"], :name => "index_user_stats_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                        :default => "", :null => false
+    t.string   "encrypted_password",           :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -116,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20120812193046) do
     t.string   "family_name"
     t.string   "full_name"
     t.boolean  "is_app_installed"
+    t.string   "push_notifications_device_id"
     t.string   "gender"
     t.string   "locale"
     t.string   "profile_pic_url"

@@ -50,6 +50,7 @@ doc\:rails=
 doc\:reapp=
 doc\:rerails=
 environment=
+gcm\:notifications\:deliver=Deliver all unsent Gcm notifications.
 jobs\:clear=Clear the delayed_job queue.
 jobs\:work=Start a delayed_job worker.
 log\:clear=Truncates all *.log files in log/ to zero bytes

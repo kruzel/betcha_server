@@ -37,6 +37,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :family_name
       t.string :full_name
       t.boolean :is_app_installed
+      t.string :push_notifications_device_id #for android gcm for now
+      t.string :device_type #android, ios, windows
       t.string :gender
       t.string :locale
       t.string :profile_pic_url     

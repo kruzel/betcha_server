@@ -112,6 +112,9 @@ class PredictionsController < ApplicationController
         url << @prediction.id.to_s
         url << "/submit"
         
+      message_body = "Hey " << @user.full_name << ", I bet you that " << @bet.subject << ", losers buy winners a " << @bet.reward << "\n\n " << url << "\n\nLink to AppStore ... \n\nLink to GooglePlay"
+      message_subject = current_user.uid << "invites you to DropaBet"
+        
       if(@user.email.nil? || @user.email.length>0)
         @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction, url)
         @mailerJob.delay.send_invites
@@ -122,9 +125,7 @@ class PredictionsController < ApplicationController
         
         sender_chat_id = "-#{current_user.uid}@chat.facebook.com"
         receiver_chat_id = "-#{@user.uid}@chat.facebook.com"
-        message_body = "Hey " << @user.full_name << ", I bet you that " << @bet.subject << ", losers buy winners a " << @bet.reward << "\n\n " << url << "\n\nLink to AppStore ... \n\nLink to GooglePlay"
-        message_subject = current_user.uid << "invites you to DropaBet"
-
+        
         jabber_message = Jabber::Message.new(receiver_chat_id, message_body)
         jabber_message.subject = message_subject
 
@@ -138,6 +139,15 @@ class PredictionsController < ApplicationController
       end 
       
       #push notification
+      if(@user.is_app_installed)
+        device = Gcm::Device.create(:registration_id => @user.push_notifications_device_id)
+        notification = Gcm::Notification.new
+        notification.device = device
+        notification.collapse_key = "updates_available"
+        notification.delay_while_idle = true
+        notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:message_text => message_body}}
+        notification.save
+      end
     end
     
     respond_to do |format|
