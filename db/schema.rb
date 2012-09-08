@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20120907195918) do
     t.string   "full_name"
     t.boolean  "is_app_installed"
     t.string   "push_notifications_device_id"
+    t.string   "device_type"
     t.string   "gender"
     t.string   "locale"
     t.string   "profile_pic_url"

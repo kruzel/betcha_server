@@ -113,7 +113,8 @@ class PredictionsController < ApplicationController
         url << "/submit"
         
       message_body = "Hey " << @user.full_name << ", I bet you that " << @bet.subject << ", losers buy winners a " << @bet.reward << "\n\n " << url << "\n\nLink to AppStore ... \n\nLink to GooglePlay"
-      message_subject = current_user.uid << "invites you to DropaBet"
+      message_subject = current_user.full_name
+      message_subject << "invites you to DropaBet"
         
       if(@user.email.nil? || @user.email.length>0)
         @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction, url)
@@ -139,8 +140,8 @@ class PredictionsController < ApplicationController
       end 
       
       #push notification
-      if(@user.is_app_installed)
-        device = Gcm::Device.create(:registration_id => @user.push_notifications_device_id)
+      if @user.is_app_installed && !@user.push_notifications_device_id.nil? && @user.push_notifications_device_id.length > 0
+        device = Gcm::Device.where("registration_id = ?", @user.push_notifications_device_id).first
         notification = Gcm::Notification.new
         notification.device = device
         notification.collapse_key = "updates_available"

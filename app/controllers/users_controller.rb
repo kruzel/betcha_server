@@ -107,9 +107,14 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    success = @user.update_attributes(params[:user])
+    
+    if success && @user.is_app_installed && !@user.push_notifications_device_id.nil? && @user.push_notifications_device_id.length > 0
+        Gcm::Device.create(:registration_id => @user.push_notifications_device_id)
+    end
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if success
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :ok }
       else
