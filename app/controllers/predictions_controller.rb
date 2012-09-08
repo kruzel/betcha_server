@@ -139,14 +139,14 @@ class PredictionsController < ApplicationController
         client.close
       end 
       
-      #push notification
+      #push notification to android thru gcm
       if @user.is_app_installed && !@user.push_notifications_device_id.nil? && @user.push_notifications_device_id.length > 0
         device = Gcm::Device.where("registration_id = ?", @user.push_notifications_device_id).first
         notification = Gcm::Notification.new
         notification.device = device
         notification.collapse_key = "updates_available"
         notification.delay_while_idle = true
-        notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:message_text => message_body}}
+        notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:owner_id => current_user.id, :user_id => @user.id , :bet_id => @bet.id, :prediction_id => @prediction.id}}
         notification.save
       end
     end
