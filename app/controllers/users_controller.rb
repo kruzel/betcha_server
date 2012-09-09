@@ -60,7 +60,8 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    success = false
+    created = false
+    password_ok = false
     
     @user = User.new(params[:user])
    
@@ -70,8 +71,8 @@ class UsersController < ApplicationController
       end
       if found_user.nil?
           fb_utils = FacebookUtils.new(@user)
-          success = fb_utils.get_facebook_info
-          if success
+          created = fb_utils.get_facebook_info
+          if created
             fb_utils.add_facebook_friends
           end
       end
@@ -79,26 +80,42 @@ class UsersController < ApplicationController
       found_user = User.find_by_email(@user.email)
     end    
     
-    if found_user.nil?
+    if found_user.nil? #its a new user
         if @user.password.nil?
           @user.password =  Devise.friendly_token[0,20]
+          password_ok = true
         end
-        success = @user.save!
-        if(success)
+        created = @user.save!
+        if(created)
           user_stat = UserStat.create!(user_id:@user.id )
         end
-      else
-        @user = found_user
-        success = true
+    else
+      #its an existing user
+      #check password, if failed return proper response
+      password_ok = found_user.valid_password?(@user.password)
+      unless password_ok
+        found_user.send_reset_password_instructions
       end
+      @user = found_user
+    end
     
     respond_to do |format|
-      if success
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+      if !found_user.nil? #its an existing user
+        if !password_ok
+          format.html { redirect_to @user, notice: 'User exist, bad password.' }
+          format.json { render json: @user, status: :unauthorized, notice: 'User exist, bad password.' }
+        else
+          format.html { redirect_to @user, notice: 'User was successfully created.' }
+          format.json { render json: @user, status: :created, location: @user }
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if created
+          format.html { redirect_to @user, notice: 'User was successfully created.' }
+          format.json { render json: @user, status: :created, location: @user }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

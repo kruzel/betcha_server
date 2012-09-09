@@ -146,7 +146,7 @@ class PredictionsController < ApplicationController
         notification.device = device
         notification.collapse_key = "updates_available"
         notification.delay_while_idle = true
-        notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:owner_id => current_user.id, :user_id => @user.id , :bet_id => @bet.id, :prediction_id => @prediction.id}}
+        notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:type => "invite", :owner_id => current_user.id, :user_id => @user.id , :bet_id => @bet.id, :prediction_id => @prediction.id}}
         notification.save
       end
     end
