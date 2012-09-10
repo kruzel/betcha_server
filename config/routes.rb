@@ -5,7 +5,8 @@ BetchaServer::Application.routes.draw do
   resources :tokens
   
   resources :users do
-    member do
+    collection do
+      get :show_by_email
       get :show_details
     end
     resources :friends do
@@ -99,7 +100,7 @@ BetchaServer::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'bets#index'
+  root :to => 'users#show_details'
 
   # See how all your routes lay out with "rake routes"
 

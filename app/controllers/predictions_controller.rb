@@ -29,7 +29,7 @@ class PredictionsController < ApplicationController
   # GET /predictions/show_bet_id.json
   def show_bet_id
     @predictions = Prediction.where("bet_id = ?",params[:bet_id])
-    @bet = @predictions.first.bet
+    @bet = @predictions.first unless @predictions.nil?
     
     respond_to do |format|
       format.html # index.html.erb
@@ -116,29 +116,6 @@ class PredictionsController < ApplicationController
       message_subject = current_user.full_name
       message_subject << "invites you to DropaBet"
         
-      if(@user.email.nil? || @user.email.length>0)
-        @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction, url)
-        @mailerJob.delay.send_invites
-      end
-      
-      if(@user.provider=="facebook")
-        #Jabber.debug=true
-        
-        sender_chat_id = "-#{current_user.uid}@chat.facebook.com"
-        receiver_chat_id = "-#{@user.uid}@chat.facebook.com"
-        
-        jabber_message = Jabber::Message.new(receiver_chat_id, message_body)
-        jabber_message.subject = message_subject
-
-        client = Jabber::Client.new(Jabber::JID.new(sender_chat_id))
-        client.connect
-        client.auth_sasl(Jabber::SASL::XFacebookPlatform.new(client,
-          BetchaServer::Application::config.app_id, current_user.access_token,
-          BetchaServer::Application::config.app_secret), nil)
-        client.send(jabber_message)
-        client.close
-      end 
-      
       #push notification to android thru gcm
       if @user.is_app_installed && !@user.push_notifications_device_id.nil? && @user.push_notifications_device_id.length > 0
         device = Gcm::Device.where("registration_id = ?", @user.push_notifications_device_id).first
@@ -148,7 +125,33 @@ class PredictionsController < ApplicationController
         notification.delay_while_idle = true
         notification.data = {:registration_ids => [@user.push_notifications_device_id], :data => {:type => "invite", :owner_id => current_user.id, :user_id => @user.id , :bet_id => @bet.id, :prediction_id => @prediction.id}}
         notification.save
+      else
+      
+        if(@user.email.nil? || @user.email.length>0)
+          @mailerJob = BetMailerJob.new(current_user,@bet,@user,@prediction, url)
+          @mailerJob.delay.send_invites
+        end
+
+        if(@user.provider=="facebook")
+          #Jabber.debug=true
+
+          sender_chat_id = "-#{current_user.uid}@chat.facebook.com"
+          receiver_chat_id = "-#{@user.uid}@chat.facebook.com"
+
+          jabber_message = Jabber::Message.new(receiver_chat_id, message_body)
+          jabber_message.subject = message_subject
+
+          client = Jabber::Client.new(Jabber::JID.new(sender_chat_id))
+          client.connect
+          client.auth_sasl(Jabber::SASL::XFacebookPlatform.new(client,
+            BetchaServer::Application::config.app_id, current_user.access_token,
+            BetchaServer::Application::config.app_secret), nil)
+          client.send(jabber_message)
+          client.close
+        end 
+      
       end
+      
     end
     
     respond_to do |format|

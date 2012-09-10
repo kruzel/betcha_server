@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:create]
+  before_filter :authenticate_user!, :except => [:create, :show_by_email]
   
   # GET /users
   # GET /users.json
@@ -26,10 +26,24 @@ class UsersController < ApplicationController
     end
   end
   
+  # GET /users/show_by_email
+  # GET /users/show_by_email.json
+  def show_by_email
+    users = User.find_all_by_email (params[:email])
+    unless users.nil?
+      @user = users.first
+    end
+      
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @user }
+    end
+  end
+  
   # GET /users/1/show_details
   # GET /users/1/show_details.json
   def show_details
-    @user = User.find(params[:id])
+    @user = current_user
     @badges = Badge.find_all_by_user_id(@user.id)
     @user_stats = UserStat.find_all_by_user_id (@user.id)
     @friends = Friend.get_user_friends(@user.id)
