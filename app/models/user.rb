@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :predictions , :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy
   has_many :badges, :dependent => :destroy
-  has_one :user_stats, :dependent => :destroy
+  has_one :user_stat, :dependent => :destroy
   
   validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :if => :email_changed?
   validates_format_of :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?

@@ -13,9 +13,9 @@ class ChatMessagesController < ApplicationController
     end
   end
   
-  # GET /chat_messages_for_bet
-  # GET /chat_messages_for_bet.json
-  def chat_messages_for_bet 
+  # GET bets/:bet_id/chat_messages_for_bet
+  # GET bets/:bet_id/chat_messages_for_bet.json
+  def show_chat_messages_for_bet 
     @chat_messages = ChatMessage.where("bet_id = ? AND created_at > ?",params[:bet_id], params[:newer_than])
     @bet = @chat_messages.first.bet
     
@@ -25,8 +25,8 @@ class ChatMessagesController < ApplicationController
     end
   end
 
-  # GET /chat_messages/1
-  # GET /chat_messages/1.json
+  # GET bets/:bet_id/chat_messages/1
+  # GET bets/:bet_id/chat_messages/1.json
   def show
     @chat_message = ChatMessage.find(params[:id])
     @bet = @chat_message.bet
@@ -37,8 +37,8 @@ class ChatMessagesController < ApplicationController
     end
   end
 
-  # GET /chat_messages/new
-  # GET /chat_messages/new.json
+  # GET bets/:bet_id/chat_messages/new
+  # GET bets/:bet_id/chat_messages/new.json
   def new
     @chat_message = ChatMessage.new
     @chat_message.user = current_user
@@ -51,14 +51,14 @@ class ChatMessagesController < ApplicationController
     end
   end
 
-  # GET /chat_messages/1/edit
+  # GET bets/:bet_id/chat_messages/1/edit
   def edit
     @chat_message = ChatMessage.find(params[:id])
     @bet = @chat_message.bet
   end
 
-  # POST /chat_messages
-  # POST /chat_messages.json
+  # POST bets/:bet_id/chat_messages
+  # POST bets/:bet_id/chat_messages.json
   def create
     @chat_message = ChatMessage.new(params[:chat_message])
     @chat_message.user = current_user
@@ -76,8 +76,8 @@ class ChatMessagesController < ApplicationController
     end
   end
 
-  # PUT /chat_messages/1
-  # PUT /chat_messages/1.json
+  # PUT bets/:bet_id/chat_messages/1
+  # PUT bets/:bet_id/chat_messages/1.json
   def update
     @chat_message = ChatMessage.find(params[:id])
     @bet = @chat_message.bet
@@ -93,8 +93,8 @@ class ChatMessagesController < ApplicationController
     end
   end
 
-  # DELETE /chat_messages/1
-  # DELETE /chat_messages/1.json
+  # DELETE bets/:bet_id/chat_messages/1
+  # DELETE bets/:bet_id/chat_messages/1.json
   def destroy
     @chat_message = ChatMessage.find(params[:id])
     @bet = @chat_message.bet

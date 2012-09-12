@@ -25,9 +25,9 @@ class PredictionsController < ApplicationController
     end
   end
   
-  # GET /predictions/show_bet_id
-  # GET /predictions/show_bet_id.json
-  def show_bet_id
+  # GET /bets/:bet_id/predictions/show_bet_id
+  # GET /bets/:bet_id/predictions/show_bet_id.json
+  def show_for_bet
     @predictions = Prediction.where("bet_id = ?",params[:bet_id])
     @bet = @predictions.first unless @predictions.nil?
     
@@ -37,8 +37,22 @@ class PredictionsController < ApplicationController
     end
   end
 
-  # GET /predictions/new
-  # GET /predictions/new.json
+  # GET /bets/:bet_id/predictions/show_updates_for_bet
+  # GET /bets/:bet_id/predictions/show_updates_for_bet.json
+  def show_updates_for_bet
+    last_update = params[:updated_at]
+    if last_update!=null
+      @predictions = Prediction.where("bet_id = ? AND updated_at > ?",params[:bet_id], last_update)
+    end
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @predictions }
+    end
+  end
+  
+  # GET /bets/:bet_id/predictions/new
+  # GET /bets/:bet_id/predictions/new.json
   def new
     @prediction = Prediction.new
     @prediction.user = current_user

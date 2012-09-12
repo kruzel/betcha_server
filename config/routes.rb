@@ -12,6 +12,7 @@ BetchaServer::Application.routes.draw do
     resources :friends do
       collection do
         get :show_for_user
+        get :show_updates_for_user
       end
     end
     resources :user_stats do
@@ -29,6 +30,7 @@ BetchaServer::Application.routes.draw do
   resources :bets do
     collection do
       get :show_for_user
+      get :show_updates_for_user
     end
 
     resources :predictions do
@@ -36,7 +38,8 @@ BetchaServer::Application.routes.draw do
         get :submit
       end
       collection do
-        get :show_bet_id
+        get :show_for_bet
+        get :show_updates_for_bet
         put :update_list
         post :send_invites
         post :create_and_invite
@@ -45,7 +48,7 @@ BetchaServer::Application.routes.draw do
 
     resources :chat_messages do
       collection do
-        get :chat_messages_for_bet
+        get :show_chat_messages_for_bet
       end
     end
 

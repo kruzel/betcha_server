@@ -21,7 +21,7 @@ class BetsController < ApplicationController
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @bet }
+      format.json { render json: @bet.as_json( :include => [ :user , :predictions , :chat_messages ] ) }
     end
   end
   
@@ -38,7 +38,26 @@ class BetsController < ApplicationController
           
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: @bets }
+      format.json { render json: @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ) }
+    end
+  end
+
+  # GET /bets/show_updates_for_user
+  # GET /bets/show_updates_for_user.json
+    def show_updates_for_user
+    last_update = params[:updated_at]
+    if last_update!=null
+      @bets = Array.new
+      @predictions = Prediction.where("user_id = ? AND updated_at > ?", current_user.id, last_update)
+      @predictions.each do |prediction|
+          @bet = Bet.find(prediction.bet.id)
+          @bets << @bet unless (@bet.nil?)
+        end unless (@predictions.nil?)
+    end
+    
+    respond_to do |format|
+      format.html # show_for_user.html.erb
+      format.json { render json: @bets.as_json( :include => [ :user , :predictions, :chat_messages ] ) }
     end
   end
 
