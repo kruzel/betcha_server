@@ -13,9 +13,9 @@ class ChatMessagesController < ApplicationController
     end
   end
   
-  # GET bets/:bet_id/chat_messages_for_bet
-  # GET bets/:bet_id/chat_messages_for_bet.json
-  def show_chat_messages_for_bet 
+  # GET bets/:bet_id/show_for_bet
+  # GET bets/:bet_id/show_for_bet.json
+  def show_for_bet 
     @chat_messages = ChatMessage.where("bet_id = ? AND created_at > ?",params[:bet_id], params[:newer_than])
     @bet = @chat_messages.first.bet
     

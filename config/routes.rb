@@ -48,7 +48,7 @@ BetchaServer::Application.routes.draw do
 
     resources :chat_messages do
       collection do
-        get :show_chat_messages_for_bet
+        get :show_for_bet
       end
     end
 
