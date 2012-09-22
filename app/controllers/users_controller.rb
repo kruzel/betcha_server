@@ -104,11 +104,15 @@ class UsersController < ApplicationController
           user_stat = UserStat.create!(user_id:@user.id )
         end
     else
-      #its an existing user
+      #its a non facebook existing user
       #check password, if failed return proper response
-      password_ok = found_user.valid_password?(@user.password)
-      unless password_ok
-        found_user.send_reset_password_instructions
+      if found_user.provider == "facebook"
+        password_ok = true
+      else
+        password_ok = found_user.valid_password?(@user.password)
+        unless password_ok
+          found_user.send_reset_password_instructions
+        end
       end
       @user = found_user
     end

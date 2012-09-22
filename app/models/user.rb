@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
           :first_name, :family_name , :full_name, :is_app_installed, :gender, :locale, 
           :profile_pic_url, :provider, :uid, :access_token, :expires_at, :expires , :coins, :id,
-          :push_notifications_device_id, :device_type
+          :push_notifications_device_id, :device_type  #, :avatar
+        
+  #has_attached_file :avatar, :styles => {  :thumb => "48x48>" }
   
   has_many :bets , :dependent => :destroy
   has_many :predictions , :dependent => :destroy

@@ -47,6 +47,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :access_token
       t.datetime :expires_at
       t.boolean :expires 
+      #paperclip attachment t.attachment :avatar 
       
       t.integer :coins
       
