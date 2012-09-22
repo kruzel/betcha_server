@@ -1,4 +1,7 @@
 class Prediction < ActiveRecord::Base
+  include Uuid 
+  before_create :gen_uid
+  
   attr_accessible :id, :user_id, :bet_id, :prediction, :date, :user_ack, :bet, :user
   
   belongs_to :user

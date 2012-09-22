@@ -1,7 +1,7 @@
 class CreateBets < ActiveRecord::Migration
   def change
-    create_table :bets do |t|
-#      t.string :uuid
+    create_table :bets, {:id => false} do |t|
+      t.string :id, :null => false
       t.references :user
       t.string :subject
       t.string :reward
@@ -11,6 +11,7 @@ class CreateBets < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :bets, :id, :unique => true
     add_index :bets, :user_id
 #    add_index :bets, :uuid
   end

@@ -1,4 +1,7 @@
 class ChatMessage < ActiveRecord::Base
+  include Uuid 
+  before_create :gen_uid
+  
   belongs_to :bet
   belongs_to :user
 end

@@ -1,4 +1,7 @@
 class Bet < ActiveRecord::Base
+  include Uuid 
+  before_create :gen_uid
+  
   belongs_to :user
   has_many :predictions, :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy

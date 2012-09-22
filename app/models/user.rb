@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Uuid 
+  before_create :gen_uid
+  
   # Include default devise modules. Others available are:
   # :confirmable,
   # :lockable, :timeoutable , :validatable 
