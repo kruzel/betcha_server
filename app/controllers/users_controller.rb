@@ -40,6 +40,20 @@ class UsersController < ApplicationController
     end
   end
   
+  # GET /users/show_by_uid
+  # GET /users/show_by_uid.json
+  def show_by_uid
+    users = User.find_all_by_uid (params[:uid])
+    unless users.nil?
+      @user = users.first
+    end
+      
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @user.as_json( :include => [ :user_stat, :badges ]) }
+    end
+  end
+  
   # GET /users/1/show_details
   # GET /users/1/show_details.json
   def show_details

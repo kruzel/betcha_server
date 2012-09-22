@@ -7,6 +7,7 @@ BetchaServer::Application.routes.draw do
   resources :users do
     collection do
       get :show_by_email
+      get :show_by_uid
       get :show_details
     end
     resources :friends do
