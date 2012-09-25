@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:create, :show_by_email]
+  before_filter :authenticate_user!, :except => [:create, :show_by_email, :reset_password]
   
   # GET /users
   # GET /users.json
@@ -149,6 +149,18 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end
+    end
+  end
+  
+  # PUT /reset_password/1
+  # PUT /reset_password/1.json
+  def reset_password
+    @user = User.find(params[:id])
+    @user.send_reset_password_instructions
+    
+    respond_to do |format|
+      format.html { redirect_to users_url }
+      format.json { head :ok }
     end
   end
 

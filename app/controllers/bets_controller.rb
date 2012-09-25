@@ -46,7 +46,7 @@ class BetsController < ApplicationController
   # GET /bets/show_updates_for_user.json
     def show_updates_for_user
     last_update = params[:updated_at]
-    if last_update!=null
+    unless last_update.nil
       @bets = Array.new
       @predictions = Prediction.where("user_id = ? AND updated_at > ?", current_user.id, last_update)
       @predictions.each do |prediction|

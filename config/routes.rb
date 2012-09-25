@@ -9,6 +9,7 @@ BetchaServer::Application.routes.draw do
       get :show_by_email
       get :show_by_uid
       get :show_details
+      put :reset_password
     end
     resources :friends do
       collection do
