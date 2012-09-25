@@ -124,9 +124,6 @@ class UsersController < ApplicationController
         password_ok = true
       else
         password_ok = found_user.valid_password?(@user.password)
-        unless password_ok
-          found_user.send_reset_password_instructions
-        end
       end
       @user = found_user
     end
