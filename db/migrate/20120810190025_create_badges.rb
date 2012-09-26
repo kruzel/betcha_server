@@ -2,7 +2,7 @@ class CreateBadges < ActiveRecord::Migration
   def change
     create_table :badges, {:id => false} do |t|
       t.string :id, :null => false
-      t.references :user
+      t.string :user_id, :references => :users
       t.string :type
 
       t.timestamps

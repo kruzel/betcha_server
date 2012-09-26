@@ -2,8 +2,8 @@ class CreateChatMessages < ActiveRecord::Migration
   def change
     create_table :chat_messages, {:id => false} do |t|
       t.string :id, :null => false
-      t.references :bet
-      t.references :user
+      t.string :bet_id, :references => :bets
+      t.string :user_id, :references => :users
       t.integer :type
       t.string :message
       t.boolean :notification_sent

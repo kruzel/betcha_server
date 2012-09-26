@@ -30,6 +30,9 @@ BetchaServer::Application.routes.draw do
   end
   
   resources :bets do
+    member do
+      put :update_or_create
+    end
     collection do
       get :show_for_user
       get :show_updates_for_user

@@ -1,4 +1,5 @@
 class BetsController < ApplicationController
+  
   before_filter :authenticate_user!
   
   # GET /bets
@@ -81,15 +82,19 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
+    success = false
     @bet = Bet.new(params[:bet])
+    @bet.id = params[:bet][:id]
     @bet.user = current_user
+    @bet.save!
     
-    if @bet.due_date.nil?
-        @bet.due_date = Time.new
+    predictions = params[:predictions]
+    unless predictions.nil?
+      success = PredictionUtils.create_predictions(@bet,predictions)
     end
     
     respond_to do |format|
-      if @bet.save
+      if success
         format.html { redirect_to @bet, notice: 'Bet was successfully created.' }
         format.json { render json: @bet, status: :created, location: @bet }
       else
@@ -106,6 +111,29 @@ class BetsController < ApplicationController
 
     respond_to do |format|
       if @bet.update_attributes(params[:bet])
+        format.html { redirect_to @bet, notice: 'Bet was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @bet.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  # PUT /bets/1/update_or_create
+  # PUT /bets/1/update_or_create.json
+  def update_or_create
+    success = false
+    @bet = Bet.find(params[:id])
+    if @bet.nil?
+      @bet = Bet.new(params[:bet])
+      success = @bet.save
+    else
+      success = @bet.update_attributes(params[:bet])
+    end
+
+    respond_to do |format|
+      if success
         format.html { redirect_to @bet, notice: 'Bet was successfully updated.' }
         format.json { head :ok }
       else

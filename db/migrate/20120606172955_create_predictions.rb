@@ -2,8 +2,8 @@ class CreatePredictions < ActiveRecord::Migration
   def change
     create_table :predictions, {:id => false} do |t|
       t.string :id, :null => false
-      t.references :user
-      t.references :bet
+      t.string :user_id, :references => :users
+      t.string :bet_id, :references => :bets
       t.string :prediction, :default => ""
       t.boolean :result
       t.string :user_ack

@@ -82,7 +82,8 @@ class PredictionsController < ApplicationController
   def create
     @prediction = Prediction.new(params[:prediction])   
     @prediction.user = current_user
-    @bet = Bet.find(params[:bet_id])
+    @prediction.bet = Bet.find(params[:bet_id])
+    @bet = @prediction.bet
 
     respond_to do |format|
       if @prediction.save

@@ -2,7 +2,7 @@ class CreateUserStats < ActiveRecord::Migration
   def change
     create_table :user_stats, {:id => false} do |t|
       t.string :id, :null => false
-      t.references :user
+      t.string :user_id, :references => :users
       t.integer :wins, :default => 0
       t.integer :consecuitive_wins, :default => 0
       t.integer :same_reward_wins, :default => 0
