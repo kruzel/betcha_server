@@ -132,7 +132,7 @@ class UsersController < ApplicationController
       if !found_user.nil? #its an existing user
         if !password_ok
           format.html { redirect_to @user, notice: 'User exist, bad password.' }
-          format.json { render json: @user, status: :unauthorized, notice: 'User exist, bad password.' }
+          format.json { render json: @user.errors, status: :unauthorized, notice: 'User exist, bad password.' }
         else
           format.html { redirect_to @user, notice: 'User was successfully created.' }
           format.json { render json: @user, status: :created, location: @user }
