@@ -3,3 +3,14 @@ db/*.sqlite3
 log/*.log
 tmp/
 .sass-cache/
+
+/.idea/.generators
+/.idea/.name
+/.idea/.rakeTasks
+/.idea/betcha_server.iml
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/scopes/scope_settings.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
