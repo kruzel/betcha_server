@@ -64,6 +64,8 @@ class FacebookUtils
           friend_user.profile_pic_url = fb_client.selection.user(friend_info[1].id).picture
           friend_user.password =  Devise.friendly_token[0,20]
 
+          friend_user.gen_uid
+
           friends_users << friend_user
         end
       end
@@ -89,6 +91,9 @@ class FacebookUtils
             friend = Friend.new()
             friend.user = @user
             friend.friend_id = friend_user.id
+
+            friend.gen_uid
+
             friends << friend
           end
         end
