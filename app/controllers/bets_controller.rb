@@ -19,10 +19,18 @@ class BetsController < ApplicationController
     @bet = Bet.find(params[:id])
     @predictions = Prediction.find_all_by_bet_id(@bet.id)
     @chat_messages = ChatMessage.find_all_by_bet_id(@bet.id)
+    @users = Array.new
+    unless (@predictions.nil?)
+      @predictions.each do |prediction|
+        unless @users.include?(prediction.user)
+          @users << prediction.user
+        end
+      end
+    end
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @bet.as_json( :include => [ :user , :predictions , :chat_messages ] ) }
+      format.json { render json: { :bet => @bet.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
   
@@ -35,11 +43,20 @@ class BetsController < ApplicationController
     @predictions.each do |prediction|
         @bet = Bet.find(prediction.bet.id)
         @bets << @bet unless (@bet.nil?)
-      end unless (@predictions.nil?)
+    end unless (@predictions.nil?)
+
+    @users = Array.new
+    unless (@predictions.nil?)
+      @predictions.each do |prediction|
+        unless @users.include?(prediction.user)
+          @users << prediction.user
+        end
+      end
+    end
           
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ) }
+      format.json { render json: { :bets => @bet.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
 

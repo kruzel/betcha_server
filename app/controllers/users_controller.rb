@@ -54,8 +54,8 @@ class UsersController < ApplicationController
     end
   end
   
-  # GET /users/1/show_details
-  # GET /users/1/show_details.json
+  # GET /users/show_details
+  # GET /users/show_details.json
   def show_details
     @user = current_user
     @badges = Badge.find_all_by_user_id(@user.id)
