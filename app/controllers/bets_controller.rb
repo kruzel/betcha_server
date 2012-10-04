@@ -56,7 +56,7 @@ class BetsController < ApplicationController
           
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: { :bets => @bet.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
+      format.json { render json: { :bets => @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
 
