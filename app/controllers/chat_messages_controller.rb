@@ -61,6 +61,7 @@ class ChatMessagesController < ApplicationController
   # POST bets/:bet_id/chat_messages.json
   def create
     @chat_message = ChatMessage.new(params[:chat_message])
+    @chat_message.id = params[:chat_message][:id]
     @chat_message.user = current_user
     @chat_message.bet_id = params[:bet_id]
     @bet = @chat_message.bet

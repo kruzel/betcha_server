@@ -80,7 +80,8 @@ class PredictionsController < ApplicationController
   # POST /predictions
   # POST /predictions.json
   def create
-    @prediction = Prediction.new(params[:prediction])   
+    @prediction = Prediction.new(params[:prediction])
+    @prediction.id = params[:prediction][:id]
     @prediction.user = current_user
     @prediction.bet = Bet.find(params[:bet_id])
     @bet = @prediction.bet
