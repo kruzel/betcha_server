@@ -2,6 +2,10 @@ require 'test_helper'
 
 class BadgesControllerTest < ActionController::TestCase
   setup do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    sign_in @user
+
     @badge = badges(:one)
   end
 
@@ -18,30 +22,30 @@ class BadgesControllerTest < ActionController::TestCase
 
   test "should create badge" do
     assert_difference('Badge.count') do
-      post :create, badge: @badge.attributes
+      post :create, badge: @badge.attributes , user_id: 1
     end
 
     assert_redirected_to badge_path(assigns(:badge))
   end
 
   test "should show badge" do
-    get :show, id: @badge.to_param
+    get :show, id: @badge.to_param , user_id: 1
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @badge.to_param
+    get :edit, id: @badge.to_param , user_id: 1
     assert_response :success
   end
 
   test "should update badge" do
-    put :update, id: @badge.to_param, badge: @badge.attributes
+    put :update, id: @badge.to_param, badge: @badge.attributes, user_id: 1
     assert_redirected_to badge_path(assigns(:badge))
   end
 
   test "should destroy badge" do
     assert_difference('Badge.count', -1) do
-      delete :destroy, id: @badge.to_param
+      delete :destroy, id: @badge.to_param, user_id: 1
     end
 
     assert_redirected_to badges_path

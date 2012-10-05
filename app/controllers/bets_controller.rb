@@ -72,10 +72,19 @@ class BetsController < ApplicationController
           @bets << @bet unless (@bet.nil?)
         end unless (@predictions.nil?)
     end
+
+    @users = Array.new
+    unless (@predictions.nil?)
+      @predictions.each do |prediction|
+        unless @users.include?(prediction.user)
+          @users << prediction.user
+        end
+      end
+    end
     
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: @bets.as_json( :include => [ :user , :predictions, :chat_messages ] ) }
+      format.json { render json: { :bets => @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
 
