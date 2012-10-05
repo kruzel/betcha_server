@@ -61,7 +61,13 @@ class UsersController < ApplicationController
     @badges = Badge.find_all_by_user_id(@user.id)
     @user_stats = UserStat.find_all_by_user_id (@user.id)
     @friends = Friend.get_user_friends(@user.id)
-    @bets = Bet.find_all_by_user_id(@user.id)
+
+    @bets = Array.new
+    @predictions = Prediction.find_all_by_user_id (@user.id)
+    @predictions.each do |prediction|
+      @bet = Bet.find(prediction.bet.id)
+      @bets << @bet unless (@bet.nil?)
+    end unless (@predictions.nil?)
      
     respond_to do |format|
       format.html # show.html.erb
