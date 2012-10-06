@@ -81,7 +81,7 @@ class PredictionsController < ApplicationController
   # POST /predictions.json
   def create
     @prediction = Prediction.new(params[:prediction])
-    @prediction.id = params[:prediction][:id]
+    @prediction.id = params[:prediction][:id] unless params[:prediction][:id].nil?
     @prediction.user = current_user
     @prediction.bet = Bet.find(params[:bet_id])
     @bet = @prediction.bet
@@ -224,7 +224,15 @@ class PredictionsController < ApplicationController
           break
         end
 
-        @mailerJob = BetMailerJob.new(@bet,@user,@prediction)
+        #TODO see create_and_invite, send through all channels
+        url = "http://www.dropabet.com:3000/bets/"
+        url << @bet.id.to_s
+        url << "/predictions/"
+        url << @prediction.id.to_s
+        url << "/submit"
+
+        #owner,bet,user,prediction, url
+        @mailerJob = BetMailerJob.new(current_user, @bet,@user,@prediction, url)
         @mailerJob.delay.send_invites
       end
     end

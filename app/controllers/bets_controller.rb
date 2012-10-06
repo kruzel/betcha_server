@@ -110,13 +110,13 @@ class BetsController < ApplicationController
   def create
     success = false
     @bet = Bet.new(params[:bet])
-    @bet.id = params[:bet][:id]
+    @bet.id = params[:bet][:id] unless params[:bet][:id].nil?
     @bet.user = current_user
-    @bet.save!
+    success = @bet.save!
     
     predictions = params[:predictions]
     unless predictions.nil?
-      success = PredictionUtils.create_predictions(@bet,predictions)
+      PredictionUtils.create_predictions(@bet,predictions)
     end
     
     respond_to do |format|
