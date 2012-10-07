@@ -66,9 +66,13 @@ class UsersController < ApplicationController
 
     @predictions = Prediction.find_all_by_user_id (@user.id)
     @predictions.each do |prediction|
-      @bet = Bet.find(prediction.bet.id)
-      unless @bets.include?@bet
-        @bets << @bet unless (@bet.nil?)
+      unless prediction.bet.nil?
+        @bet = Bet.find(prediction.bet.id)
+        unless @bet.nil?
+          unless @bets.include?@bet
+            @bets << @bet
+          end
+        end
       end
     end unless (@predictions.nil?)
      

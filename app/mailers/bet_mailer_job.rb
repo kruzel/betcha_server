@@ -2,17 +2,16 @@
 # and open the template in the editor.
 
 class BetMailerJob
-  def initialize(owner,bet,user,prediction, url)
-    @owner = owner
-    @bet = bet
-    @user = user
-    @prediction = prediction
-    @url = url
+
+  def initialize( receiver, message_subject, message_body)
+    @receiver = receiver
+    @message_subject = message_subject
+    @message_body = message_body
   end
   
   def send_invites
     if(@user.email.nil? || @user.email.length>0)
-      BetMailer.send_invite(@owner,@user,@bet,@url).deliver
+      BetMailer.send_invite(@receiver,@message_subject,@message_body).deliver
       return
     end
   end

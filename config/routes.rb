@@ -46,7 +46,6 @@ BetchaServer::Application.routes.draw do
         get :show_for_bet
         get :show_updates_for_bet
         put :update_list
-        post :send_invites
         post :create_and_invite
       end
     end

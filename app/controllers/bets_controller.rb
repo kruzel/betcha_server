@@ -7,9 +7,28 @@ class BetsController < ApplicationController
   def index
     @bets = Bet.all
 
+    @predictions = Prediction.find_all_by_user_id (current_user.id)
+    @predictions.each do |prediction|
+      unless prediction.bet.nil?
+        @bet = Bet.find(prediction.bet.id)
+        unless @bets.include?@bet
+          @bets << @bet unless (@bet.nil?)
+        end
+      end
+    end unless (@predictions.nil?)
+
+    @users = Array.new
+    unless (@predictions.nil?)
+      @predictions.each do |prediction|
+        unless @users.include?(prediction.user)
+          @users << prediction.user
+        end
+      end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @bets }
+      format.json { render json: { :bets => @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
 
@@ -41,10 +60,12 @@ class BetsController < ApplicationController
     
     @predictions = Prediction.find_all_by_user_id (current_user.id)
     @predictions.each do |prediction|
+      unless prediction.bet.nil?
         @bet = Bet.find(prediction.bet.id)
         unless @bets.include?@bet
           @bets << @bet unless (@bet.nil?)
         end
+      end
     end unless (@predictions.nil?)
 
     @users = Array.new
