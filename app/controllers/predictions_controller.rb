@@ -128,11 +128,7 @@ class PredictionsController < ApplicationController
       end
     end
 
-    if @prediction.save!
-      PredictionUtils.create_and_invite(@bet,@prediction)
-    else
-      success = false
-    end
+    success = PredictionUtils.create_and_invite(@bet,@prediction)
 
     @predictions = Array.new
     @predictions << @prediction
