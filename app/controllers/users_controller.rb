@@ -18,11 +18,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @users = User.find_all_by_id(params[:id])
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])} }
+      format.json { render json: {:users => @users.as_json( :include => [ :user_stat, :badges])} }
     end
   end
   
@@ -33,10 +33,13 @@ class UsersController < ApplicationController
     unless users.nil?
       @user = users.first
     end
+
+    @users = Array.new
+    @users << @user
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :users => @user.as_json( :include => [ :user_stat, :badges ])} }
+      format.json { render json: { :users => @users.as_json( :include => [ :user_stat, :badges ])} }
     end
   end
   
@@ -47,10 +50,13 @@ class UsersController < ApplicationController
     unless users.nil?
       @user = users.first
     end
+
+    @users = Array.new
+    @users << @user
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :users => @user.as_json( :include => [ :user_stat, :badges ]) }}
+      format.json { render json: { :users => @users.as_json( :include => [ :user_stat, :badges ]) }}
     end
   end
   
@@ -78,7 +84,7 @@ class UsersController < ApplicationController
      
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :user => @user } }
+      #format.json { render json: { :user => @user } }
     end
   end
 
@@ -87,9 +93,12 @@ class UsersController < ApplicationController
   def new
     @user = User.new
 
+    @users = Array.new
+    @users << @user
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :user => @user } }
+      format.json { render json: { :users => @users.as_json( :include => [ :user_stat, :badges ]) } }
     end
   end
 
@@ -140,6 +149,9 @@ class UsersController < ApplicationController
       end
       @user = found_user
     end
+
+    @users = Array.new
+    @users << @user
     
     respond_to do |format|
       if !found_user.nil? #its an existing user
@@ -148,12 +160,12 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unauthorized, notice: 'User exist, bad password.' }
         else
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
+          format.json { render json: {:users => @users.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
         end
       else
         if created
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
+          format.json { render json: {:users => @users.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
         else
           format.html { render action: "new" }
           format.json { render json: @user.errors, status: :unprocessable_entity }

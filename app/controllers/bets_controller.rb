@@ -46,10 +46,13 @@ class BetsController < ApplicationController
         end
       end
     end
+
+    @bets = Array.new
+    @bets << @bet
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :bet => @bet.as_json( :include => {:user  => {} , :predictions  => { } , :chat_messages  => {} } ), :users => @users } }
+      format.json { render json: { :bets => @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ), :users => @users } }
     end
   end
   
@@ -144,11 +147,14 @@ class BetsController < ApplicationController
     unless predictions.nil?
       PredictionUtils.create_predictions(@bet,predictions)
     end
+
+    @bets = Array.new
+    @bets << @bet
     
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'Bet was successfully created.' }
-        format.json { render json: { :bet => @bet.as_json( :include => {:user  => {} , :predictions  => { } , :chat_messages  => {} } ) }, status: :created, location: @bet }
+        format.json { render json: { :bets => @bets.as_json( :include => [ :user , :predictions , :chat_messages ] ) }, status: :created, location: @bet }
 
       else
         format.html { render action: "new" }

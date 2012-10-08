@@ -18,10 +18,13 @@ class PredictionsController < ApplicationController
   def show
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet
+
+    @predictions = Array.new
+    @predictions << @prediction
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :prediction =>  @prediction } }
+      format.json { render json: { :predictions =>  @predictions } }
     end
   end
   
@@ -58,10 +61,13 @@ class PredictionsController < ApplicationController
     @prediction.user = current_user
     @prediction.bet_id = params[:bet_id]
     @bet = @prediction.bet
-    
+
+    @predictions = Array.new
+    @predictions << @prediction
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :prediction => @prediction } }
+      format.json { render json: { :predictions => @predictions } }
     end
   end
 
@@ -86,10 +92,13 @@ class PredictionsController < ApplicationController
     @prediction.bet = Bet.find(params[:bet_id])
     @bet = @prediction.bet
 
+    @predictions = Array.new
+    @predictions << @prediction
+
     respond_to do |format|
       if @prediction.save
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: { :prediction => @prediction }, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :predictions => @predictions }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
@@ -124,11 +133,14 @@ class PredictionsController < ApplicationController
     else
       success = false
     end
+
+    @predictions = Array.new
+    @predictions << @prediction
     
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: { :prediction => @prediction }, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :predictions => @predictions }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
@@ -159,7 +171,6 @@ class PredictionsController < ApplicationController
   # PUT /bets/:bet_id/predictions/update_list
   # PUT /bets/:bet_id/predictions/update_list.json
   def update_list
-   
     success = true
     
     params[:predictions].each do |entry|

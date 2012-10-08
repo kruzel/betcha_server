@@ -26,11 +26,11 @@ class UserStatsController < ApplicationController
   # GET users/:user_id/user_stats/1
   # GET users/:user_id/user_stats/1.json
   def show
-    @user_stat = UserStat.find(params[:id])
+    @users_stats = UserStat.find_all_by_user_id(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :user_stat => @user_stat } }
+      format.json { render json: { :user_stats => @user_stats } }
     end
   end
 
@@ -39,9 +39,12 @@ class UserStatsController < ApplicationController
   def new
     @user_stat = UserStat.new
 
+    @users_stats = Array.new
+    @users_stats <<  @user_stat
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :user_stat => @user_stat } }
+      format.json { render json: { :user_stats => @user_stats } }
     end
   end
 
@@ -55,10 +58,13 @@ class UserStatsController < ApplicationController
   def create
     @user_stat = UserStat.new(params[:user_stat])
 
+    @users_stats = Array.new
+    @users_stats <<  @user_stat
+
     respond_to do |format|
       if @user_stat.save
         format.html { redirect_to @user_stat, notice: 'User stat was successfully created.' }
-        format.json { render json: { :user_stat => @user_stat }, status: :created, location: @user_stat }
+        format.json { render json: { :user_stats => @user_stats }, status: :created, location: @user_stat }
       else
         format.html { render action: "new" }
         format.json { render json: @user_stat.errors, status: :unprocessable_entity }

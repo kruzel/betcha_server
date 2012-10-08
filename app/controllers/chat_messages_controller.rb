@@ -31,9 +31,12 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.find(params[:id])
     @bet = @chat_message.bet
 
+    @chat_messages = Array.new
+    @chat_messages <<  @chat_message
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :chat_message => @chat_message } }
+      format.json { render json: { :chat_messages => @chat_messages } }
     end
   end
 
@@ -45,9 +48,12 @@ class ChatMessagesController < ApplicationController
     @chat_message.bet_id = params[:bet_id]
     @bet = @chat_message.bet
 
+    @chat_messages = Array.new
+    @chat_messages <<  @chat_message
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :chat_message => @chat_message } }
+      format.json { render json: { :chat_messages => @chat_messages } }
     end
   end
 
@@ -66,10 +72,13 @@ class ChatMessagesController < ApplicationController
     @chat_message.bet_id = params[:bet_id]
     @bet = @chat_message.bet
 
+    @chat_messages = Array.new
+    @chat_messages <<  @chat_message
+
     respond_to do |format|
       if @chat_message.save
         format.html { redirect_to @bet, notice: 'Chat message was successfully created.' }
-        format.json { render json: { :chat_message => @chat_message }, status: :created, location: [@bet,@chat_message] }
+        format.json { render json: { :chat_messages => @chat_messages }, status: :created, location: [@bet,@chat_message] }
       else
         format.html { render action: "new" }
         format.json { render json: @chat_message.errors, status: :unprocessable_entity }
