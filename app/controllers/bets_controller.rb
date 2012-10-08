@@ -122,7 +122,7 @@ class BetsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @bet }
+      format.json { render json: { :bet => @bet } }
     end
   end
 
@@ -148,7 +148,8 @@ class BetsController < ApplicationController
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'Bet was successfully created.' }
-        format.json { render json: @bet, status: :created, location: @bet }
+        format.json { render json: { :bet => @bet.as_json( :include => {:user  => {} , :predictions  => { } , :chat_messages  => {} } ) }, status: :created, location: @bet }
+
       else
         format.html { render action: "new" }
         format.json { render json: @bet.errors, status: :unprocessable_entity }

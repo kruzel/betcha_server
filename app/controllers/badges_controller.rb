@@ -1,30 +1,30 @@
 class BadgesController < ApplicationController
   before_filter :authenticate_user!
   
-  # GET /badges
-  # GET /badges.json
+  # GET users/:user_id/badges
+  # GET users/:user_id/badges.json
   def index
     @badges = Badge.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @badges }
+      format.json { render json: { :badges => @badges } }
     end
   end
 
-  # GET /badges/1
-  # GET /badges/1.json
+  # GET users/:user_id/badges/1
+  # GET users/:user_id/badges/1.json
   def show
     @badge = Badge.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @badge }
+      format.json { render json: { :badge => @badge } }
     end
   end
 
-  # GET /badges/new
-  # GET /badges/new.json
+  # GET users/:user_id/badges/new
+  # GET users/:user_id/badges/new.json
   def new
     @badge = Badge.new
 
@@ -34,13 +34,13 @@ class BadgesController < ApplicationController
     end
   end
 
-  # GET /badges/1/edit
+  # GET users/:user_id/badges/1/edit
   def edit
     @badge = Badge.find(params[:id])
   end
 
-  # POST /badges
-  # POST /badges.json
+  # POST users/:user_id/badges
+  # POST users/:user_id/badges.json
   def create
     @badge = Badge.new(params[:badge])
 
@@ -55,8 +55,8 @@ class BadgesController < ApplicationController
     end
   end
 
-  # PUT /badges/1
-  # PUT /badges/1.json
+  # PUT users/:user_id/badges/1
+  # PUT users/:user_id/badges/1.json
   def update
     @badge = Badge.find(params[:id])
 
@@ -71,8 +71,8 @@ class BadgesController < ApplicationController
     end
   end
 
-  # DELETE /badges/1
-  # DELETE /badges/1.json
+  # DELETE users/:user_id/badges/1
+  # DELETE users/:user_id/badges/1.json
   def destroy
     @badge = Badge.find(params[:id])
     @badge.destroy

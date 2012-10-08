@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.json { render json: {:users => @users} }
     end
   end
 
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user.as_json( :include => [ :user_stat, :badges]) }
+      format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])} }
     end
   end
   
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user.as_json( :include => [ :user_stat, :badges ]) }
+      format.json { render json: { :users => @user.as_json( :include => [ :user_stat, :badges ])} }
     end
   end
   
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user.as_json( :include => [ :user_stat, :badges ]) }
+      format.json { render json: { :users => @user.as_json( :include => [ :user_stat, :badges ]) }}
     end
   end
   
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
      
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user }
+      format.json { render json: { :user => @user } }
     end
   end
 
@@ -89,7 +89,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @user }
+      format.json { render json: { :user => @user } }
     end
   end
 
@@ -148,12 +148,12 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unauthorized, notice: 'User exist, bad password.' }
         else
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: @user, status: :created, location: @user }
+          format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
         end
       else
         if created
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: @user, status: :created, location: @user }
+          format.json { render json: {:user => @user.as_json( :include => [ :user_stat, :badges])}, status: :created, location: @user }
         else
           format.html { render action: "new" }
           format.json { render json: @user.errors, status: :unprocessable_entity }

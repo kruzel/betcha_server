@@ -1,15 +1,15 @@
 class ChatMessagesController < ApplicationController
   before_filter :authenticate_user!
 
-  # GET /chat_messages
-  # GET /chat_messages.json
+  # GET bets/:bet_id/chat_messages
+  # GET bets/:bet_id/chat_messages.json
   def index #TODO allow only to admin
     @chat_messages = ChatMessage.all
     @bet = @chat_messages.first.bet
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @chat_messages }
+      format.json { render json: { :chat_messages => @chat_messages } }
     end
   end
   
@@ -21,7 +21,7 @@ class ChatMessagesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @chat_messages }
+      format.json { render json: { :chat_messages => @chat_messages } }
     end
   end
 
@@ -33,7 +33,7 @@ class ChatMessagesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @chat_message }
+      format.json { render json: { :chat_message => @chat_message } }
     end
   end
 
@@ -47,7 +47,7 @@ class ChatMessagesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @chat_message }
+      format.json { render json: { :chat_message => @chat_message } }
     end
   end
 
@@ -69,7 +69,7 @@ class ChatMessagesController < ApplicationController
     respond_to do |format|
       if @chat_message.save
         format.html { redirect_to @bet, notice: 'Chat message was successfully created.' }
-        format.json { render json: @chat_message, status: :created, location: [@bet,@chat_message] }
+        format.json { render json: { :chat_message => @chat_message }, status: :created, location: [@bet,@chat_message] }
       else
         format.html { render action: "new" }
         format.json { render json: @chat_message.errors, status: :unprocessable_entity }

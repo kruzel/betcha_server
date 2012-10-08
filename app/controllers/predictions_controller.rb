@@ -1,27 +1,27 @@
 class PredictionsController < ApplicationController
   before_filter :authenticate_user! , :except => [:submit,:update]
   
-  # GET /predictions
-  # GET /predictions.json
+  # GET /bets/:bet_id/predictions
+  # GET /bets/:bet_id/predictions.json
   def index #TODO allow only to admin
     @predictions = Prediction.all
     @bet = @predictions.first.bet
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @predictions }
+      format.json { render json: { :predictions => @predictions } }
     end
   end
 
-  # GET /predictions/1
-  # GET /predictions/1.json
+  # GET /bets/:bet_id/predictions/1
+  # GET /bets/:bet_id/predictions/1.json
   def show
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @prediction }
+      format.json { render json: { :prediction =>  @prediction } }
     end
   end
   
@@ -33,7 +33,7 @@ class PredictionsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @predictions }
+      format.json { render json: { :predictions => @predictions } }
     end
   end
 
@@ -47,7 +47,7 @@ class PredictionsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @predictions }
+      format.json { render json: { :predictions => @predictions } }
     end
   end
   
@@ -61,7 +61,7 @@ class PredictionsController < ApplicationController
     
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @prediction }
+      format.json { render json: { :prediction => @prediction } }
     end
   end
 
@@ -70,8 +70,8 @@ class PredictionsController < ApplicationController
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet
   end
-  
-  # GET /predictions/1/submit
+
+  # GET /bets/:bet_id/predictions/1/submit
   def submit
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet
@@ -89,7 +89,7 @@ class PredictionsController < ApplicationController
     respond_to do |format|
       if @prediction.save
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: @prediction, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :prediction => @prediction }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
@@ -97,7 +97,7 @@ class PredictionsController < ApplicationController
     end
   end
 
-  # POST /create_and_invite.json
+  # POST /bets/:bet_id/create_and_invite.json
   def create_and_invite
     success = true
     
@@ -128,7 +128,7 @@ class PredictionsController < ApplicationController
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: @prediction, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :prediction => @prediction }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
@@ -136,8 +136,8 @@ class PredictionsController < ApplicationController
     end
   end
 
-  # PUT /predictions/1
-  # PUT /predictions/1.json
+  # PUT /bets/:bet_id/predictions/1
+  # PUT /bets/:bet_id/predictions/1.json
   def update
     @prediction = Prediction.find(params[:id])
     if(!params[:prediction].nil?)
@@ -156,8 +156,8 @@ class PredictionsController < ApplicationController
     end
   end
   
-  # PUT /predictions/update_list
-  # PUT /predictions/update_list.json
+  # PUT /bets/:bet_id/predictions/update_list
+  # PUT /bets/:bet_id/predictions/update_list.json
   def update_list
    
     success = true
@@ -180,8 +180,8 @@ class PredictionsController < ApplicationController
     end
   end
 
-  # DELETE /predictions/1
-  # DELETE /predictions/1.json
+  # DELETE /bets/:bet_id/predictions/1
+  # DELETE /bets/:bet_id/predictions/1.json
   def destroy
     @prediction = Prediction.find(params[:id])
     @bet = @prediction.bet

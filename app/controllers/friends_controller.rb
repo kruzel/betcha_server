@@ -14,12 +14,12 @@ class FriendsController < ApplicationController
       
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: @friends }
+      format.json { render json: { :friends => @friends } }
     end
   end
   
-  # GET /users/:user_id/friends/show_for_user
-  # GET /users/:user_id/friends/show_for_user.json
+  # GET /users/:user_id/friends/show_updates_for_user
+  # GET /users/:user_id/friends/show_updates_for_user.json
   def show_updates_for_user 
     last_update = params[:updated_at]
     unless last_update.nil?
@@ -34,7 +34,7 @@ class FriendsController < ApplicationController
     
     respond_to do |format|
       format.html # show_for_user.html.erb
-      format.json { render json: @friends }
+      format.json { render json: { :friends => @friends } }
     end
   end
 end
