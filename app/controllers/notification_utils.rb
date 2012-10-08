@@ -4,13 +4,13 @@ class NotificationUtils
   end
   handle_asynchronously :delayed_send_notification
 
-  def prepare_invite_GCM_notification(bet, prediction)
+  def self.prepare_invite_GCM_notification(bet, prediction)
     device = Gcm::Device.where("registration_id = ?", bet.user.push_notifications_device_id).first
     notification = Gcm::Notification.new
     notification.device = device
     notification.collapse_key = "updates_available"
     notification.delay_while_idle = true
-    notification.data = {:registration_ids => [@prediction.user.push_notifications_device_id], :data => {:type => "invite", :owner_id => bet.user.id, :user_id => prediction.user.id , :bet_id => bet.id, :prediction_id => prediction.id}}
+    notification.data = {:registration_ids => [prediction.user.push_notifications_device_id], :data => {:type => "invite", :owner_id => bet.user.id, :user_id => prediction.user.id , :bet_id => bet.id, :prediction_id => prediction.id}}
     notification.save
 
     push_notification_utils = NotificationUtils.new
