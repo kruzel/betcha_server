@@ -15,11 +15,11 @@ class BadgesController < ApplicationController
   # GET users/:user_id/badges/1
   # GET users/:user_id/badges/1.json
   def show
-    @badge = Badge.find(params[:id])
+    @badges = Badge.find_all_by_id(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :badge => @badge } }
+      format.json { render json: { :badges => @badges } }
     end
   end
 
@@ -28,9 +28,12 @@ class BadgesController < ApplicationController
   def new
     @badge = Badge.new
 
+    @badges = Array.new
+    @badges << @badge
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @badge }
+      format.json { render json: { :badges => @badges } }
     end
   end
 
@@ -44,10 +47,13 @@ class BadgesController < ApplicationController
   def create
     @badge = Badge.new(params[:badge])
 
+    @badges = Array.new
+    @badges << @badge
+
     respond_to do |format|
       if @badge.save
         format.html { redirect_to @badge, notice: 'Badge was successfully created.' }
-        format.json { render json: @badge, status: :created, location: @badge }
+        format.json { render json: { :badges => @badges }, status: :created, location: @badge }
       else
         format.html { render action: "new" }
         format.json { render json: @badge.errors, status: :unprocessable_entity }
@@ -59,6 +65,9 @@ class BadgesController < ApplicationController
   # PUT users/:user_id/badges/1.json
   def update
     @badge = Badge.find(params[:id])
+
+    @badges = Array.new
+    @badges << @badge
 
     respond_to do |format|
       if @badge.update_attributes(params[:badge])
