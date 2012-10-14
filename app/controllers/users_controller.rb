@@ -123,6 +123,7 @@ class UsersController < ApplicationController
         fb_utils = FacebookUtils.new(@user)
       else
         found_user.access_token = @user.access_token unless @user.access_token.nil?
+        fb_utils = FacebookUtils.new(found_user)
       end
 
       created = fb_utils.get_facebook_info
