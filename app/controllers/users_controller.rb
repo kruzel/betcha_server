@@ -120,14 +120,16 @@ class UsersController < ApplicationController
         found_user = User.find_by_uid(@user.uid)
       end
       if found_user.nil?
-          fb_utils = FacebookUtils.new(@user)
-          created = fb_utils.get_facebook_info
-          if created
-            fb_utils.add_facebook_friends
-          end
+        fb_utils = FacebookUtils.new(@user)
       else
         found_user.access_token = @user.access_token unless @user.access_token.nil?
       end
+
+      created = fb_utils.get_facebook_info
+      if created
+        fb_utils.add_facebook_friends
+      end
+
     else #email provider
       found_user = User.find_by_email(@user.email)
     end    
