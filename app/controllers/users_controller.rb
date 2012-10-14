@@ -179,10 +179,10 @@ class UsersController < ApplicationController
     end
   end
   
-  # PUT /reset_password/1
-  # PUT /reset_password/1.json
+  # PUT /reset_password
+  # PUT /reset_password.json
   def reset_password
-    @user = User.find(params[:id])
+    @user = User.find_by_email(params[:email])
     @user.send_reset_password_instructions
     
     respond_to do |format|
