@@ -116,8 +116,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
    
     if @user.provider == "facebook"
-      if !@user.access_token.nil?
-        found_user = User.find_by_access_token(@user.access_token)
+      unless @user.uid.nil?
+        found_user = User.find_by_uid(@user.uid)
       end
       if found_user.nil?
           fb_utils = FacebookUtils.new(@user)
@@ -125,6 +125,8 @@ class UsersController < ApplicationController
           if created
             fb_utils.add_facebook_friends
           end
+      else
+        found_user.access_token = @user.access_token unless @user.access_token.nil?
       end
     else #email provider
       found_user = User.find_by_email(@user.email)
