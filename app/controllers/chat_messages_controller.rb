@@ -75,6 +75,8 @@ class ChatMessagesController < ApplicationController
     @chat_messages = Array.new
     @chat_messages <<  @chat_message
 
+    NotificationUtils.send_bet_update_notification(@bet)
+
     respond_to do |format|
       if @chat_message.save
         format.html { redirect_to @bet, notice: 'Chat message was successfully created.' }

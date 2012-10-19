@@ -153,6 +153,8 @@ class PredictionsController < ApplicationController
     end
     @bet = @prediction.bet
 
+    NotificationUtils.send_bet_update_notification(@bet)
+
     respond_to do |format|
       if @prediction.update_attributes(params[:prediction])
         format.html { redirect_to [@bet,@prediction] , notice: 'User bet was successfully updated.' }

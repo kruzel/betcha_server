@@ -10,7 +10,7 @@ class BetMailerJob
   end
   
   def send_invites
-    if(@user.email.nil? || @user.email.length>0)
+    if(@receiver.email.nil? || @receiver.email.length>0)
       BetMailer.send_invite(@receiver,@message_subject,@message_body).deliver
       return
     end
