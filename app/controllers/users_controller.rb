@@ -126,26 +126,29 @@ class UsersController < ApplicationController
         fb_utils = FacebookUtils.new(found_user)
       end
 
-      created = fb_utils.get_facebook_info
+      created = fb_utils.get_facebook_info #new user will be created here if not found via email
       if created
+        found_user = fb_utils.user
         fb_utils.add_facebook_friends
       end
 
     else #email provider
       found_user = User.find_by_email(@user.email)
-    end    
-    
-    if found_user.nil? #its a new user
+
+      if found_user.nil? #its a new user
         if @user.password.nil?
           @user.password =  Devise.friendly_token[0,20]
           password_ok = true
         end
         created = @user.save!
-        if(created)
+        if created
           user_stat = UserStat.create!(user_id:@user.id )
         end
-    else
-      #its a non facebook existing user
+      end
+    end
+
+    unless found_user.nil?
+      #its a new user
       #check password, if failed return proper response
       if found_user.provider == "facebook"
         password_ok = true

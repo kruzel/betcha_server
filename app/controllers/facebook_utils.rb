@@ -2,14 +2,20 @@
 # and open the template in the editor.
 
 class FacebookUtils
-    
+    attr_accessor :user
+
     def initialize(user)
       @user = user
     end
-    
+
     def get_facebook_info
       fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
       user_info = fb_client.selection.me.info!
+
+      found_user = User.find_by_email(user_info.email)
+      unless found_user.nil?
+        @user = found_user
+      end
 
       @user.email = user_info.email
       @user.full_name = user_info.name
@@ -20,8 +26,12 @@ class FacebookUtils
       @user.gender = user_info.gender
       @user.locale = user_info.locale
       @user.profile_pic_url = fb_client.selection.me.picture
-      @user.password =  Devise.friendly_token[0,20]
-      return @user.save
+
+      if found_user.nil?
+        @user.password =  Devise.friendly_token[0,20]
+      end
+
+      return @user.save!
     end
   
     def add_facebook_friends

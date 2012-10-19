@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
                           )
                           
       user_stat = UserStat.create!(user_id:user.id )
-      fb_utils = FacebookUtils.new(user,auth.credentials.token)
+      fb_utils = FacebookUtils.new(user)
       success = fb_utils.get_facebook_info
       if success
         fb_utils.add_facebook_friends
