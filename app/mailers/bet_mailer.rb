@@ -7,6 +7,7 @@ class BetMailer < ActionMailer::Base
   #   en.bet_mailer.send_invite.subject
   #
   def send_invite(receiver, bet_message_subject, message_body)
+    logger.info("receiver email: " << receiver.email)
     @message_body = message_body
     mail(:to => receiver.email, :subject => bet_message_subject)
     

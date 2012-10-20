@@ -18,6 +18,8 @@ class ChatMessagesController < ApplicationController
   def show_for_bet 
     @chat_messages = ChatMessage.where("bet_id = ? AND created_at > ?",params[:bet_id], params[:newer_than])
     @bet = @chat_messages.first.bet
+
+    @chat_message = @chat_messages[0]
     
     respond_to do |format|
       format.html # index.html.erb

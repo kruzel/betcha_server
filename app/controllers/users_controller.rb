@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @users = User.find_all_by_id(params[:id])
+    @user = @users[0]
       
     respond_to do |format|
       format.html # show.html.erb

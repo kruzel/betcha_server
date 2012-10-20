@@ -16,6 +16,7 @@ class BadgesController < ApplicationController
   # GET users/:user_id/badges/1.json
   def show
     @badges = Badge.find_all_by_id(params[:id])
+    @badge = @badges[0]
 
     respond_to do |format|
       format.html # show.html.erb
