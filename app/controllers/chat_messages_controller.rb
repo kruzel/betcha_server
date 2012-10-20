@@ -77,7 +77,7 @@ class ChatMessagesController < ApplicationController
     @chat_messages = Array.new
     @chat_messages <<  @chat_message
 
-    NotificationUtils.send_bet_update_notification(@bet)
+    NotificationUtils.send_bet_update_notification(@bet, current_user)
 
     respond_to do |format|
       if @chat_message.save

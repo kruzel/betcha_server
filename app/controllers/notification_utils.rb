@@ -61,10 +61,11 @@ class NotificationUtils
     end
   end
 
-  def self.send_bet_update_notification(bet)
-
+  def self.send_bet_update_notification(bet, sender)
     #send update to all participants
     bet.predictions.each do |prediction|
+      next if prediction.user == sender #don't send to the updating user
+
       if prediction.user.is_app_installed && !prediction.user.push_notifications_device_id.nil? && prediction.user.push_notifications_device_id.length > 0
         #this is a structured message with bet and prediction ids
         prepare_bet_update_GCM_notification(bet, prediction)

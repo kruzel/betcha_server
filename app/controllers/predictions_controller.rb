@@ -153,7 +153,7 @@ class PredictionsController < ApplicationController
     end
     @bet = @prediction.bet
 
-    NotificationUtils.send_bet_update_notification(@bet)
+    NotificationUtils.send_bet_update_notification(@bet, current_user)
 
     respond_to do |format|
       if @prediction.update_attributes(params[:prediction])
