@@ -208,9 +208,9 @@ class BetsController < ApplicationController
     @bet = Bet.find(params[:id])
     if @bet.user == current_user
       @bet.destroy
-      success = false
-    else
       success = true
+    else
+      success = false
     end
 
     respond_to do |format|
