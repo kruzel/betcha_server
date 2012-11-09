@@ -17,24 +17,6 @@ class NotificationUtils
     push_notification_utils.delayed_send_notification
   end
 
-  def self.send_facebook_chat_message(sender, receiver, message_subject, message_body)
-    #Jabber.debug=true
-
-    sender_chat_id = "-#{sender.uid}@chat.facebook.com"
-    receiver_chat_id = "-#{receiver.uid}@chat.facebook.com"
-
-    jabber_message = Jabber::Message.new(receiver_chat_id, message_body)
-    jabber_message.subject = message_subject
-
-    client = Jabber::Client.new(Jabber::JID.new(sender_chat_id))
-    client.connect
-    client.auth_sasl(Jabber::SASL::XFacebookPlatform.new(client,
-                                                         BetchaServer::Application::config.app_id, sender.access_token,
-                                                         BetchaServer::Application::config.app_secret), nil)
-    client.send(jabber_message)
-    client.close
-  end
-
   def self.send_bet_invite_notification(bet, prediction)
     if prediction.user.is_app_installed && !prediction.user.push_notifications_device_id.nil? && prediction.user.push_notifications_device_id.length > 0
       #this is a structured message with bet and prediction ids
@@ -51,11 +33,12 @@ class NotificationUtils
       message_subject << " invites you to DropaBet"
 
       if(prediction.user.email.nil? || prediction.user.email.length>0)
-        @mailerJob = BetMailerJob.new(prediction.user, message_subject, message_body)
-        @mailerJob.delay.send_invites
+        mailerJob = BetMailerJob.new(prediction.user, message_subject, message_body)
+        mailerJob.delay.send_invites
       else
-        if(@prediction.user.provider=="facebook")
-          send_facebook_chat_message(bet.user, prediction.user, message_subject, message_body )
+        if(prediction.user.provider=="facebook")
+          fbNotifyJob = FacebookNotificationJob.new(bet.user, prediction.user, message_subject, message_body)
+          fbNotifyJob.send
         end
       end
     end
@@ -78,12 +61,13 @@ class NotificationUtils
         message_subject << " has been updated"
 
         if(prediction.user.email.nil? || prediction.user.email.length>0)
-          @mailerJob = BetMailerJob.new(prediction.user, message_subject, message_body)
-          @mailerJob.delay.send_invites
+          mailerJob = BetMailerJob.new(prediction.user, message_subject, message_body)
+          mailerJob.delay.send_invites
         end
 
         if(prediction.user.provider=="facebook")
-          send_facebook_chat_message(bet.user, prediction.user, message_subject, message_body )
+          fbNotifyJob = FacebookNotificationJob.new(bet.user, prediction.user, message_subject, message_body)
+          fbNotifyJob.send
         end
       end
     end
