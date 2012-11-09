@@ -7,8 +7,10 @@ class FacebookNotificationJob
   end
 
   def send_notification
-    Jabber.debug=true
+    #Jabber.debug=true
 
+    #TODO find how to send FB chat notification from delayed job
+=begin
     sender_chat_id = "-#{@sender_uid}@chat.facebook.com"
     receiver_chat_id = "-#{@receiver_uid}@chat.facebook.com"
 
@@ -22,6 +24,7 @@ class FacebookNotificationJob
                                                          BetchaServer::Application::config.app_secret), nil)
     client.send(jabber_message)
     client.close
+=end
   end
 
 end
