@@ -6,7 +6,7 @@ class FacebookNotificationJob
     @message_body = message_body
   end
 
-  def send
+  def send_notification
     #Jabber.debug=true
 
     sender_chat_id = "-#{@sender_uid}@chat.facebook.com"
