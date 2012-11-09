@@ -38,7 +38,7 @@ class NotificationUtils
       else
         if(prediction.user.provider=="facebook")
           fbNotifyJob = FacebookNotificationJob.new(bet.user, prediction.user, message_subject, message_body)
-          fbNotifyJob.send
+          fbNotifyJob.delay.send
         end
       end
     end
@@ -67,7 +67,7 @@ class NotificationUtils
 
         if(prediction.user.provider=="facebook")
           fbNotifyJob = FacebookNotificationJob.new(bet.user, prediction.user, message_subject, message_body)
-          fbNotifyJob.send
+          fbNotifyJob.delay.send
         end
       end
     end

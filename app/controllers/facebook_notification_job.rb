@@ -23,6 +23,5 @@ class FacebookNotificationJob
     client.send(jabber_message)
     client.close
   end
-  handle_asynchronously :send
 
 end
