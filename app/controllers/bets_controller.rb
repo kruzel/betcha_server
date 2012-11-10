@@ -207,7 +207,11 @@ class BetsController < ApplicationController
   def destroy
     @bet = Bet.find(params[:id])
     if @bet.user == current_user
-      @bet.destroy
+      @bet.predictions.each do |prediction|
+        if prediction.user == current_user
+          prediction.archive = true
+        end
+      end
       success = true
     else
       success = false

@@ -7,7 +7,8 @@ class CreatePredictions < ActiveRecord::Migration
       t.string :prediction, :default => ""
       t.boolean :result
       t.string :user_ack
-
+      t.boolean :participating, :default => true
+      t.boolean :archive, :default => false     #user marked as archived, do not return unless explicitly requested
       t.timestamps
     end
     
