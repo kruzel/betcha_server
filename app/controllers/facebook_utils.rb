@@ -13,9 +13,8 @@ class FacebookUtils
       user_info = fb_client.selection.me.info!
 
       found_user = User.find_by_email(user_info.email)
-      unless found_user.nil?
-        @user = found_user
-      end
+      found_user = User.find_by_uid(user_info.id) if found_user.nil?
+      @user = found_user unless found_user.nil?
 
       @user.email = user_info.email
       @user.full_name = user_info.name

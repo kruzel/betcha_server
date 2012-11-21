@@ -1,0 +1,27 @@
+<h1>Listing topic_categories</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Image</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @topic_categories.each do |topic_category| %>
+  <tr>
+    <td><%= topic_category.id %></td>
+    <td><%= topic_category.name %></td>
+    <td><%= topic_category.image %></td>
+    <td><%= link_to 'Show', topic_category %></td>
+    <td><%= link_to 'Edit', edit_topic_category_path(topic_category) %></td>
+    <td><%= link_to 'Destroy', topic_category, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Topic category', new_topic_category_path %>
