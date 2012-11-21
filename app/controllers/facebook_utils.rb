@@ -12,8 +12,8 @@ class FacebookUtils
       fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
       user_info = fb_client.selection.me.info!
 
-      found_user = User.find_by_email(user_info.email)
-      found_user = User.find_by_uid(user_info.id) if found_user.nil?
+      found_user = User.find_by_uid(user_info.id)
+      found_user = User.find_by_email(user_info.email) if found_user.nil?
       @user = found_user unless found_user.nil?
 
       @user.email = user_info.email
