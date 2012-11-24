@@ -14,7 +14,11 @@ class FacebookUtils
 
       found_user = User.find_by_uid(user_info.id)
       found_user = User.find_by_email(user_info.email) if found_user.nil?
-      @user = found_user unless found_user.nil?
+      unless found_user.nil?
+        tmpUser = @user
+        @user = found_user
+        @user.access_token = tmpUser.access_token unless tmpUser.access_token.nil?
+      end
 
       @user.email = user_info.email
       @user.full_name = user_info.name
