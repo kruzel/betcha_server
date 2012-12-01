@@ -1,0 +1,26 @@
+<h1>Listing prediction_options</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Image</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @prediction_options.each do |prediction_option| %>
+  <tr>
+    <td><%= prediction_option.name %></td>
+    <td><%= image_tag prediction_option.image %></td>
+    <td><%= link_to 'Show', topic_category_topic_prediction_option_path(@topic_category,@topic,prediction_option) %></td>
+    <td><%= link_to 'Edit', edit_topic_category_topic_prediction_option_path(@topic_category,@topic,prediction_option) %></td>
+    <td><%= link_to 'Destroy', [@topic_category,@topic,prediction_option], confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Prediction option', new_topic_category_topic_prediction_option_path(@topic_category,@topic) %> |
+<%= link_to 'Back', url_for(:controller => :topics , :method => :get, :action => :show_details, :id => @topic.id, :topic_category_id => @topic_category.id ) %>

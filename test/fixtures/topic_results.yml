@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  topic: 
+  prediction_option: 
+  score1: 1
+  score2: 1
+
+two:
+  topic: 
+  prediction_option: 
+  score1: 1
+  score2: 1

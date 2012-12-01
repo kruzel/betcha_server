@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  stake_category: 
+  name: MyString
+  image: 
+  amount: 1
+  affiliate_token: MyString
+  affiliate_url: MyString
+
+two:
+  stake_category: 
+  name: MyString
+  image: 
+  amount: 1
+  affiliate_token: MyString
+  affiliate_url: MyString

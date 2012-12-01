@@ -21,6 +21,18 @@ class TopicCategoriesController < ApplicationController
     end
   end
 
+  # GET /topic_categories/show_details/1
+  # GET /topic_categories/show_details/1.json
+  def show_details
+    @topic_category = TopicCategory.find(params[:id])
+    @topics = @topic_category.topics
+
+    respond_to do |format|
+      format.html # show_details.html.erb
+      format.json { render json: @topic_category }
+    end
+  end
+
   # GET /topic_categories/new
   # GET /topic_categories/new.json
   def new

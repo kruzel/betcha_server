@@ -1,0 +1,34 @@
+<%= form_for(@stake) do |f| %>
+  <% if @stake.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stake.errors.count, "error") %> prohibited this stake from being saved:</h2>
+
+      <ul>
+      <% @stake.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.file_field :image %>
+  </div>
+
+  <div class="field">
+    <%= f.label :affiliate_token %><br />
+    <%= f.text_field :affiliate_token %>
+  </div>
+  <div class="field">
+    <%= f.label :affiliate_url %><br />
+    <%= f.text_field :affiliate_url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

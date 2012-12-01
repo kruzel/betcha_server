@@ -1,0 +1,30 @@
+<h1>Listing stakes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Image</th>
+    <th>Amount</th>
+    <th>Affiliate token</th>
+    <th>Affiliate url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stakes.each do |stake| %>
+  <tr>
+    <td><%= stake.name %></td>
+    <td><%= image_tag stake.image (:thumb) %></td>
+    <td><%= stake.affiliate_token %></td>
+    <td><%= stake.affiliate_url %></td>
+    <td><%= link_to 'Show', stake %></td>
+    <td><%= link_to 'Edit', edit_stake_path(stake) %></td>
+    <td><%= link_to 'Destroy', stake, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stake', new_stake_path %>

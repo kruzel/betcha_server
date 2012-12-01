@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Category:</b>
+  <%= @topic_category.name %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @topic.name %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @prediction_option.name %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= image_tag @prediction_option.image %>
+</p>
+
+<%= link_to 'Edit', edit_topic_category_topic_prediction_option_path(@topic_category,@topic,@prediction_option) %> |
+<%= link_to 'Back', url_for(:controller => :topics , :method => :get, :action => :show_details, :id => @topic.id, :topic_category_id => @topic.topic_category.id ) %>

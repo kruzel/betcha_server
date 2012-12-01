@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @stake.name %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= image_tag @stake.image (:thumb) %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @stake.image.url %>
+</p>
+
+<p>
+  <b>Affiliate token:</b>
+  <%= @stake.affiliate_token %>
+</p>
+
+<p>
+  <b>Affiliate url:</b>
+  <%= @stake.affiliate_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_stake_path(@stake) %> |
+<%= link_to 'Back', stakes_path %>

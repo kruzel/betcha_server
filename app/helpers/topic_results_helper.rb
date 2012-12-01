@@ -1,0 +1,2 @@
+module TopicResultsHelper
+end

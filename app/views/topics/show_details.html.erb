@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Category:</b>
+  <%= @topic.topic_category.name %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%= @topic.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%= @topic.end_time %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @topic.location.city %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @topic.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_topic_category_topic_path(@topic.topic_category,@topic) %> |
+<%= link_to 'Back', url_for(:controller => :topic_categories , :method => :get, :action => :show_details, :id => @topic.topic_category.id ) %>
+
+<%= render :template  => 'prediction_options/index' %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Topic:</b>
+  <%= @topic_result.topic %>
+</p>
+
+<p>
+  <b>Prediction option:</b>
+  <%= @topic_result.prediction_option %>
+</p>
+
+<p>
+  <b>Score1:</b>
+  <%= @topic_result.score1 %>
+</p>
+
+<p>
+  <b>Score2:</b>
+  <%= @topic_result.score2 %>
+</p>
+
+
+<%= link_to 'Edit', edit_topic_result_path(@topic_result) %> |
+<%= link_to 'Back', topic_results_path %>

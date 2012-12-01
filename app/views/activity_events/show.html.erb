@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @activity_event.type %>
+</p>
+
+<p>
+  <b>Object:</b>
+  <%= @activity_event.object_id %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @activity_event.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_activity_event_path(@activity_event) %> |
+<%= link_to 'Back', activity_events_path %>

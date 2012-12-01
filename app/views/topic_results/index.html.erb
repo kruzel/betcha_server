@@ -1,0 +1,29 @@
+<h1>Listing topic_results</h1>
+
+<table>
+  <tr>
+    <th>Topic</th>
+    <th>Prediction option</th>
+    <th>Score1</th>
+    <th>Score2</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @topic_results.each do |topic_result| %>
+  <tr>
+    <td><%= topic_result.topic %></td>
+    <td><%= topic_result.prediction_option %></td>
+    <td><%= topic_result.score1 %></td>
+    <td><%= topic_result.score2 %></td>
+    <td><%= link_to 'Show', topic_result %></td>
+    <td><%= link_to 'Edit', edit_topic_result_path(topic_result) %></td>
+    <td><%= link_to 'Destroy', topic_result, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Topic result', new_topic_result_path %>

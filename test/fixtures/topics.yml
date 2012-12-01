@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  category: 
+  start_time: 2012-11-27 21:20:37
+  end_time: 2012-11-27 21:20:37
+  location: 
+  name: MyString
+  prediction_options: 
+
+two:
+  category: 
+  start_time: 2012-11-27 21:20:37
+  end_time: 2012-11-27 21:20:37
+  location: 
+  name: MyString
+  prediction_options: 

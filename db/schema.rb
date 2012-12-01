@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907195918) do
+ActiveRecord::Schema.define(:version => 20121128184738) do
+
+  create_table "activity_events", :force => true do |t|
+    t.string   "type"
+    t.string   "object_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activity_events", ["id"], :name => "index_activity_events_on_id", :unique => true
 
   create_table "badges", :force => true do |t|
     t.string   "user_id"
@@ -99,12 +109,36 @@ ActiveRecord::Schema.define(:version => 20120907195918) do
 
   add_index "gcm_notifications", ["device_id"], :name => "index_gcm_notifications_on_device_id"
 
+  create_table "locations", :force => true do |t|
+    t.string   "country"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["id"], :name => "index_locations_on_id", :unique => true
+
+  create_table "prediction_options", :force => true do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "topic_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prediction_options", ["id"], :name => "index_prediction_options_on_id", :unique => true
+
   create_table "predictions", :force => true do |t|
     t.string   "user_id"
     t.string   "bet_id"
-    t.string   "prediction", :default => ""
+    t.string   "prediction",    :default => ""
     t.boolean  "result"
     t.string   "user_ack"
+    t.boolean  "participating", :default => true
+    t.boolean  "archive",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -112,6 +146,59 @@ ActiveRecord::Schema.define(:version => 20120907195918) do
   add_index "predictions", ["bet_id"], :name => "index_predictions_on_bet_id"
   add_index "predictions", ["id"], :name => "index_predictions_on_id", :unique => true
   add_index "predictions", ["user_id"], :name => "index_predictions_on_user_id"
+
+  create_table "stakes", :force => true do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "affiliate_token"
+    t.string   "affiliate_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stakes", ["id"], :name => "index_stakes_on_id", :unique => true
+
+  create_table "topic_categories", :force => true do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topic_categories", ["id"], :name => "index_topic_categories_on_id", :unique => true
+
+  create_table "topic_results", :force => true do |t|
+    t.string   "topic_id"
+    t.string   "prediction_option_id"
+    t.integer  "score1"
+    t.integer  "score2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topic_results", ["id"], :name => "index_topic_results_on_id", :unique => true
+  add_index "topic_results", ["prediction_option_id"], :name => "index_topic_results_on_prediction_option_id"
+  add_index "topic_results", ["topic_id"], :name => "index_topic_results_on_topic_id"
+
+  create_table "topics", :force => true do |t|
+    t.string   "topic_category_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "location_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topics", ["id"], :name => "index_topics_on_id", :unique => true
+  add_index "topics", ["location_id"], :name => "index_topics_on_location_id"
+  add_index "topics", ["topic_category_id"], :name => "index_topics_on_topic_category_id"
 
   create_table "user_stats", :force => true do |t|
     t.string   "user_id"
