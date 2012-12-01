@@ -9,4 +9,5 @@ class PredictionOption < ActiveRecord::Base
   end
 
   belongs_to :topic
+  has_many :predictions
 end

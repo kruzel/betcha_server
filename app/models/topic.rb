@@ -6,4 +6,5 @@ class Topic < ActiveRecord::Base
   belongs_to :location
   has_many :prediction_options, :dependent => :destroy
   has_one :topic_result
+  has_many :bets
 end

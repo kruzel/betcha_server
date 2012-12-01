@@ -9,7 +9,7 @@ class PredictionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { :predictions => @predictions } }
+      format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) }}
     end
   end
 
@@ -24,7 +24,7 @@ class PredictionsController < ApplicationController
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :predictions =>  @predictions } }
+      format.json { render json: { :predictions =>  @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) } }
     end
   end
   
@@ -50,7 +50,7 @@ class PredictionsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { :predictions => @predictions } }
+      format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) } }
     end
   end
   
@@ -67,7 +67,7 @@ class PredictionsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :predictions => @predictions } }
+      format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) } }
     end
   end
 
@@ -98,7 +98,7 @@ class PredictionsController < ApplicationController
     respond_to do |format|
       if @prediction.save
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: { :predictions => @predictions }, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }
@@ -136,7 +136,7 @@ class PredictionsController < ApplicationController
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
-        format.json { render json: { :predictions => @predictions }, status: :created, location: [@bet,@prediction] }
+        format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) }, status: :created, location: [@bet,@prediction] }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction.errors, status: :unprocessable_entity }

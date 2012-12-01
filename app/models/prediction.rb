@@ -6,6 +6,7 @@ class Prediction < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :bet
+  belongs_to :prediction_option
 end
 # == Schema Information
 #
