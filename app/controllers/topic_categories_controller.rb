@@ -6,7 +6,7 @@ class TopicCategoriesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @topic_categories }
+      format.json { render json: { :topic_categories => @topic_categories.as_json( :include => { :topics => { :include =>  [ :prediction_options, :topic_result ] } }) } }
     end
   end
 
@@ -15,9 +15,12 @@ class TopicCategoriesController < ApplicationController
   def show
     @topic_category = TopicCategory.find(params[:id])
 
+    @topic_categories = Array.new
+    @topic_categories << @topic_category
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @topic_category }
+      format.json { render json: { :topic_categories => @topic_categories.as_json( :include => { :topics => { :include =>  [ :prediction_options, :topic_result ] } }) } }
     end
   end
 
@@ -54,10 +57,13 @@ class TopicCategoriesController < ApplicationController
   def create
     @topic_category = TopicCategory.new(params[:topic_category])
 
+    @topic_categories = Array.new
+    @topic_categories << @topic_category
+
     respond_to do |format|
       if @topic_category.save
         format.html { redirect_to @topic_category, notice: 'Topic category was successfully created.' }
-        format.json { render json: @topic_category, status: :created, location: @topic_category }
+        format.json { render json: { :topic_categories => @topic_categories.as_json( :include => { :topics => { :include =>  [ :prediction_options, :topic_result ] } }) }, status: :created, location: @topic_category }
       else
         format.html { render action: "new" }
         format.json { render json: @topic_category.errors, status: :unprocessable_entity }

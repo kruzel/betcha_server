@@ -8,7 +8,7 @@ class StakesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @stakes }
+      format.json { render json: { :stakes => @stakes.as_json( :only => [ :id , :name  , :affiliate_token, :affiliate_url ], :methods => [ :image_url ] ) } }
     end
   end
 
@@ -17,9 +17,12 @@ class StakesController < ApplicationController
   def show
     @stake = Stake.find(params[:id])
 
+    @stakes = Array.new
+    @stakes << @stake
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @stake }
+      format.json { render json: { :stakes => @stakes.as_json( :only => [ :id , :name  , :affiliate_token, :affiliate_url ], :methods => [ :image_url ] ) } }
     end
   end
 
@@ -44,10 +47,13 @@ class StakesController < ApplicationController
   def create
     @stake = Stake.new(params[:stake])
 
+    @stakes = Array.new
+    @stakes << @stake
+
     respond_to do |format|
       if @stake.save
         format.html { redirect_to @stake, notice: 'Stake was successfully created.' }
-        format.json { render json: @stake, status: :created, location: @stake }
+        format.json { render json: { :stakes => @stakes.as_json( :only => [ :id , :name  , :affiliate_token, :affiliate_url ], :methods => [ :image_url ] ) }, status: :created, location: @stake }
       else
         format.html { render action: "new" }
         format.json { render json: @stake.errors, status: :unprocessable_entity }

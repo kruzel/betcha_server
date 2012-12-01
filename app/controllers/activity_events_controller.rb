@@ -8,7 +8,7 @@ class ActivityEventsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @activity_events }
+      format.json { render json:{ :activity_events => @activity_events } }
     end
   end
 
@@ -17,9 +17,12 @@ class ActivityEventsController < ApplicationController
   def show
     @activity_event = ActivityEvent.find(params[:id])
 
+    @activity_events = Array.new
+    @activity_events << @activity_event
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @activity_event }
+      format.json { render json: { :activity_events => @activity_events} }
     end
   end
 
@@ -44,10 +47,13 @@ class ActivityEventsController < ApplicationController
   def create
     @activity_event = ActivityEvent.new(params[:activity_event])
 
+    @activity_events = Array.new
+    @activity_events << @activity_event
+
     respond_to do |format|
       if @activity_event.save
         format.html { redirect_to @activity_event, notice: 'Activity event was successfully created.' }
-        format.json { render json: @activity_event, status: :created, location: @activity_event }
+        format.json { render json: { :activity_events => @activity_events}, status: :created, location: @activity_event }
       else
         format.html { render action: "new" }
         format.json { render json: @activity_event.errors, status: :unprocessable_entity }

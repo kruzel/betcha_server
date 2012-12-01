@@ -4,4 +4,8 @@ class Stake < ActiveRecord::Base
 
   has_attached_file :image, :styles => { :thumb => "80x80>" }
 
+  def image_url
+    image.url(:thumb)
+  end
+
 end
