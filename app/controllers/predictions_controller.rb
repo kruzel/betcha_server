@@ -95,8 +95,18 @@ class PredictionsController < ApplicationController
     @predictions = Array.new
     @predictions << @prediction
 
+    success = @prediction.save
+
+    if success
+      event = ActivityEvent.new
+      event.type = "prediction"
+      event.object_id = @prediction.id
+      event.description =  @prediction.prediction
+      event.save
+    end
+
     respond_to do |format|
-      if @prediction.save
+      if success
         format.html { redirect_to @bet, notice: 'User bet was successfully created.' }
         format.json { render json: { :predictions => @predictions.as_json( :include => { :prediction_option => { :include =>  :prediction_option } }) }, status: :created, location: [@bet,@prediction] }
       else
@@ -130,6 +140,14 @@ class PredictionsController < ApplicationController
 
     success = PredictionUtils.create_and_invite(@bet,@prediction)
 
+    if success
+      event = ActivityEvent.new
+      event.type = "prediction"
+      event.object_id = @prediction.id
+      event.description =  @prediction.prediction
+      event.save
+    end
+
     @predictions = Array.new
     @predictions << @prediction
     
@@ -153,10 +171,20 @@ class PredictionsController < ApplicationController
     end
     @bet = @prediction.bet
 
-    NotificationUtils.send_bet_update_notification(@bet, current_user)
+    success = @prediction.update_attributes(params[:prediction])
+
+    if success
+      NotificationUtils.send_bet_update_notification(@bet, current_user)
+
+      event = ActivityEvent.new
+      event.type = "prediction_update"
+      event.object_id = @prediction.id
+      event.description =  @prediction.prediction
+      event.save
+    end
 
     respond_to do |format|
-      if @prediction.update_attributes(params[:prediction])
+      if success
         format.html { redirect_to [@bet,@prediction] , notice: 'User bet was successfully updated.' }
         format.json { head :ok }
       else

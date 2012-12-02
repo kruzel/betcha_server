@@ -77,10 +77,20 @@ class ChatMessagesController < ApplicationController
     @chat_messages = Array.new
     @chat_messages <<  @chat_message
 
-    NotificationUtils.send_bet_update_notification(@bet, current_user)
+    success = @chat_message.save
+
+    if success
+      NotificationUtils.send_bet_update_notification(@bet, current_user)
+
+      event = ActivityEvent.new
+      event.type = "chat"
+      event.object_id = @chat_message.id
+      event.description =  @chat_message.message
+      event.save
+    end
 
     respond_to do |format|
-      if @chat_message.save
+      if success
         format.html { redirect_to @bet, notice: 'Chat message was successfully created.' }
         format.json { render json: { :chat_messages => @chat_messages }, status: :created, location: [@bet,@chat_message] }
       else

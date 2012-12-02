@@ -144,18 +144,26 @@ class BetsController < ApplicationController
     success = @bet.save!
     
     predictions = params[:predictions]
+    predictions = params[:bet][:predictions] if predictions.nil?
     unless predictions.nil?
       PredictionUtils.create_predictions(@bet,predictions)
     end
 
     @bets = Array.new
     @bets << @bet
+
+    if success
+      event = ActivityEvent.new
+      event.type = "bet"
+      event.object_id = @bet.id
+      event.description =  @bet.subject
+      event.save
+    end
     
     respond_to do |format|
       if success
         format.html { redirect_to @bet, notice: 'Bet was successfully created.' }
         format.json { render json: { :bets => @bets.as_json( :include => { :user => {} , :predictions => { :include =>  :prediction_option } , :chat_messages => {}, :topic => {} } ) }, status: :created, location: @bet }
-
       else
         format.html { render action: "new" }
         format.json { render json: @bet.errors, status: :unprocessable_entity }
