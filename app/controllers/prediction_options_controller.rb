@@ -10,7 +10,7 @@ class PredictionOptionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { :prediction_options => @prediction_options }}
+      format.json { render json: { :prediction_options => @prediction_options.as_json( :only => [ :id , :name  ], :include => :topic , :methods =>  :image_url ) }}
     end
   end
 
@@ -26,7 +26,7 @@ class PredictionOptionsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :prediction_options => @prediction_options } }
+      format.json { render json: { :prediction_options => @prediction_options.as_json( :only => [ :id , :name  ], :include => :topic , :methods =>  :image_url ) } }
     end
   end
 
@@ -65,7 +65,7 @@ class PredictionOptionsController < ApplicationController
     respond_to do |format|
       if @prediction_option.save
         format.html { redirect_to [@topic_category,@topic,@prediction_option], notice: 'Prediction option was successfully created.' }
-        format.json { render json: { :prediction_options => @prediction_options }, status: :created, location: @prediction_option }
+        format.json { render json: { :prediction_options => @prediction_options.as_json( :only => [ :id , :name  ], :include => :topic , :methods =>  :image_url ) }, status: :created, location: @prediction_option }
       else
         format.html { render action: "new" }
         format.json { render json: @prediction_option.errors, status: :unprocessable_entity }
