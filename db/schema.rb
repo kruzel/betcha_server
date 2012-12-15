@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20121128184738) do
 
   create_table "activity_events", :force => true do |t|
-    t.string   "type"
+    t.string   "event_type"
     t.string   "object_id"
     t.string   "description"
     t.datetime "created_at"
