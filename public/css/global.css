@@ -40,8 +40,9 @@ body {
 #introText{
 	width:668px;
 	position:absolute;
-	left:40px;
+	left:100px;
 	text-align:left;
+    top: 40px;
 }
 #iPhone{
 	position:absolute;
