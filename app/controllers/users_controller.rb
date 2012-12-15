@@ -141,6 +141,9 @@ class UsersController < ApplicationController
           @user.password =  Devise.friendly_token[0,20]
           password_ok = true
         end
+
+        @user.provider="email"
+
         created = @user.save!
         if created
           user_stat = UserStat.create!(user_id:@user.id )

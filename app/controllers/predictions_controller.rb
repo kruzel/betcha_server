@@ -99,7 +99,7 @@ class PredictionsController < ApplicationController
 
     if success
       event = ActivityEvent.new
-      event.type = "prediction"
+      event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
       event.save
@@ -142,7 +142,7 @@ class PredictionsController < ApplicationController
 
     if success
       event = ActivityEvent.new
-      event.type = "prediction"
+      event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
       event.save
@@ -177,7 +177,7 @@ class PredictionsController < ApplicationController
       NotificationUtils.send_bet_update_notification(@bet, current_user)
 
       event = ActivityEvent.new
-      event.type = "prediction_update"
+      event.event_type = "prediction_update"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
       event.save

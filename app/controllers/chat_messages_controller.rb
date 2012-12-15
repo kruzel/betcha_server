@@ -83,7 +83,7 @@ class ChatMessagesController < ApplicationController
       NotificationUtils.send_bet_update_notification(@bet, current_user)
 
       event = ActivityEvent.new
-      event.type = "chat"
+      event.event_type = "chat"
       event.object_id = @chat_message.id
       event.description =  @chat_message.message
       event.save

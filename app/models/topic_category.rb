@@ -5,7 +5,7 @@ class TopicCategory < ActiveRecord::Base
   has_attached_file :image, :styles => { :thumb => "80x80>" }
 
   def image_url
-    image.url(:thumb)
+    ::Rails.application.config.server_url + image.url(:thumb)
   end
 
   has_many :topics

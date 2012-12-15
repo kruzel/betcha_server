@@ -6,7 +6,7 @@ class TopicCategoriesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) } }
+      format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :only => [ :id , :name, :location_id, :start_time, :end_time ], :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) } }
     end
   end
 
@@ -20,7 +20,7 @@ class TopicCategoriesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) } }
+      format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :only => [ :id , :name, :location_id, :start_time, :end_time ], :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) } }
     end
   end
 
@@ -63,7 +63,7 @@ class TopicCategoriesController < ApplicationController
     respond_to do |format|
       if @topic_category.save
         format.html { redirect_to @topic_category, notice: 'Topic category was successfully created.' }
-        format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) }, status: :created, location: @topic_category }
+        format.json { render json: { :topic_categories => @topic_categories.as_json( :only => [ :id , :name ], :methods =>  :image_url, :include => { :topics => { :only => [ :id , :name, :location_id, :start_time, :end_time ], :include =>  { :prediction_options => { :only => [ :id , :name  ], :methods =>  :image_url }, :topic_result => {} } } }) }, status: :created, location: @topic_category }
       else
         format.html { render action: "new" }
         format.json { render json: @topic_category.errors, status: :unprocessable_entity }
