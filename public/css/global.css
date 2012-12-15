@@ -1,0 +1,196 @@
+/* 
+	Resets defualt browser settings
+	reset.css
+*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td 
+{ 
+	margin:0; padding:0; border:0; outline:0; font-weight:inherit; font-style:inherit; font-size:100%; font-family:inherit; vertical-align:baseline; 
+}
+:focus { outline:0; }
+a:active { outline:none; }
+body { line-height:1; color:black; background:white; }
+ol,ul { list-style:none; }
+table { border-collapse:separate; border-spacing:0; }
+caption,th,td { text-align:left; font-weight:normal; }
+blockquote:before,blockquote:after,q:before,q:after { content:""; }
+blockquote,q { quotes:"" ""; }
+
+/*
+	Page Style
+*/
+body { 
+	font:normal 62.5%/1.5 Helvetica, Arial, sans-serif;
+	letter-spacing:0;
+	color:#434343;
+	/*background:#efefef url(../img/background.png) repeat top center;*/
+	padding:20px 0;
+	position:relative;
+	text-shadow:0 1px 0 rgba(255,255,255,.8);
+	-webkit-font-smoothing: subpixel-antialiased;
+	text-align:left;
+}
+
+#main{
+	position:relative;
+	width:1024px;
+	top: 40px;
+	text-align:left;
+}
+
+#introText{
+	width:668px;
+	position:absolute;
+	left:40px;
+	text-align:left;
+}
+#iPhone{
+	position:absolute;
+	top: 40px;
+	right:100px;
+}
+
+#container {
+	width:256px;
+	margin:0 auto;
+	position:relative;
+	/*float:right;*/
+	z-index:0;
+}
+
+#frame {
+	position:absolute;
+	z-index:0;
+	width:256;
+	height:508px;
+	left:0px;
+}
+
+#example {
+	width:256px;
+	height:508px;
+	position:absolute;
+}
+
+/*
+	Slideshow style
+*/
+
+#slides {
+	position:absolute;
+	width:231px;
+	top:100px;
+	left:14px;
+	z-index:100;
+}
+
+/*
+	Slides container
+	Important:
+	Set the width of your slides container
+	If height not specified height will be set by the slide content
+	Set to display none, prevents content flash
+*/
+
+.slides_container {
+	position:absolute;
+	width:231px;
+	height:400px;
+	overflow:hidden;
+	left:0px;
+	display:none;
+}
+
+/*
+	Each slide
+	Important:
+	Set the width of your slides
+	Offeset for the 20px of padding
+	If height not specified height will be set by the slide content
+	Set to display block
+*/
+
+#slides .slide {
+	
+	width:231px;
+	
+	
+	display:block;
+}
+
+/*
+	Next/prev buttons
+*/
+#slides .next,#slides .prev {
+	position:absolute;
+	top:107px;
+	left:-32px;
+	width:24px;
+	height:43px;
+	display:block;
+	z-index:101;
+}
+
+#slides .next {
+	left:238px;
+}
+
+.grey{
+	color: #CCC;
+}
+/*
+	Pagination
+*/
+
+.pagination {
+	margin:26px auto 0;
+	width:130px;
+}
+
+.pagination li {
+	float:left;
+	margin:0 1px;
+	list-style:none;
+}
+
+.pagination li a {
+	display:block;
+	width:12px;
+	height:0;
+	padding-top:12px;
+	background-image:url(../img/pagination.png);
+	background-position:0 0;
+	float:left;
+	overflow:hidden;
+}
+
+.pagination li.current a {
+	background-position:0 -12px;
+}
+
+/*
+	Footer
+*/
+
+#footer {
+	text-align:center;
+	width:580px;
+	margin-top:9px;
+	padding:4.5px 0 18px;
+	border-top:1px solid #dfdfdf;
+}
+
+#footer p {
+	margin:4.5px 0;
+	font-size:1.0em;
+}
+
+/*
+	Type and anchors
+*/
+
+
+
+p{
+	font-size:200%;
+	font-family:"Arial Black";
+}

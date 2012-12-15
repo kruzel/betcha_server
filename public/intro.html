@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<title>Slides, A Slideshow Plugin for jQuery</title>
+	
+	<link rel="stylesheet" href="css/global.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="js/slides.min.jquery.js"></script>
+	<script>
+		$(function(){
+			// Set starting slide to 1
+			var startSlide = 1;
+			// Get slide number if it exists
+			if (window.location.hash) {
+				startSlide = window.location.hash.replace('#','');
+			}
+			// Initialize Slides
+			$('#slides').slides({
+				preload: true,
+				preloadImage: 'img/loading.gif',
+				generatePagination: true,
+				play: 5000,
+				pause: 2500,
+				hoverPause: true,
+				// Get the starting slide
+				start: startSlide,
+				animationComplete: function(current){
+					// Set the slide number as a hash
+					window.location.hash = '#' + current;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<center>
+	<div id="main">	
+		<div id="introText">
+			<div>
+				<img src="img/image297.PNG" alt="Drop a Bet" >
+			</div>
+			<br/><br/><br/><br/>
+			<div>
+				<p>Bet your Friends </p><br/>
+				<p>Bet on Anything</P><br/>
+				<p>Bet Anytime</P><br/>
+			</div>
+			<br/><br/><br/><br/>
+			<div>
+				<img src="img/image299.PNG" alt="Social casual mobile betting" >
+			</div>
+			<br/>
+			<div>
+				<p class="grey">
+					Coming soon . . . 
+				</p>
+			</div>
+		</div>
+		<div id="iPhone">
+			<div id="container">
+				<div id="example">
+					<div id="slides">
+						<div class="slides_container">
+							<div class="slide">
+								<img src="img/33.png" width="231" height="325" alt="Slide 1"/>
+							</div>
+							<div class="slide">
+								<img src="img/16.png" width="231" height="325" alt="Slide 2"/>
+							</div>
+							<div class="slide">
+								<img src="img/19.png" width="231" height="325" alt="Slide 3"/>
+							</div>
+							<div class="slide">
+								<img src="img/21.png" width="231" height="325"/>
+							</div>
+							<div class="slide">
+								<img src="img/23.png" width="231" height="325"/>
+							</div>
+							<div class="slide">
+								<img src="img/28.png" width="231" height="325"/>
+							</div>
+							<div class="slide">
+								<img src="img/30.png" width="231" height="325"/>
+							</div>
+							<div class="slide">
+								<img src="img/31.png" width="231" height="325"/>
+							</div>
+						</div>
+						<a href="#" class="prev"><img src="img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+						<a href="#" class="next"><img src="img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+					</div>
+					<img id="frame" src="img/iphone.png" width="256" height="508" alt="Example Frame" />
+				</div>		
+			</div>
+		</div>
+	</div>
+</center>
+</body>
+</html>
