@@ -42,8 +42,19 @@ BetchaServer::Application.routes.draw do
       member do
         get :show_details
       end
-      resources :prediction_options
-      resources :topic_results
+      collection do
+        get :show_for_category
+      end
+      resources :prediction_options do
+        collection do
+          get :show_for_topic
+        end
+      end
+      resources :topic_results do
+        collection do
+          get :show_for_topic
+        end
+      end
     end
   end
   

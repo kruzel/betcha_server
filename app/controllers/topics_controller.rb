@@ -13,6 +13,18 @@ class TopicsController < ApplicationController
     end
   end
 
+  # GET /topic_categories/topic_category_id/topics/show_for_category
+  # GET topic_categories/topic_category_id/topics/show_for_category.json
+  def show_for_category
+    @topic_category = TopicCategory.find(params[:topic_category_id])
+    @topics = Topic.find_all_by_topic_category_id(params[:topic_category_id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @topics }
+    end
+  end
+
   # GET /topic_categories/topic_category_id/topics/1
   # GET /topic_categories/topic_category_id/topics/1.json
   def show

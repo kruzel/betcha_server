@@ -1,8 +1,8 @@
 class TopicResultsController < ApplicationController
   before_filter :authenticate_user!
 
-  # GET /topic_results
-  # GET /topic_results.json
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results.json
   def index
     @topic_results = TopicResult.all
 
@@ -12,8 +12,19 @@ class TopicResultsController < ApplicationController
     end
   end
 
-  # GET /topic_results/1
-  # GET /topic_results/1.json
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/show_for_topic
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/show_for_topic.json
+  def show_for_topic
+    @topic_results = TopicResult.find_all_by_topic_id(params[:topic_id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @topic_results }
+    end
+  end
+
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/1
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/1.json
   def show
     @topic_result = TopicResult.find(params[:id])
 
@@ -23,8 +34,8 @@ class TopicResultsController < ApplicationController
     end
   end
 
-  # GET /topic_results/new
-  # GET /topic_results/new.json
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/new
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/new.json
   def new
     @topic_result = TopicResult.new
 
@@ -34,13 +45,13 @@ class TopicResultsController < ApplicationController
     end
   end
 
-  # GET /topic_results/1/edit
+  # GET /topic_categories/topic_category_id/topics/topic_id/topic_results/1/edit
   def edit
     @topic_result = TopicResult.find(params[:id])
   end
 
-  # POST /topic_results
-  # POST /topic_results.json
+  # POST /topic_categories/topic_category_id/topics/topic_id/topic_results
+  # POST /topic_categories/topic_category_id/topics/topic_id/topic_results.json
   def create
     @topic_result = TopicResult.new(params[:topic_result])
 
@@ -55,8 +66,8 @@ class TopicResultsController < ApplicationController
     end
   end
 
-  # PUT /topic_results/1
-  # PUT /topic_results/1.json
+  # PUT /topic_categories/topic_category_id/topics/topic_id/topic_results/1
+  # PUT /topic_categories/topic_category_id/topics/topic_id/topic_results/1.json
   def update
     @topic_result = TopicResult.find(params[:id])
 
@@ -71,8 +82,8 @@ class TopicResultsController < ApplicationController
     end
   end
 
-  # DELETE /topic_results/1
-  # DELETE /topic_results/1.json
+  # DELETE /topic_categories/topic_category_id/topics/topic_id/topic_results/1
+  # DELETE /topic_categories/topic_category_id/topics/topic_id/topic_results/1.json
   def destroy
     @topic_result = TopicResult.find(params[:id])
     @topic_result.destroy

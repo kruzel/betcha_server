@@ -14,6 +14,19 @@ class PredictionOptionsController < ApplicationController
     end
   end
 
+  # GET /topic_categories/topic_category_id/topics/topic_id/prediction_options/show_for_topic
+  # GET /topic_categories/topic_category_id/topics/topic_id/prediction_options/show_for_topic.json
+  def show_for_topic
+    @topic_category = TopicCategory.find(params[:topic_category_id])
+    @topic = Topic.find(params[:topic_id])
+    @prediction_options = PredictionOption.find_all_by_topic_id(params[:topic_id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: { :prediction_options => @prediction_options.as_json( :only => [ :id , :name  ], :include => :topic , :methods =>  :image_url ) }}
+    end
+  end
+
   # GET /topic_categories/topic_category_id/topics/topic_id/prediction_options/1
   # GET /topic_categories/topic_category_id/topics/topic_id/prediction_options/1.json
   def show
