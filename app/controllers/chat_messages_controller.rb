@@ -86,6 +86,7 @@ class ChatMessagesController < ApplicationController
       event.event_type = "chat"
       event.object_id = @chat_message.id
       event.description =  @chat_message.message
+      event.users = event.get_users
       event.save
     end
 

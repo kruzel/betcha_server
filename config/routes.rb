@@ -28,7 +28,11 @@ BetchaServer::Application.routes.draw do
     end
   end
 
-  resources :activity_events
+  resources :activity_events  do
+    collection do
+      get :show_for_user
+    end
+  end
 
   resources :locations
 

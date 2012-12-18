@@ -102,6 +102,7 @@ class PredictionsController < ApplicationController
       event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
+      event.users = event.get_users
       event.save
     end
 
@@ -145,6 +146,7 @@ class PredictionsController < ApplicationController
       event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
+      event.users = event.get_users
       event.save
     end
 
@@ -180,6 +182,7 @@ class PredictionsController < ApplicationController
       event.event_type = "prediction_update"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
+      event.users = event.get_users
       event.save
     end
 

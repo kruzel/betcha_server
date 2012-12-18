@@ -157,6 +157,7 @@ class BetsController < ApplicationController
       event.event_type = "bet"
       event.object_id = @bet.id
       event.description =  @bet.subject
+      event.users = event.get_users
       event.save
     end
     

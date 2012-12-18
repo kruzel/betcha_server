@@ -12,6 +12,17 @@ class ActivityEventsController < ApplicationController
     end
   end
 
+  # GET /activity_events
+  # GET /activity_events.json
+  def show_for_user
+    @activity_events = ActivityEvent.joins(:activity_event_users).where(:activity_event_users => {"user_id" => current_user.id })
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json:{ :activity_events => @activity_events } }
+    end
+  end
+
   # GET /activity_events/1
   # GET /activity_events/1.json
   def show
