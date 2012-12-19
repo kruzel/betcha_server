@@ -31,6 +31,7 @@ BetchaServer::Application.routes.draw do
   resources :activity_events  do
     collection do
       get :show_for_user
+      get :show_updates_for_user
     end
   end
 

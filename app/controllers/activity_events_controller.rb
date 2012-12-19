@@ -12,10 +12,24 @@ class ActivityEventsController < ApplicationController
     end
   end
 
-  # GET /activity_events
-  # GET /activity_events.json
+  # GET /activity_events/show_for_user
+  # GET /activity_events/show_for_user.json
   def show_for_user
     @activity_events = ActivityEvent.joins(:activity_event_users).where(:activity_event_users => {"user_id" => current_user.id })
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json:{ :activity_events => @activity_events } }
+    end
+  end
+
+  # GET /activity_events/show_updates_for_user
+  # GET /activity_events/show_updates_for_user.json
+  def show_updates_for_user
+    last_update = params[:updated_at]
+    unless last_update.nil?
+      @activity_events = ActivityEvent.joins(:activity_event_users).where("activity_event_users.user_id = ? AND updated_at > ?", current_user.id, last_update )
+    end
 
     respond_to do |format|
       format.html # index.html.erb
