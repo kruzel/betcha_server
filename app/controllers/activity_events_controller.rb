@@ -28,7 +28,7 @@ class ActivityEventsController < ApplicationController
   def show_updates_for_user
     last_update = params[:updated_at]
     unless last_update.nil?
-      @activity_events = ActivityEvent.joins(:activity_event_users).where("activity_event_users.user_id = ? AND updated_at > ?", current_user.id, last_update )
+      @activity_events = ActivityEvent.joins(:activity_event_users).where("activity_event_users.user_id = ? AND activity_events.updated_at > ?", current_user.id, last_update )
     end
 
     respond_to do |format|
