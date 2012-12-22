@@ -9,4 +9,5 @@ class TopicCategory < ActiveRecord::Base
   end
 
   has_many :topics
+  has_many :bets
 end

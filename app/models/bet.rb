@@ -6,6 +6,7 @@ class Bet < ActiveRecord::Base
   has_many :predictions, :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy
   belongs_to :topic
+  belongs_to :topic_category
 end
 # == Schema Information
 #

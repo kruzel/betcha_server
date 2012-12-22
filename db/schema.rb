@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216205230) do
+ActiveRecord::Schema.define(:version => 20121222105105) do
 
   create_table "activity_event_users", :force => true do |t|
     t.string   "activity_event_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20121216205230) do
     t.string   "topic_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "topic_category_id"
   end
 
   add_index "bets", ["id"], :name => "index_bets_on_id", :unique => true
