@@ -98,7 +98,7 @@ class PredictionsController < ApplicationController
     success = @prediction.save
 
     if success
-      event = ActivityEvent.new
+      event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
@@ -142,7 +142,7 @@ class PredictionsController < ApplicationController
     success = PredictionUtils.create_and_invite(@bet,@prediction)
 
     if success
-      event = ActivityEvent.new
+      event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction
@@ -178,7 +178,7 @@ class PredictionsController < ApplicationController
     if success
       NotificationUtils.send_bet_update_notification(@bet, current_user)
 
-      event = ActivityEvent.new
+      event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction_update"
       event.object_id = @prediction.id
       event.description =  @prediction.prediction

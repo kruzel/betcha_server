@@ -153,7 +153,7 @@ class BetsController < ApplicationController
     @bets << @bet
 
     if success
-      event = ActivityEvent.new
+      event = ActivityEvent.new(params[:activity_event])
       event.event_type = "bet"
       event.object_id = @bet.id
       event.description =  @bet.subject
