@@ -2,14 +2,14 @@
 
 <p>
   <b>User:</b>
-  <%= @badge.user %>
+  <%= @badge.user.full_name %>
 </p>
 
 <p>
-  <b>Type:</b>
-  <%= @badge.type %>
+  <b>Name:</b>
+  <%= @badge.name %>
 </p>
 
 
-<%= link_to 'Edit', edit_badge_path(@badge) %> |
-<%= link_to 'Back', badges_path %>
+<%= link_to 'Edit', edit_user_badge_path(current_user, @badge) %> |
+<%= link_to 'Back', user_badge_path %>

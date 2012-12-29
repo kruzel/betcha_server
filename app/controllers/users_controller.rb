@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } }) } }
+      format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } }) } }
     end
   end
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } })} }
+      format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } })} }
     end
   end
   
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } })} }
+      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } })} }
     end
   end
   
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } }) }}
+      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } }) }}
     end
   end
   
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } }) } }
+      format.json { render json: { :users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } }) } }
     end
   end
 
@@ -174,12 +174,12 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unauthorized, notice: 'User exist, bad password.' }
         else
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } })}, status: :created, location: @user }
+          format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } })}, status: :created, location: @user }
         end
       else
         if created
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :type, :value  ], :methods =>  :image_url } })}, status: :created, location: @user }
+          format.json { render json: {:users => @users.as_json( :include => { :user_stat => {}, :badges => { :only => [ :id , :value  ], :methods =>  [ :name, :image_url] } })}, status: :created, location: @user }
         else
           format.html { render action: "new" }
           format.json { render json: @user.errors, status: :unprocessable_entity }

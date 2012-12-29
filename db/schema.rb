@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229153328) do
+ActiveRecord::Schema.define(:version => 20121229151518) do
 
   create_table "activity_event_users", :force => true do |t|
     t.string   "activity_event_id"
@@ -48,11 +48,10 @@ ActiveRecord::Schema.define(:version => 20121229153328) do
 
   create_table "badges", :force => true do |t|
     t.string   "user_id"
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "value"
     t.string   "badge_type_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "badges", ["id"], :name => "index_badges_on_id", :unique => true

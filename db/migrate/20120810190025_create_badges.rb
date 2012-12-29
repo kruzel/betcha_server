@@ -3,7 +3,8 @@ class CreateBadges < ActiveRecord::Migration
     create_table :badges, {:id => false} do |t|
       t.string :id, :null => false
       t.string :user_id, :references => :users
-      t.string :type
+      t.integer :value
+      t.string :badge_type_id, :references => :badge_types, :null => false
 
       t.timestamps
     end

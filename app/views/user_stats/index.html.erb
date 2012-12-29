@@ -21,13 +21,13 @@
     <td><%= user_stat.invites %></td>
     <td><%= user_stat.bet_creations %></td>
     <td><%= user_stat.participations %></td>
-    <td><%= link_to 'Show', user_stat %></td>
-    <td><%= link_to 'Edit', edit_user_stat_path(user_stat) %></td>
-    <td><%= link_to 'Destroy', user_stat, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', user_user_stat_path(current_user,user_stat) %></td>
+    <td><%= link_to 'Edit', edit_user_user_stat_path(current_user,user_stat) %></td>
+    <td><%= link_to 'Destroy', [current_user,user_stat], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New User stat', new_user_stat_path %>
+<%= link_to 'New User stat', new_user_user_stat_path %>

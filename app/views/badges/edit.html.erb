@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @badge %> |
-<%= link_to 'Back', badges_path %>
+<%= link_to 'Show', user_badge_path(current_user,@badge) %> |
+<%= link_to 'Back', user_badges_path %>

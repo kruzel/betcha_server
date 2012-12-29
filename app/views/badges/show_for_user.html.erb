@@ -2,8 +2,7 @@
 
 <table>
   <tr>
-    <th>User</th>
-    <th>Type</th>
+    <th>Name</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,11 +10,10 @@
 
 <% @badges.each do |badge| %>
   <tr>
-    <td><%= badge.user %></td>
-    <td><%= badge.type %></td>
-    <td><%= link_to 'Show', badge %></td>
-    <td><%= link_to 'Edit', edit_badge_path(badge) %></td>
-    <td><%= link_to 'Destroy', badge, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= badge.name %></td>
+    <td><%= link_to 'Show', user_badge_path(current_user, badge) %></td>
+    <td><%= link_to 'Edit', edit_user_badge_path(current_user, badge) %></td>
+    <td><%= link_to 'Destroy', [current_user, badge] , confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -49,6 +49,7 @@ class BadgesController < ApplicationController
   # GET users/:user_id/badges/new
   # GET users/:user_id/badges/new.json
   def new
+    @badge_types = BadgeType.all
     @badge = Badge.new
 
     @badges = Array.new
@@ -69,13 +70,15 @@ class BadgesController < ApplicationController
   # POST users/:user_id/badges.json
   def create
     @badge = Badge.new(params[:badge])
+    @badge.user = current_user
+    @badge.badge_type = BadgeType.find(params[:badge_type][:id])
 
     @badges = Array.new
     @badges << @badge
 
     respond_to do |format|
       if @badge.save
-        format.html { redirect_to @badge, notice: 'Badge was successfully created.' }
+        format.html { redirect_to [current_user,@badge], notice: 'Badge was successfully created.' }
         format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) }, status: :created, location: @badge }
       else
         format.html { render action: "new" }
@@ -94,7 +97,7 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       if @badge.update_attributes(params[:badge])
-        format.html { redirect_to @badge, notice: 'Badge was successfully updated.' }
+        format.html { redirect_to [current_user,@badge], notice: 'Badge was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -110,7 +113,7 @@ class BadgesController < ApplicationController
     @badge.destroy
 
     respond_to do |format|
-      format.html { redirect_to badges_url }
+      format.html { redirect_to user_badges_url }
       format.json { head :ok }
     end
   end
