@@ -100,7 +100,7 @@ class PredictionsController < ApplicationController
     if success
       event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction"
-      event.object_id = @prediction.id
+      event.obj_id = @prediction.id
       event.description =  @prediction.prediction
       event.users = event.get_users
       event.save
@@ -144,7 +144,7 @@ class PredictionsController < ApplicationController
     if success
       event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction"
-      event.object_id = @prediction.id
+      event.obj_id = @prediction.id
       event.description =  @prediction.prediction
       event.users = event.get_users
       event.save
@@ -180,7 +180,7 @@ class PredictionsController < ApplicationController
 
       event = ActivityEvent.new(params[:activity_event])
       event.event_type = "prediction_update"
-      event.object_id = @prediction.id
+      event.obj_id = @prediction.id
       event.description =  @prediction.prediction
       event.users = event.get_users
       event.save

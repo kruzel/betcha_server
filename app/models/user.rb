@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :badges, :dependent => :destroy
   has_one :user_stat, :dependent => :destroy
   has_many :activity_event_users, :dependent => :destroy
-  has_many :activity_events, :through => :activity_event_users
+  has_many :activity_events, :through => :activity_event_users, :uniq => true
   
   validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :if => :email_changed?
   validates_format_of :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
