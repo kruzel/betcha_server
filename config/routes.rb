@@ -1,5 +1,7 @@
 BetchaServer::Application.routes.draw do
 
+  resources :badge_types
+
   devise_for :users, :path => 'accounts', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } #, :path => 'accounts'
   resources :tokens
 
@@ -24,6 +26,7 @@ BetchaServer::Application.routes.draw do
     resources :badges do
       collection do
         get :show_for_user
+        get :show_updates_for_user
       end
     end
   end

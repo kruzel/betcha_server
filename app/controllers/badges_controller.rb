@@ -8,7 +8,29 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { :badges => @badges } }
+      format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) } }
+    end
+  end
+
+  # GET users/:user_id/badges/show_for_user
+  # GET users/:user_id/badges/show_for_user.json
+  def show_for_user
+    @badges = Badge.find_all_by_user_id(current_user.id)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) } }
+    end
+  end
+
+  # GET users/:user_id/badges/show_updates_for_user
+  # GET users/:user_id/badges/show_updates_for_user.json
+  def show_updates_for_user
+    @badges = Badge.where("user_id = ? AND updated_at > ?", current_user.id, last_update)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) } }
     end
   end
 
@@ -20,7 +42,7 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: { :badges => @badges } }
+      format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) } }
     end
   end
 
@@ -54,7 +76,7 @@ class BadgesController < ApplicationController
     respond_to do |format|
       if @badge.save
         format.html { redirect_to @badge, notice: 'Badge was successfully created.' }
-        format.json { render json: { :badges => @badges }, status: :created, location: @badge }
+        format.json { render json: { :badges => @badges.as_json( :only => [ :id , :type ], :methods =>  :image_url ) }, status: :created, location: @badge }
       else
         format.html { render action: "new" }
         format.json { render json: @badge.errors, status: :unprocessable_entity }

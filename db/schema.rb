@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222105105) do
+ActiveRecord::Schema.define(:version => 20121229153328) do
 
   create_table "activity_event_users", :force => true do |t|
     t.string   "activity_event_id"
@@ -34,11 +34,25 @@ ActiveRecord::Schema.define(:version => 20121222105105) do
 
   add_index "activity_events", ["id"], :name => "index_activity_events_on_id", :unique => true
 
+  create_table "badge_types", :force => true do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "badge_types", ["id"], :name => "index_badge_types_on_id", :unique => true
+
   create_table "badges", :force => true do |t|
     t.string   "user_id"
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "value"
+    t.string   "badge_type_id", :null => false
   end
 
   add_index "badges", ["id"], :name => "index_badges_on_id", :unique => true
