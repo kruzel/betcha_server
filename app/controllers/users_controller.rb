@@ -127,13 +127,11 @@ class UsersController < ApplicationController
         fb_utils = FacebookUtils.new(found_user)
       end
 
-      created = fb_utils.get_facebook_info #new user will be created here if not found via email
-=begin  move code to client side
-      if created
-        found_user = fb_utils.user
-        fb_utils.add_facebook_friends
+      if found_user.access_token.nil?
+        created = true
+      else
+        created = fb_utils.get_facebook_info #its an authenticated oauth user, get his info
       end
-=end
 
     else #email provider
       found_user = User.find_by_email(@user.email)
