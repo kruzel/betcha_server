@@ -9,28 +9,30 @@ class FacebookUtils
     end
 
     def get_facebook_info
-      fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
-      user_info = fb_client.selection.me.info!
+      if !@user.access_token.nil?
+        fb_client = FBGraph::Client.new(:client_id => BetchaServer::Application::config.app_id,:secret_id => BetchaServer::Application::config.app_secret ,:token => @user.access_token)
+        user_info = fb_client.selection.me.info!
 
-      found_user = User.find_by_uid(user_info.id)
-      found_user = User.find_by_email(user_info.email) if found_user.nil?
-      unless found_user.nil?
-        tmpUser = @user
-        @user = found_user
-        @user.access_token = tmpUser.access_token unless tmpUser.access_token.nil?
+        found_user = User.find_by_uid(user_info.id)
+        found_user = User.find_by_email(user_info.email) if found_user.nil?
+        unless found_user.nil?
+          tmpUser = @user
+          @user = found_user
+          @user.access_token = tmpUser.access_token unless tmpUser.access_token.nil?
+        end
+
+        @user.email = user_info.email
+        @user.full_name = user_info.name
+        @user.provider = "facebook"
+        @user.uid = user_info.id
+        #      user.expires_at = user_info.credentials.expires_at
+        #      @user.expires =
+        @user.gender = user_info.gender
+        @user.locale = user_info.locale
+        @user.profile_pic_url = fb_client.selection.me.picture
       end
 
-      @user.email = user_info.email
-      @user.full_name = user_info.name
-      @user.provider = "facebook"
-      @user.uid = user_info.id
-  #      user.expires_at = user_info.credentials.expires_at 
-  #      @user.expires = 
-      @user.gender = user_info.gender
-      @user.locale = user_info.locale
-      @user.profile_pic_url = fb_client.selection.me.picture
-
-      if found_user.nil?
+      if found_user.nil? #not an existing user
         @user.password =  Devise.friendly_token[0,20]
       end
 
