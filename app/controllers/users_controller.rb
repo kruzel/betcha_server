@@ -127,7 +127,7 @@ class UsersController < ApplicationController
         fb_utils = FacebookUtils.new(found_user)
       end
 
-      if found_user.access_token.nil?
+      if @user.access_token.nil?
         created = true
       else
         created = fb_utils.get_facebook_info #its an authenticated oauth user, get his info
