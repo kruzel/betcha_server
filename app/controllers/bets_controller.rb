@@ -154,6 +154,7 @@ class BetsController < ApplicationController
 
     if success
       event = ActivityEvent.new(params[:activity_event])
+      event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
       event.event_type = "bet"
       event.obj_id = @bet.id
       event.description =  @bet.subject

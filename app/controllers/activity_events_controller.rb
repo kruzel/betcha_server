@@ -71,6 +71,7 @@ class ActivityEventsController < ApplicationController
   # POST /activity_events.json
   def create
     @activity_event = ActivityEvent.new(params[:activity_event])
+    @activity_event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
 
     @activity_events = Array.new
     @activity_events << @activity_event

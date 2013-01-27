@@ -99,6 +99,7 @@ class PredictionsController < ApplicationController
 
     if success
       event = ActivityEvent.new(params[:activity_event])
+      event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
       event.event_type = "prediction"
       event.obj_id = @prediction.id
       event.description =  @prediction.prediction
@@ -143,6 +144,7 @@ class PredictionsController < ApplicationController
 
     if success
       event = ActivityEvent.new(params[:activity_event])
+      event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
       event.event_type = "prediction"
       event.obj_id = @prediction.id
       event.description =  @prediction.prediction
@@ -179,6 +181,7 @@ class PredictionsController < ApplicationController
       NotificationUtils.send_bet_update_notification(@bet, current_user)
 
       event = ActivityEvent.new(params[:activity_event])
+      event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
       event.event_type = "prediction_update"
       event.obj_id = @prediction.id
       event.description =  @prediction.prediction

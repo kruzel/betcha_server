@@ -83,6 +83,7 @@ class ChatMessagesController < ApplicationController
       NotificationUtils.send_bet_update_notification(@bet, current_user)
 
       event = ActivityEvent.new(params[:activity_event])
+      event.id = params[:activity_event][:id] unless params[:activity_event][:id].nil?
       event.event_type = "chat"
       event.obj_id = @chat_message.id
       event.description =  @chat_message.message

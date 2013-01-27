@@ -44,7 +44,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :gender
       t.string :locale
       t.string :profile_pic_url     
-      t.string :provider
+      t.string :provider, :default => "email"
       t.string :uid
       t.string :access_token
       t.datetime :expires_at
